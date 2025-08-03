@@ -104,7 +104,7 @@ export default function CoverPage() {
             <br />
             AI agents, crypto systems, and viral growth tools.
             <br />
-            <span className="text-blue-300 font-semibold">20,000+ students</span> trust my work at MUStudentsUnited.
+            <span className="text-blue-300 font-semibold">30,000+ students</span> trust my work at MuStudentsUnited.
           </motion.p>
           
           {/* CTA Buttons */}

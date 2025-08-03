@@ -98,7 +98,7 @@ export default function IndexPage() {
           className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-8 max-w-4xl mx-auto"
         >
           <div className="text-center">
-            <div className="text-3xl font-bold text-blue-300 mb-2">20K+</div>
+            <div className="text-2xl sm:text-3xl font-bold text-blue-300 mb-1 sm:mb-2">30K+</div>
             <div className="text-gray-300">Students Served</div>
           </div>
           <div className="text-center">

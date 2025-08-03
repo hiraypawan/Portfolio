@@ -1,72 +1,64 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FaCode, FaGraduationCap, FaRocket, FaCog, FaBitcoin, FaUsers, FaPalette, FaStar } from 'react-icons/fa';
+import { FaCode, FaAndroid, FaServer, FaRocket, FaBriefcase, FaGem, FaLightbulb } from 'react-icons/fa';
 
 const milestones = [
   {
     year: "2018",
     age: "16",
-    title: "Started Coding",
-    description: "Began at 16 using Kodular (no-code) to build apps.",
+    title: "📖 Chapter 1: The Spark",
+    description: "In a world where teenagers played PUBG, I opened Kodular and built my first mobile app without writing a single line of code. Then Java whispered, 'Let’s level up,' and Android Studio became my new battleground. My school notebooks had more code than math.",
     icon: FaCode,
     color: "from-blue-500 to-cyan-500"
   },
   {
-    year: "2019",
+    year: "2020",
     age: "17",
-    title: "Learning Java & Android Studio",
-    description: "Self-learned Java and Android development.",
-    icon: FaCode,
+    title: "📖 Chapter 2: Into the Stack",
+    description: "While others memorized textbook definitions, I was learning full-stack development on my own. Discovered UI design, white-hat hacking, and black-hat (just for knowledge 😏), photo editing, video editing—because being multi-talented is a lifestyle, not a choice.",
+    icon: FaServer,
     color: "from-green-500 to-emerald-500"
   },
   {
-    year: "2020",
-    age: "18",
-    title: "Diploma in Computer Engineering",
-    description: "Completed at SH Jondhale College with a focus beyond the syllabus.",
-    icon: FaGraduationCap,
-    color: "from-purple-500 to-pink-500"
-  },
-  {
     year: "2021",
-    age: "19",
-    title: "Expanded Skills",
-    description: "Mastered digital marketing, WordPress, game development (Unity, UE5), Blender.",
-    icon: FaCog,
+    age: "18",
+    title: "📖 Chapter 3: Viral Instinct",
+    description: "College was okay... but I became the digital marketing guy—running viral ads before Reels became a thing. Learned Unity, then Unreal Engine 4/5 because one engine wasn’t enough. Stumbled into crypto and learned about DApps while India was still Googling 'What is blockchain?' Yes, I made ₹1,00,000+ in a day—no cap.",
+    icon: FaRocket,
     color: "from-orange-500 to-red-500"
   },
   {
     year: "2022",
-    age: "20",
-    title: "Entered Crypto World",
-    description: "Traded meme coins, built Dapps, tracked airdrops, joined crypto projects as a moderator.",
-    icon: FaBitcoin,
-    color: "from-yellow-500 to-orange-500"
+    age: "19",
+    title: "📖 Chapter 4: Freelance Level: God Mode",
+    description: "Started working with real clients across the globe. Built websites, apps, marketing funnels—you name it. Tinkered with AI long before ChatGPT became mainstream (and yes, I had early access 😎). Basically, I was the quiet storm building silently.",
+    icon: FaBriefcase,
+    color: "from-purple-500 to-pink-500"
   },
   {
     year: "2023",
-    age: "21",
-    title: "Real World Applications",
-    description: "Worked on real businesses & tools like mumbaistudentsunited.com, used by 20K+ students.",
-    icon: FaUsers,
-    color: "from-indigo-500 to-purple-500",
+    age: "20",
+    title: "📖 Chapter 5: United We Build",
+    description: "Launched MuStudentsUnited, now impacting 30,000+ students across Mumbai. Created a real-life system that actually helped students, not just another idea lost in a Notion doc. Also started building AI models, automations, and went full cyborg mode—still human though.",
+    icon: FaGem,
+    color: "from-yellow-500 to-orange-500",
     link: { text: "mumbaistudentsunited.com", href: "https://mumbaistudentsunited.com" }
   },
   {
     year: "2024",
-    age: "22",
-    title: "Design and Leadership",
-    description: "Learned UI/UX, graphic design, video editing, and leadership.",
-    icon: FaPalette,
+    age: "21",
+    title: "📖 Chapter 6: Creator Era",
+    description: "Started helping creators hit 20K+ subs by scripting, editing, SEO, and ad strategy. Business ROI? Crushed it. Also became the go-to guy for crypto and meme coin trades—because why not?",
+    icon: FaLightbulb,
     color: "from-pink-500 to-rose-500"
   },
   {
     year: "2025",
-    age: "23",
-    title: "Tech + Design + Business = Me",
-    description: "Full-stack mastery combining technical skills, creative design, and business acumen.",
-    icon: FaStar,
+    age: "22",
+    title: "📖 Chapter 7: Now & Beyond",
+    description: "Now building smart things with AI, Blockchain, and Web3—solving real-world gaps with tech. Learning AI/ML, still hustling, still helping, still hungry. And yes, I still make memes, build DApps, and sometimes debug code at 3AM with coffee and chaos. If you’ve read this far… maybe you should hire me or invest in me.",
+    icon: FaCode,
     color: "from-cyan-500 to-blue-500"
   }
 ];
