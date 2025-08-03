@@ -21,6 +21,12 @@ export const metadata: Metadata = {
   keywords: "Full-Stack Developer, AI, Web3, React, Next.js, Portfolio, MUStudentsUnited, Pawan Hiray",
   authors: [{ name: "Pawan Hiray" }],
   creator: "Pawan Hiray",
+  viewport: {
+    width: 'device-width',
+    initialScale: 1.0,
+    maximumScale: 1.0,
+    userScalable: false,
+  },
   openGraph: {
     title: "Pawan Hiray - Full-Stack Developer & AI Innovator",
     description: "Interactive book-style portfolio showcasing full-stack development, AI projects, and Web3 innovations.",
@@ -47,7 +53,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${spaceGrotesk.variable} ${firaCode.variable} font-sans antialiased overflow-hidden`}
+        className={`${spaceGrotesk.variable} ${firaCode.variable} font-sans antialiased touch-manipulation`}
       >
         <ThemeProvider
           attribute="class"

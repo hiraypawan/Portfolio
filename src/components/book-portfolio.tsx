@@ -203,7 +203,19 @@ export default function BookPortfolio() {
                   }}
                 >
                   <div className="w-full h-full bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900 shadow-2xl">
-                    <CurrentPageComponent />
+                    <CurrentPageComponent 
+                      onNavigate={(page: number) => {
+                        if (page !== currentPage && !isFlipping) {
+                          setIsFlipping(true);
+                          setDirection(page > currentPage ? 'forward' : 'backward');
+                          playPageFlipSound();
+                          setTimeout(() => {
+                            setCurrentPage(page);
+                            setIsFlipping(false);
+                          }, 300);
+                        }
+                      }}
+                    />
                   </div>
                 </motion.div>
               </AnimatePresence>

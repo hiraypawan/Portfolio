@@ -71,7 +71,7 @@ export default function StoryPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-purple-600/10 animate-pulse" />
       </div>
 
-      <div className="flex flex-col h-full z-10 relative px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+      <div className="flex flex-col h-full z-10 relative px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent smooth-scroll">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -79,10 +79,10 @@ export default function StoryPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-8"
         >
-          <h1 className="text-5xl font-bold text-white mb-4 font-space-grotesk">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 font-space-grotesk">
             My Journey (2018–2025)
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
             From 16-year-old beginner to full-stack innovator
           </p>
         </motion.div>

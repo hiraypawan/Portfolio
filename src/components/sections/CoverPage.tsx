@@ -4,6 +4,10 @@ import { motion } from 'framer-motion';
 import { FaCode, FaBrain, FaRocket, FaGithub, FaLinkedin, FaEnvelope, FaGlobe } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 
+interface CoverPageProps {
+  onNavigate?: (page: number) => void;
+}
+
 const floatingIcons = [
   { icon: FaCode, x: 20, y: 20, delay: 0 },
   { icon: FaBrain, x: 80, y: 30, delay: 0.5 },
@@ -11,7 +15,7 @@ const floatingIcons = [
   { icon: FaCode, x: 85, y: 80, delay: 1.5 },
 ];
 
-export default function CoverPage() {
+export default function CoverPage({ onNavigate }: CoverPageProps) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -117,6 +121,7 @@ export default function CoverPage() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => onNavigate && onNavigate(3)}
               className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
             >
               View My Work
@@ -124,6 +129,7 @@ export default function CoverPage() {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => onNavigate && onNavigate(5)}
               className="px-8 py-3 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 transition-all duration-300"
             >
               Contact Me
