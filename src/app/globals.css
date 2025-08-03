@@ -95,6 +95,15 @@ html {
   scrollbar-width: thin;
 }
 
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 .scrollbar-thumb-white\/20::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.2);
 }
