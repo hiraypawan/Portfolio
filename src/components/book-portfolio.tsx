@@ -123,13 +123,15 @@ export default function BookPortfolio() {
   };
 
   return (
-    <div className="relative h-screen overflow-hidden bg-gradient-to-br from-slate-900 to-purple-900">
-      {/* Animated Cursor */}
-      <AnimatedCursor />
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 to-purple-900">
+      {/* Animated Cursor - Hidden on mobile */}
+      <div className="hidden md:block">
+        <AnimatedCursor />
+      </div>
       
       {/* Book Container */}
-      <div className="absolute inset-0 flex items-center justify-center perspective-1000">
-        <div className="relative w-full h-full max-w-6xl max-h-4xl">
+      <div className="flex items-center justify-center min-h-screen p-2 sm:p-4 md:p-6">
+        <div className="relative w-full h-screen max-w-7xl">
           {/* Page Content */}
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
@@ -143,10 +145,7 @@ export default function BookPortfolio() {
                 duration: 0.6,
                 ease: "easeInOut",
               }}
-              className="absolute inset-0 w-full h-full"
-              style={{
-                transformStyle: 'preserve-3d',
-              }}
+              className="w-full h-full"
             >
               <CurrentPageComponent />
             </motion.div>
@@ -154,32 +153,82 @@ export default function BookPortfolio() {
         </div>
       </div>
 
-      {/* Navigation Buttons */}
+      {/* Mobile Navigation - Bottom */}
+      <div className="md:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
+        <div className="flex items-center space-x-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-4 py-2">
+          <motion.button
+            onClick={prevPage}
+            disabled={isFlipping}
+            className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-50"
+            whileTap={{ scale: 0.95 }}
+            aria-label="Previous Page"
+          >
+            <FaArrowLeft size={16} />
+          </motion.button>
+          
+          <div className="flex space-x-1">
+            {pageComponents.map((_, index) => (
+              <motion.button
+                key={index}
+                onClick={() => {
+                  if (index !== currentPage && !isFlipping) {
+                    setIsFlipping(true);
+                    setDirection(index > currentPage ? 'forward' : 'backward');
+                    playPageFlipSound();
+                    setTimeout(() => {
+                      setCurrentPage(index);
+                      setIsFlipping(false);
+                    }, 300);
+                  }
+                }}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === currentPage
+                    ? 'bg-white scale-125'
+                    : 'bg-white/40'
+                }`}
+                aria-label={`Go to ${pageNames[index]}`}
+              />
+            ))}
+          </div>
+          
+          <motion.button
+            onClick={nextPage}
+            disabled={isFlipping}
+            className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-50"
+            whileTap={{ scale: 0.95 }}
+            aria-label="Next Page"
+          >
+            <FaArrowRight size={16} />
+          </motion.button>
+        </div>
+      </div>
+
+      {/* Desktop Navigation Buttons */}
       <motion.button
         onClick={prevPage}
         disabled={isFlipping}
-        className="absolute left-8 top-1/2 transform -translate-y-1/2 z-50 p-4 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="hidden md:block absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 z-50 p-3 lg:p-4 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Previous Page"
       >
-        <FaArrowLeft size={24} />
+        <FaArrowLeft size={20} />
       </motion.button>
 
       <motion.button
         onClick={nextPage}
         disabled={isFlipping}
-        className="absolute right-8 top-1/2 transform -translate-y-1/2 z-50 p-4 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="hidden md:block absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 z-50 p-3 lg:p-4 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Next Page"
       >
-        <FaArrowRight size={24} />
+        <FaArrowRight size={20} />
       </motion.button>
 
-      {/* Page Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50">
-        <div className="flex items-center space-x-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-6 py-3">
+      {/* Desktop Page Indicator */}
+      <div className="hidden md:block absolute bottom-6 lg:bottom-8 left-1/2 transform -translate-x-1/2 z-50">
+        <div className="flex items-center space-x-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-4 lg:px-6 py-2 lg:py-3">
           <div className="flex space-x-2">
             {pageComponents.map((_, index) => (
               <motion.button
@@ -205,7 +254,7 @@ export default function BookPortfolio() {
               />
             ))}
           </div>
-          <div className="text-white/80 text-sm font-medium">
+          <div className="text-white/80 text-sm font-medium hidden lg:block">
             {pageNames[currentPage]}
           </div>
         </div>
@@ -214,19 +263,26 @@ export default function BookPortfolio() {
       {/* Sound Toggle */}
       <motion.button
         onClick={() => setSoundEnabled(!soundEnabled)}
-        className="absolute top-8 right-8 z-50 p-3 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
+        className="absolute top-4 right-4 lg:top-8 lg:right-8 z-50 p-2 lg:p-3 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         aria-label={soundEnabled ? 'Mute Sound' : 'Enable Sound'}
       >
-        {soundEnabled ? <FaVolumeUp size={20} /> : <FaVolumeMute size={20} />}
+        {soundEnabled ? <FaVolumeUp size={16} /> : <FaVolumeMute size={16} />}
       </motion.button>
 
-      {/* Keyboard Hints */}
-      <div className="absolute top-8 left-8 z-50 text-white/60 text-sm">
-        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-3">
+      {/* Keyboard Hints - Desktop only */}
+      <div className="hidden lg:block absolute top-4 lg:top-8 left-4 lg:left-8 z-50 text-white/60 text-xs lg:text-sm">
+        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-2 lg:p-3">
           <div>← → Arrow keys to navigate</div>
           <div>Space bar for next page</div>
+        </div>
+      </div>
+
+      {/* Mobile swipe indicator */}
+      <div className="md:hidden absolute top-4 left-1/2 transform -translate-x-1/2 z-50 text-white/60 text-xs">
+        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg px-3 py-1">
+          Swipe or use buttons to navigate
         </div>
       </div>
     </div>

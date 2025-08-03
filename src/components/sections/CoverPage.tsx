@@ -24,59 +24,63 @@ export default function CoverPage() {
   }, []);
 
   return (
-    <div className="relative h-full bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
+    <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 animate-pulse" />
-        {/* Floating Background Icons */}
-        {floatingIcons.map((item, index) => {
-          const IconComponent = item.icon;
-          return (
-            <motion.div
-              key={index}
-              className="absolute text-white/10"
-              style={{ left: `${item.x}%`, top: `${item.y}%` }}
-              animate={{
-                y: [0, -20, 0],
-                rotate: [0, 360],
-              }}
-              transition={{
-                duration: 6,
-                delay: item.delay,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <IconComponent size={60} />
-            </motion.div>
-          );
-        })}
+        {/* Floating Background Icons - Hidden on small screens */}
+        <div className="hidden sm:block">
+          {floatingIcons.map((item, index) => {
+            const IconComponent = item.icon;
+            return (
+              <motion.div
+                key={index}
+                className="absolute text-white/10"
+                style={{ left: `${item.x}%`, top: `${item.y}%` }}
+                animate={{
+                  y: [0, -20, 0],
+                  rotate: [0, 360],
+                }}
+                transition={{
+                  duration: 6,
+                  delay: item.delay,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <IconComponent size={60} />
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Mouse Trail Effect */}
-      <motion.div
-        className="absolute w-96 h-96 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none"
-        animate={{
-          x: mousePosition.x - 200,
-          y: mousePosition.y - 200,
-        }}
-        transition={{ type: "spring", damping: 30, stiffness: 200 }}
-      />
+      {/* Mouse Trail Effect - Desktop only */}
+      <div className="hidden md:block">
+        <motion.div
+          className="absolute w-96 h-96 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none"
+          animate={{
+            x: mousePosition.x - 200,
+            y: mousePosition.y - 200,
+          }}
+          transition={{ type: "spring", damping: 30, stiffness: 200 }}
+        />
+      </div>
 
       {/* Main Content */}
-      <div className="flex flex-col items-center justify-center h-full text-center z-10 relative">
+      <div className="flex flex-col items-center justify-center min-h-screen text-center z-10 relative px-4 py-8">
         {/* Glassmorphism Card */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-3xl p-12 shadow-2xl max-w-2xl"
+          className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl w-full max-w-xs sm:max-w-md md:max-w-2xl"
         >
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-6xl font-bold text-white mb-4 font-space-grotesk"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 font-space-grotesk"
           >
             Hi, I&apos;m Pawan Hiray 👋
           </motion.h1>
@@ -85,7 +89,7 @@ export default function CoverPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="text-xl text-gray-200 mb-6 font-light"
+            className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-200 mb-6 font-light"
           >
             Tech Builder • Web3 & AI Specialist • Growth Hacker
           </motion.div>
@@ -94,7 +98,7 @@ export default function CoverPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
-            className="text-gray-300 text-lg leading-relaxed mb-8"
+            className="text-gray-300 text-sm sm:text-base lg:text-lg leading-relaxed mb-8"
           >
             I&apos;m a multi-skilled developer passionate about building automation tools,
             <br />
