@@ -16,7 +16,7 @@ export function Contact() {
     // Here you would integrate with Formspree, Resend, or another email service
     console.log('Form submitted:', formData);
     // For now, we'll just alert the user
-    alert('Thank you for your message! I\'ll get back to you soon.');
+    alert('Thank you for your message! I&apos;ll get back to you soon.');
     setFormData({ name: '', email: '', message: '' });
   };
 
@@ -43,7 +43,7 @@ export function Contact() {
             </span>
           </h2>
           <p className="text-xl text-cosmic-300 max-w-2xl mx-auto">
-            Ready to collaborate on your next project? I'm open to freelance work, 
+            Ready to collaborate on your next project? I&apos;m open to freelance work,
             partnerships, and exciting startup opportunities.
           </p>
         </motion.div>
@@ -62,7 +62,7 @@ export function Contact() {
                 Get in Touch
               </h3>
               <p className="text-cosmic-300 text-lg leading-relaxed mb-6">
-                I'm always excited to discuss new opportunities, innovative projects, 
+                I&apos;m always excited to discuss new opportunities, innovative projects,
                 and ways we can work together to create something amazing.
               </p>
             </div>
@@ -86,7 +86,7 @@ export function Contact() {
 
             <div className="bg-cosmic-800/50 backdrop-blur-sm border border-cosmic-700/50 rounded-xl p-6">
               <h4 className="text-cosmic-100 font-semibold mb-3">
-                What I'm looking for:
+                What I&apos;m looking for:
               </h4>
               <ul className="text-cosmic-300 space-y-2">
                 <li>• Freelance development projects</li>

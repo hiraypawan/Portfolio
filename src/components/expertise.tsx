@@ -80,14 +80,14 @@ export function Expertise() {
                 </p>
                 
                 <div className="flex flex-wrap gap-2">
-                  {area.technologies.map((tech, techIndex) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 bg-cosmic-700/50 border border-cosmic-600/50 rounded-full text-sm text-cosmic-200 hover:bg-cosmic-600/50 transition-colors duration-200"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+                      {area.technologies.map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-3 py-1 bg-cosmic-700/50 border border-cosmic-600/50 rounded-full text-sm text-cosmic-200 hover:bg-cosmic-600/50 transition-colors duration-200"
+                        >
+                          {tech}
+                        </span>
+                      ))}
                 </div>
               </div>
             </motion.div>
@@ -106,7 +106,7 @@ export function Expertise() {
               Ready to build something amazing?
             </h3>
             <p className="text-cosmic-300 text-lg">
-              Let's combine these skills to create innovative solutions that make a real impact.
+              Let&apos;s combine these skills to create innovative solutions that make a real impact.
             </p>
           </div>
         </motion.div>

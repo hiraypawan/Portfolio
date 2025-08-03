@@ -48,7 +48,7 @@ export function About() {
             </span>
           </h2>
           <p className="text-xl text-cosmic-300 max-w-3xl mx-auto leading-relaxed">
-            I'm a multi-skilled developer passionate about building automation tools, 
+            I&apos;m a multi-skilled developer passionate about building automation tools,
             AI agents, crypto systems, and viral growth tools. With expertise spanning 
             full-stack development, Web3, and digital marketing, I create innovative 
             solutions that drive real-world impact.
@@ -95,9 +95,9 @@ export function About() {
             </h3>
             <p className="text-cosmic-300 text-lg leading-relaxed">
               I believe in the power of technology to transform lives and businesses. 
-              Whether it's building intelligent AI systems, creating decentralized applications, 
-              or developing growth-hacking tools that go viral, I'm always looking for ways 
-              to push the boundaries of what's possible in the digital world.
+              Whether it&apos;s building intelligent AI systems, creating decentralized applications, 
+              or developing growth-hacking tools that go viral, I&apos;m always looking for ways 
+              to push the boundaries of what&apos;s possible in the digital world.
             </p>
           </div>
         </motion.div>

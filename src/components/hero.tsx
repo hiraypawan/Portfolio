@@ -33,7 +33,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            <span className="text-cosmic-100">Hi, I'm </span>
+            <span className="text-cosmic-100">Hi, I&apos;m </span>
             <span className="bg-gradient-to-r from-neon-purple via-neon-blue to-neon-pink bg-clip-text text-transparent">
               Pawan Hiray
             </span>
