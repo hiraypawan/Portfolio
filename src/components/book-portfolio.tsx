@@ -34,7 +34,6 @@ export default function BookPortfolio() {
   const [isFlipping, setIsFlipping] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
-  const [audioReady, setAudioReady] = useState(false);
 
   // Audio reference for better performance
   const audioRef = useRef<HTMLAudioElement | null>(null);

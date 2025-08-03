@@ -78,7 +78,7 @@ export default function CoverPage() {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="text-6xl font-bold text-white mb-4 font-space-grotesk"
           >
-            Hi, I'm Pawan Hiray 👋
+            Hi, I&apos;m Pawan Hiray 👋
           </motion.h1>
           
           <motion.div
@@ -96,7 +96,7 @@ export default function CoverPage() {
             transition={{ delay: 0.9, duration: 0.8 }}
             className="text-gray-300 text-lg leading-relaxed mb-8"
           >
-            I'm a multi-skilled developer passionate about building automation tools,
+            I&apos;m a multi-skilled developer passionate about building automation tools,
             <br />
             AI agents, crypto systems, and viral growth tools.
             <br />

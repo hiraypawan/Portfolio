@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { FaExternalLinkAlt, FaGithub, FaUsers, FaRobot, FaGamepad, FaChartLine } from 'react-icons/fa';
+import Image from 'next/image';
 
 const projects = [
   {
@@ -168,9 +169,11 @@ export default function ProjectsPage() {
                   <div className="relative">
                     <div className={`absolute inset-0 bg-gradient-to-r ${project.color} rounded-2xl blur-xl opacity-30`}></div>
                     <div className="relative bg-white/10 backdrop-blur-sm rounded-2xl p-4">
-                      <img 
+                      <Image 
                         src={project.image} 
                         alt={project.title}
+                        width={400}
+                        height={192}
                         className="w-full h-48 object-cover rounded-xl"
                       />
                     </div>

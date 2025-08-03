@@ -57,8 +57,8 @@ export default function IndexPage() {
           </h1>
           <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-8 max-w-4xl">
             <p className="text-xl text-gray-200 leading-relaxed">
-              "I'm a multi-skilled developer passionate about building automation tools, 
-              AI agents, crypto systems, and viral growth tools."
+              &ldquo;I&apos;m a multi-skilled developer passionate about building automation tools, 
+              AI agents, crypto systems, and viral growth tools.&rdquo;
             </p>
           </div>
         </motion.div>
