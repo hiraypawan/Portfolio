@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence, PanInfo } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowLeft, FaArrowRight, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 import CoverPage from './sections/CoverPage';
 import IndexPage from './sections/IndexPage';
@@ -90,21 +90,6 @@ export default function BookPortfolio() {
     }, 300);
   }, [isFlipping, playPageFlipSound]);
 
-  // Handle swipe gestures
-  const handleSwipe = (event: any, info: PanInfo) => {
-    const swipeThreshold = 100;
-    const swipeVelocityThreshold = 300;
-    
-    if (Math.abs(info.offset.x) > swipeThreshold || Math.abs(info.velocity.x) > swipeVelocityThreshold) {
-      if (info.offset.x > 0) {
-        // Swipe right - go to previous page
-        prevPage();
-      } else {
-        // Swipe left - go to next page
-        nextPage();
-      }
-    }
-  };
 
   // Touch handlers for mobile
   const [touchStart, setTouchStart] = useState<number | null>(null);

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FaCode, FaAndroid, FaServer, FaRocket, FaBriefcase, FaGem, FaLightbulb } from 'react-icons/fa';
+import { FaCode, FaServer, FaRocket, FaBriefcase, FaGem, FaLightbulb } from 'react-icons/fa';
 
 const milestones = [
   {
