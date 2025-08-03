@@ -170,7 +170,7 @@ export default function BookPortfolio() {
         onLoadingComplete={() => setIsLoading(false)} 
       />
       
-      <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 to-purple-900">
+      <div className="relative min-h-screen min-h-[100dvh] overflow-hidden bg-gradient-to-br from-slate-900 to-purple-900">
         {/* Animated Cursor - Now works on mobile too */}
         <AnimatedCursor />
       
