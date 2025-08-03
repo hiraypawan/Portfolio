@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaArrowLeft, FaArrowRight, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 import CoverPage from './sections/CoverPage';
@@ -34,18 +34,35 @@ export default function BookPortfolio() {
   const [isFlipping, setIsFlipping] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
+  const [audioReady, setAudioReady] = useState(false);
+
+  // Audio reference for better performance
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Initialize audio on component mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        audioRef.current = new Audio('/sounds/page-flip.mp3');
+        audioRef.current.volume = 0.3;
+        audioRef.current.preload = 'auto';
+      } catch (error) {
+        console.warn('Audio initialization failed:', error);
+      }
+    }
+  }, []);
 
   // Play page flip sound
   const playPageFlipSound = useCallback(() => {
-    if (soundEnabled) {
+    if (soundEnabled && audioRef.current) {
       try {
-        const audio = new Audio('/sounds/page-flip.mp3');
-        audio.volume = 0.3;
-        audio.play().catch(() => {
-          // Silently fail if audio can't play
+        // Reset audio to beginning for rapid clicks
+        audioRef.current.currentTime = 0;
+        audioRef.current.play().catch((error) => {
+          console.warn('Audio playback failed:', error);
         });
       } catch (error) {
-        // Silently fail if audio creation fails
+        console.warn('Audio play error:', error);
       }
     }
   }, [soundEnabled]);
