@@ -1,5 +1,7 @@
 # Pawan Hiray – Portfolio 🚀
 
+**🌐 Live Portfolio**: [pawanhiray.vercel.app](https://pawanhiray.vercel.app/)
+
 Hi! I'm Pawan, a full-stack developer, AI & Web3 builder, and growth hacker.  
 This site showcases my work, skills, and projects.  
 Built using [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.com), and hosted on [Vercel](https://vercel.com).
@@ -26,8 +28,8 @@ Built using [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.co
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/pawanhiray/dev-portfolio-ai.git
-   cd dev-portfolio-ai
+   git clone https://github.com/hiraypawan/Portfolio.git
+   cd Portfolio
    ```
 
 2. **Install dependencies**:

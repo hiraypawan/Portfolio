@@ -89,7 +89,7 @@ export function Hero() {
               { icon: Github, href: 'https://github.com/pawanhiray', label: 'GitHub' },
               { icon: Linkedin, href: 'https://linkedin.com/in/pawanhiray', label: 'LinkedIn' },
               { icon: Mail, href: 'mailto:pawanhiray1@gmail.com', label: 'Email' },
-              { icon: ExternalLink, href: 'https://www.pawanhiray.vercel.com', label: 'Website' },
+              { icon: ExternalLink, href: 'https://pawanhiray.vercel.app', label: 'Website' },
             ].map((social, index) => (
               <motion.a
                 key={social.label}
