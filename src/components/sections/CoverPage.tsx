@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FaCode, FaBrain, FaRocket } from 'react-icons/fa';
+import { FaCode, FaBrain, FaRocket, FaGithub, FaLinkedin, FaEnvelope, FaGlobe } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 
 const floatingIcons = [
@@ -78,7 +78,7 @@ export default function CoverPage() {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="text-6xl font-bold text-white mb-4 font-space-grotesk"
           >
-            Pawan Hiray
+            Hi, I'm Pawan Hiray 👋
           </motion.h1>
           
           <motion.div
@@ -87,19 +87,87 @@ export default function CoverPage() {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="text-xl text-gray-200 mb-6 font-light"
           >
-            Full-Stack Developer • AI Innovator • Web3 Pioneer
+            Tech Builder • Web3 & AI Specialist • Growth Hacker
           </motion.div>
           
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
-            className="text-gray-300 text-lg leading-relaxed"
+            className="text-gray-300 text-lg leading-relaxed mb-8"
           >
-            Crafting innovative digital solutions with modern technology stacks.
+            I'm a multi-skilled developer passionate about building automation tools,
             <br />
-            <span className="text-blue-300 font-semibold">20,000+ students</span> trust my work.
+            AI agents, crypto systems, and viral growth tools.
+            <br />
+            <span className="text-blue-300 font-semibold">20,000+ students</span> trust my work at MUStudentsUnited.
           </motion.p>
+          
+          {/* CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="flex flex-col sm:flex-row gap-4 mb-8"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
+            >
+              View My Work
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-3 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 transition-all duration-300"
+            >
+              Contact Me
+            </motion.button>
+          </motion.div>
+          
+          {/* Social Icons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.8 }}
+            className="flex justify-center space-x-6"
+          >
+            <motion.a
+              href="https://github.com/hiraypawan"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.2, rotate: 5 }}
+              className="text-white/70 hover:text-white transition-colors"
+            >
+              <FaGithub size={24} />
+            </motion.a>
+            <motion.a
+              href="https://linkedin.com/in/pawanhiray"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.2, rotate: -5 }}
+              className="text-white/70 hover:text-blue-400 transition-colors"
+            >
+              <FaLinkedin size={24} />
+            </motion.a>
+            <motion.a
+              href="mailto:pawanhiray1@gmail.com"
+              whileHover={{ scale: 1.2, rotate: 5 }}
+              className="text-white/70 hover:text-red-400 transition-colors"
+            >
+              <FaEnvelope size={24} />
+            </motion.a>
+            <motion.a
+              href="https://pawanhiray.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.2, rotate: -5 }}
+              className="text-white/70 hover:text-green-400 transition-colors"
+            >
+              <FaGlobe size={24} />
+            </motion.a>
+          </motion.div>
           
           <motion.div
             initial={{ opacity: 0, scale: 0 }}
