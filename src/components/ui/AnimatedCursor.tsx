@@ -15,8 +15,8 @@ interface Particle {
   color: string;
 }
 
-const codeChars = ['<', '>', '{', '}', '(', ')', ';', '=', '+', '-', '*', '/', '$', '@', '#'];
-const colors = ['#00D9FF', '#A855F7', '#EC4899', '#10B981', '#F59E0B'];
+const codeChars = ['<', '>', '{', '}', '(', ')', ';', '=', '+', '-', '*', '/', '$', '@', '#', '💡', '💰', '⚙️'];
+const colors = ['#0FF0FC', '#FF73FA', '#FBFF7B', '#7DFF6E', '#FF9E64', '#FFFFFF'];
 
 export default function AnimatedCursor() {
   const [particles, setParticles] = useState<Particle[]>([]);

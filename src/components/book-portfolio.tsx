@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, PanInfo } from 'framer-motion';
 import { FaArrowLeft, FaArrowRight, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
 import CoverPage from './sections/CoverPage';
 import IndexPage from './sections/IndexPage';
@@ -10,6 +10,7 @@ import ProjectsPage from './sections/ProjectsPage';
 import SkillsPage from './sections/SkillsPage';
 import ContactPage from './sections/ContactPage';
 import AnimatedCursor from './ui/AnimatedCursor';
+import BookLoader from './ui/BookLoader';
 
 const pageComponents = [
   CoverPage,
@@ -34,6 +35,7 @@ export default function BookPortfolio() {
   const [isFlipping, setIsFlipping] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
+  const [isLoading, setIsLoading] = useState(true);
 
   // Audio reference for better performance
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -88,6 +90,22 @@ export default function BookPortfolio() {
     }, 300);
   }, [isFlipping, playPageFlipSound]);
 
+  // Handle swipe gestures
+  const handleSwipe = (event: any, info: PanInfo) => {
+    const swipeThreshold = 50;
+    const swipeVelocityThreshold = 500;
+    
+    if (Math.abs(info.offset.x) > swipeThreshold || Math.abs(info.velocity.x) > swipeVelocityThreshold) {
+      if (info.offset.x > 0) {
+        // Swipe right - go to previous page
+        prevPage();
+      } else {
+        // Swipe left - go to next page
+        nextPage();
+      }
+    }
+  };
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -123,35 +141,48 @@ export default function BookPortfolio() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 to-purple-900">
-      {/* Animated Cursor - Hidden on mobile */}
-      <div className="hidden md:block">
-        <AnimatedCursor />
-      </div>
+    <>
+      {/* Book Loader */}
+      <BookLoader 
+        isLoading={isLoading} 
+        onLoadingComplete={() => setIsLoading(false)} 
+      />
       
-      {/* Book Container */}
-      <div className="flex items-center justify-center min-h-screen p-2 sm:p-4 md:p-6">
-        <div className="relative w-full h-screen max-w-7xl">
-          {/* Page Content */}
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={currentPage}
-              custom={direction}
-              variants={pageVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                duration: 0.6,
-                ease: "easeInOut",
-              }}
-              className="w-full h-full"
-            >
-              <CurrentPageComponent />
-            </motion.div>
-          </AnimatePresence>
+      <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 to-purple-900">
+        {/* Animated Cursor - Hidden on mobile */}
+        <div className="hidden md:block">
+          <AnimatedCursor />
         </div>
-      </div>
+      
+        {/* Book Container */}
+        <div className="flex items-center justify-center min-h-screen p-2 sm:p-4 md:p-6">
+          <motion.div 
+            className="relative w-full h-screen max-w-7xl"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.1}
+            onDragEnd={handleSwipe}
+          >
+            {/* Page Content */}
+            <AnimatePresence mode="wait" custom={direction}>
+              <motion.div
+                key={currentPage}
+                custom={direction}
+                variants={pageVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  duration: 0.6,
+                  ease: "easeInOut",
+                }}
+                className="w-full h-full overflow-y-auto"
+              >
+                <CurrentPageComponent />
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
+        </div>
 
       {/* Mobile Navigation - Bottom */}
       <div className="md:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
@@ -226,6 +257,23 @@ export default function BookPortfolio() {
         <FaArrowRight size={20} />
       </motion.button>
 
+      {/* Folded Page Corner - Mobile */}
+      <div className="md:hidden fixed bottom-0 right-0 z-40">
+        <motion.div
+          onClick={nextPage}
+          className="relative w-16 h-16 cursor-pointer overflow-hidden"
+          whileTap={{ scale: 0.95 }}
+        >
+          {/* Folded corner triangle */}
+          <div className="absolute bottom-0 right-0 w-16 h-16">
+            <div className="absolute bottom-0 right-0 w-0 h-0 border-l-16 border-b-16 border-l-transparent border-b-white/20"></div>
+            <div className="absolute bottom-0 right-0 w-0 h-0 border-l-12 border-b-12 border-l-transparent border-b-white/10"></div>
+          </div>
+          {/* Page curl shadow */}
+          <div className="absolute bottom-0 right-0 w-4 h-4 bg-gradient-to-tl from-black/30 to-transparent"></div>
+        </motion.div>
+      </div>
+
       {/* Desktop Page Indicator */}
       <div className="hidden md:block absolute bottom-6 lg:bottom-8 left-1/2 transform -translate-x-1/2 z-50">
         <div className="flex items-center space-x-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-4 lg:px-6 py-2 lg:py-3">
@@ -285,6 +333,6 @@ export default function BookPortfolio() {
           Swipe or use buttons to navigate
         </div>
       </div>
-    </div>
+    </>
   );
 }

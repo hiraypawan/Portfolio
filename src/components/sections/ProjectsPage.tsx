@@ -88,13 +88,13 @@ const projects = [
 
 export default function ProjectsPage() {
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-red-900/30 to-slate-900 overflow-hidden">
+    <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-red-900/30 to-slate-900">
       {/* Background Animation */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-pink-600/10 animate-pulse" />
       </div>
 
-      <div className="flex flex-col min-h-screen z-10 relative px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-8 sm:py-12 min-h-full">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
