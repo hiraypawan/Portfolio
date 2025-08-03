@@ -10,7 +10,7 @@ const projects = [
     title: 'MUStudentsUnited',
     subtitle: 'Academic Social Platform',
     description: 'A comprehensive academic platform serving 30,000+ students with note sharing, forums, and study materials. Built as a solo initiative.',
-    image: '/images/smartbotx.png',
+    image: '/images/MuStudentPreview.png',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'JWT Auth'],
     stats: '30K+ Active Students',
     liveUrl: 'https://mumbaistudentsunited.com',

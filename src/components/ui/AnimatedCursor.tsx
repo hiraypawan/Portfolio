@@ -21,31 +21,69 @@ const colors = ['#0FF0FC', '#FF73FA', '#FBFF7B', '#7DFF6E', '#FF9E64', '#FFFFFF'
 export default function AnimatedCursor() {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const createParticle = (x: number, y: number) => {
+    if (Math.random() < 0.6) {
+      const newParticle: Particle = {
+        id: Date.now() + Math.random(),
+        x,
+        y,
+        vx: (Math.random() - 0.5) * 6,
+        vy: (Math.random() - 0.5) * 6,
+        life: 100,
+        maxLife: 100,
+        char: codeChars[Math.floor(Math.random() * codeChars.length)],
+        color: colors[Math.floor(Math.random() * colors.length)],
+      };
+      
+      setParticles(prev => [...prev.slice(-40), newParticle]);
+    }
+  };
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
-      
-      // Create new particles on mouse move with higher frequency
-      if (Math.random() < 0.6) {
-        const newParticle: Particle = {
-          id: Date.now() + Math.random(),
-          x: e.clientX,
-          y: e.clientY,
-          vx: (Math.random() - 0.5) * 6,
-          vy: (Math.random() - 0.5) * 6,
-          life: 100,
-          maxLife: 100,
-          char: codeChars[Math.floor(Math.random() * codeChars.length)],
-          color: colors[Math.floor(Math.random() * colors.length)],
-        };
-        
-        setParticles(prev => [...prev.slice(-40), newParticle]);
+      createParticle(e.clientX, e.clientY);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      if (touch) {
+        setMousePos({ x: touch.clientX, y: touch.clientY });
+        createParticle(touch.clientX, touch.clientY);
+      }
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (touch) {
+        setMousePos({ x: touch.clientX, y: touch.clientY });
+        createParticle(touch.clientX, touch.clientY);
       }
     };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchstart', handleTouchStart);
+    };
   }, []);
 
   useEffect(() => {

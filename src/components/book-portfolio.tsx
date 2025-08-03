@@ -171,10 +171,8 @@ export default function BookPortfolio() {
       />
       
       <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-900 to-purple-900">
-        {/* Animated Cursor - Hidden on mobile */}
-        <div className="hidden md:block">
-          <AnimatedCursor />
-        </div>
+        {/* Animated Cursor - Now works on mobile too */}
+        <AnimatedCursor />
       
         {/* Book Container */}
         <div 
