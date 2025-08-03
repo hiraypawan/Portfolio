@@ -1,3 +1,5 @@
+'use client';
+
 // Placeholder for StoryPage component
 export default function StoryPage() {
   return (

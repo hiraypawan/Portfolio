@@ -1,3 +1,5 @@
+'use client';
+
 // Placeholder for IndexPage component
 export default function IndexPage() {
   return (

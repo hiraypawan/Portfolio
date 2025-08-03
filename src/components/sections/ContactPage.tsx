@@ -1,3 +1,5 @@
+'use client';
+
 // Placeholder for ContactPage component
 export default function ContactPage() {
   return (

@@ -1,3 +1,5 @@
+'use client';
+
 // Placeholder for ProjectsPage component
 export default function ProjectsPage() {
   return (

@@ -1,3 +1,5 @@
+'use client';
+
 // Placeholder for SkillsPage component
 export default function SkillsPage() {
   return (

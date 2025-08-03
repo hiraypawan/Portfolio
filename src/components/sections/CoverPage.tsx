@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { FaCode, FaBrain, FaRocket } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
