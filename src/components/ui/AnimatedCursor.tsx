@@ -15,8 +15,8 @@ interface Particle {
   color: string;
 }
 
-const codeChars = ['<', '>', '{', '}', '(', ')', ';', '=', '+', '-', '*', '/', '$', '@', '#', '💡', '💰', '⚙️'];
-const colors = ['#0FF0FC', '#FF73FA', '#FBFF7B', '#7DFF6E', '#FF9E64', '#FFFFFF'];
+const codeChars = ['<', '>', '{', '}', '(', ')', ';', '=', '+', '-', '*', '/', '$', '@', '#', '💡', '💰', '⚙️', '✨', '🚀', '💻', '🔥', '⭐', '💎', '⚡'];
+const colors = ['#0FF0FC', '#FF73FA', '#FBFF7B', '#7DFF6E', '#FF9E64', '#FFFFFF', '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4'];
 
 export default function AnimatedCursor() {
   const [particles, setParticles] = useState<Particle[]>([]);
@@ -26,21 +26,21 @@ export default function AnimatedCursor() {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({ x: e.clientX, y: e.clientY });
       
-      // Create new particles on mouse move
-      if (Math.random() < 0.3) {
+      // Create new particles on mouse move with higher frequency
+      if (Math.random() < 0.6) {
         const newParticle: Particle = {
           id: Date.now() + Math.random(),
           x: e.clientX,
           y: e.clientY,
-          vx: (Math.random() - 0.5) * 4,
-          vy: (Math.random() - 0.5) * 4,
-          life: 60,
-          maxLife: 60,
+          vx: (Math.random() - 0.5) * 6,
+          vy: (Math.random() - 0.5) * 6,
+          life: 100,
+          maxLife: 100,
           char: codeChars[Math.floor(Math.random() * codeChars.length)],
           color: colors[Math.floor(Math.random() * colors.length)],
         };
         
-        setParticles(prev => [...prev.slice(-20), newParticle]);
+        setParticles(prev => [...prev.slice(-40), newParticle]);
       }
     };
 

@@ -24,7 +24,7 @@ export default function CoverPage() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
+    <div className="relative h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 animate-pulse" />
@@ -68,7 +68,7 @@ export default function CoverPage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col items-center justify-center min-h-screen text-center z-10 relative px-4 py-8">
+      <div className="flex flex-col items-center justify-center h-screen text-center z-10 relative px-4 py-8">
         {/* Glassmorphism Card */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}

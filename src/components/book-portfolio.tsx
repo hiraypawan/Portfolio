@@ -92,8 +92,8 @@ export default function BookPortfolio() {
 
   // Handle swipe gestures
   const handleSwipe = (event: any, info: PanInfo) => {
-    const swipeThreshold = 50;
-    const swipeVelocityThreshold = 500;
+    const swipeThreshold = 100;
+    const swipeVelocityThreshold = 300;
     
     if (Math.abs(info.offset.x) > swipeThreshold || Math.abs(info.velocity.x) > swipeVelocityThreshold) {
       if (info.offset.x > 0) {
@@ -103,6 +103,34 @@ export default function BookPortfolio() {
         // Swipe left - go to next page
         nextPage();
       }
+    }
+  };
+
+  // Touch handlers for mobile
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      nextPage();
+    } else if (isRightSwipe) {
+      prevPage();
     }
   };
 
@@ -124,19 +152,28 @@ export default function BookPortfolio() {
 
   const CurrentPageComponent = pageComponents[currentPage];
 
-  // Page flip animation variants
+  // Enhanced 3D page flip animation variants
   const pageVariants = {
     enter: (direction: string) => ({
-      rotateY: direction === 'forward' ? 90 : -90,
+      rotateY: direction === 'forward' ? 180 : -180,
       opacity: 0,
+      scale: 0.8,
+      transformOrigin: direction === 'forward' ? 'left center' : 'right center',
+      x: direction === 'forward' ? 100 : -100,
     }),
     center: {
       rotateY: 0,
       opacity: 1,
+      scale: 1,
+      x: 0,
+      transformOrigin: 'center center',
     },
     exit: (direction: string) => ({
-      rotateY: direction === 'forward' ? -90 : 90,
+      rotateY: direction === 'forward' ? -180 : 180,
       opacity: 0,
+      scale: 0.8,
+      transformOrigin: direction === 'forward' ? 'right center' : 'left center',
+      x: direction === 'forward' ? -100 : 100,
     }),
   };
 
@@ -155,33 +192,40 @@ export default function BookPortfolio() {
         </div>
       
         {/* Book Container */}
-        <div className="flex items-center justify-center min-h-screen p-2 sm:p-4 md:p-6">
-          <motion.div 
-            className="relative w-full h-screen max-w-7xl"
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.1}
-            onDragEnd={handleSwipe}
-          >
-            {/* Page Content */}
-            <AnimatePresence mode="wait" custom={direction}>
-              <motion.div
-                key={currentPage}
-                custom={direction}
-                variants={pageVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  duration: 0.6,
-                  ease: "easeInOut",
-                }}
-                className="w-full h-full overflow-y-auto"
-              >
-                <CurrentPageComponent />
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
+        <div 
+          className="flex items-center justify-center min-h-screen p-0 overflow-hidden"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          <div className="relative w-full h-screen max-w-none perspective-1000">
+            {/* 3D Book Effect Container */}
+            <div className="relative w-full h-full preserve-3d">
+              {/* Page Content */}
+              <AnimatePresence mode="wait" custom={direction}>
+                <motion.div
+                  key={currentPage}
+                  custom={direction}
+                  variants={pageVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    duration: 0.8,
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                  }}
+                  className="absolute inset-0 w-full h-full overflow-hidden"
+                  style={{
+                    transformStyle: 'preserve-3d',
+                  }}
+                >
+                  <div className="w-full h-full bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900 shadow-2xl">
+                    <CurrentPageComponent />
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
 
       {/* Mobile Navigation - Bottom */}
