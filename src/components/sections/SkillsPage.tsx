@@ -66,24 +66,26 @@ export default function SkillsPage() {
         ))}
       </div>
 
-      <div className="flex flex-col items-center justify-center h-full text-center z-10 relative px-8 py-12">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mb-12"
-        >
+      <div className="flex flex-col h-full z-10 relative px-8 py-12 overflow-y-auto">
+        <div className="text-center mb-8">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="mb-8"
+          >
           <h1 className="text-5xl font-bold text-white mb-6 font-space-grotesk">
             Expertise Grid
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl">
             Four core areas where I excel in building innovative solutions
           </p>
-        </motion.div>
+          </motion.div>
+        </div>
 
         {/* Expertise Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-7xl mx-auto mb-8">
           {expertiseCards.map((card, index) => {
             const IconComponent = card.icon;
             return (
@@ -134,7 +136,7 @@ export default function SkillsPage() {
           transition={{ delay: 1.5, duration: 0.8 }}
           className="mt-12 backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-6"
         >
-          <div className="grid grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center">
             <div>
               <div className="text-2xl font-bold text-blue-300 mb-1">15+</div>
               <div className="text-gray-300 text-sm">Languages</div>

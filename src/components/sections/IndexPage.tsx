@@ -12,7 +12,7 @@ const skillCards = [
   },
   {
     icon: FaGlobe,
-    title: '🌐 Web3 & AI Specialist',
+    title: '🌐 Web3  AI Specialist',
     description: 'Developing AI agents, blockchain dApps, and intelligent automation systems',
     color: 'from-purple-500 to-pink-500'
   },
@@ -38,33 +38,33 @@ const skillCards = [
 
 export default function IndexPage() {
   return (
-    <div className="relative h-full bg-gradient-to-br from-slate-900 via-emerald-900 to-slate-900 overflow-hidden">
+    <div className="relative min-h-screen bg-gradient-to-br from-slate-900 via-emerald-900 to-slate-900 overflow-hidden">
       {/* Background Animation */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/10 to-teal-600/10 animate-pulse" />
       </div>
 
-      <div className="flex flex-col items-center justify-center h-full text-center z-10 relative px-8">
+      <div className="flex flex-col items-center justify-center h-full text-center z-10 relative">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="mb-12"
+          className="mb-12 px-4"
         >
           <h1 className="text-5xl font-bold text-white mb-6 font-space-grotesk">
             About Me
           </h1>
-          <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-8 max-w-4xl">
+          <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-8 max-w-4xl mx-auto">
             <p className="text-xl text-gray-200 leading-relaxed">
-              &ldquo;I&apos;m a multi-skilled developer passionate about building automation tools, 
-              AI agents, crypto systems, and viral growth tools.&rdquo;
+              “Im a multi-skilled developer passionate about building automation tools, 
+              AI agents, crypto systems, and viral growth tools.”
             </p>
           </div>
         </motion.div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl px-4">
           {skillCards.map((skill, index) => {
             const IconComponent = skill.icon;
             return (
@@ -95,7 +95,7 @@ export default function IndexPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.8 }}
-          className="mt-12 grid grid-cols-3 gap-8 backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-8"
+          className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-8 max-w-4xl mx-auto"
         >
           <div className="text-center">
             <div className="text-3xl font-bold text-blue-300 mb-2">20K+</div>
