@@ -377,7 +377,6 @@ export default function BookPortfolio() {
           Swipe or use buttons to navigate
         </div>
       </div>
-      </div>
     </>
   );
 }
