@@ -39,7 +39,7 @@ export function Contact() {
         >
           <h2 className="text-4xl sm:text-5xl font-bold mb-6">
             <span className="bg-gradient-to-r from-neon-purple to-neon-blue bg-clip-text text-transparent">
-              Let's Connect
+              Let&apos;s Connect
             </span>
           </h2>
           <p className="text-xl text-cosmic-300 max-w-2xl mx-auto">
