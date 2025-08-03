@@ -127,7 +127,7 @@ export default function ContactPage() {
           </div>
           
           <div className="text-center text-gray-400 text-sm">
-            Or fill out the form above and I'll get back to you soon!
+            Or fill out the form above and I&apos;ll get back to you soon!
           </div>
         </motion.div>
       </div>

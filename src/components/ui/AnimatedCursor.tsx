@@ -21,18 +21,6 @@ const colors = ['#0FF0FC', '#FF73FA', '#FBFF7B', '#7DFF6E', '#FF9E64', '#FFFFFF'
 export default function AnimatedCursor() {
   const [particles, setParticles] = useState<Particle[]>([]);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check if device is mobile
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768 || 'ontouchstart' in window);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   const createParticle = (x: number, y: number) => {
     if (Math.random() < 0.6) {
