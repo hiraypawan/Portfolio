@@ -81,7 +81,7 @@ export default function BookPortfolio() {
 				animate={{ opacity: 1, rotateY: 0 }}
 				exit={{ opacity: 0, rotateY: 90 }}
 				transition={{ duration: 0.6, ease: "easeInOut" }}
-				className="absolute w-full h-full max-w-4xl max-h-[90vh] bg-white/10 backdrop-blur-xl border border-white/30 p-8 rounded-3xl shadow-2xl flex items-center justify-center overflow-hidden"
+className="absolute w-full h-full max-w-4xl max-h-[85vh] lg:max-h-[88vh] bg-white/10 backdrop-blur-xl border border-white/30 p-8 lg:p-10 rounded-3xl shadow-2xl flex items-center justify-center overflow-hidden"
 			style={{ transformStyle: 'preserve-3d' }}
 			>
 				<div className="flex items-center justify-center w-full h-full">
