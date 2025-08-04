@@ -17,57 +17,57 @@ export default function ContactPage() {
     setFormData({ name: '', email: '', message: '' });
   };
   return (
-    div className="w-full h-full"
+    <div className="w-full h-full">
       {/* Background Animation */}
-      div className="absolute inset-0 opacity-20"
-        div className="absolute inset-0 bg-gradient-to-r from-teal-600/10 to-cyan-600/10 animate-pulse" /
-      /div
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 bg-gradient-to-r from-teal-600/10 to-cyan-600/10 animate-pulse" />
+      </div>
 
-      div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center py-4 px-4"
+      <div className="relative z-10 flex flex-col items-center justify-center w-full h-full text-center py-4 px-4">
         {/* Header */}
-        motion.div
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="mb-4"
-        
-          h1 className="text-3xl font-bold text-white mb-2 font-space-grotesk"
+        >
+          <h1 className="text-3xl font-bold text-white mb-2 font-space-grotesk">
             Contact Me
-          /h1
-          p className="text-sm text-gray-300 max-w-xl mx-auto"
+          </h1>
+          <p className="text-sm text-gray-300 max-w-xl mx-auto">
             Open to freelance, collaborations, and startup ideas.
-          /p
-        /motion.div
+          </p>
+        </motion.div>
 
         {/* Contact Form */}
-        motion.form
+        <motion.form
           onSubmit={handleSubmit}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.8 }}
           className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-xl p-4 max-w-md w-full"
-        
-          div className="mb-3"
-            label className="block text-left text-gray-300 text-xs mb-1"Name/label
-            input
+        >
+          <div className="mb-3">
+            <label className="block text-left text-gray-300 text-xs mb-1">Name</label>
+            <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
               required
               className="w-full px-3 py-1 bg-transparent border border-gray-300 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            /
-          /div
-          div className="mb-3"
-            label className="block text-left text-gray-300 text-xs mb-1"Email/label
-            input
+            />
+          </div>
+          <div className="mb-3">
+            <label className="block text-left text-gray-300 text-xs mb-1">Email</label>
+            <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               required
               className="w-full px-3 py-1 bg-transparent border border-gray-300 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            /
+            />
           </div>
           <div className="mb-3">
             <label className="block text-left text-gray-300 text-xs mb-1">Message</label>
@@ -126,9 +126,9 @@ export default function ContactPage() {
             </motion.a>
           </div>
           
-          div className="text-center text-gray-400 text-xs"
-            Or fill out the form above and Iapos;ll get back to you soon!
-          /div
+          <div className="text-center text-gray-400 text-xs">
+            Or fill out the form above and I&apos;ll get back to you soon!
+          </div>
         </motion.div>
       </div>
     </div>
