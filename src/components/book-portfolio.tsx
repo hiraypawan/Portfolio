@@ -163,7 +163,7 @@ export default function BookPortfolio() {
                 duration: 0.8,
                 ease: [0.25, 0.46, 0.45, 0.94],
               }}
-              className="w-full min-h-screen"
+              className="w-full min-h-[100dvh] overflow-y-auto"
             >
               <div 
                 className="w-full min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900"

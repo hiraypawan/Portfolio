@@ -71,7 +71,7 @@ export default function StoryPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-purple-600/10 animate-pulse" />
       </div>
 
-      <div className="flex flex-col min-h-screen z-10 relative px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 mobile-scroll">
+      <div className="w-full h-full overflow-y-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
