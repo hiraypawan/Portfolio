@@ -66,7 +66,7 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl w-full max-w-full"
+          className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 md:p-10 shadow-2xl w-full max-w-full"
         >
           <motion.h1
             initial={{ opacity: 0, y: 20 }}

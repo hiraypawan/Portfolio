@@ -40,13 +40,13 @@ const expertiseCards = [
 
 export default function SkillsPage() {
   return (
-    <div className="w-full h-full overflow-hidden">
+    div className="w-full h-full overflow-y-auto custom-scrollbar"
       {/* Background Animation */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute inset-0 bg-gradient-to-r from-yellow-600/10 to-orange-600/10 animate-pulse" />
+      div className="absolute inset-0 opacity-20"
+        div className="absolute inset-0 bg-gradient-to-r from-yellow-600/10 to-orange-600/10 animate-pulse" /
       {/* Floating particles */}
-      {[...Array(20)].map((_, i) => (
-        <motion.div
+      {[...Array(20)].map((_, i) = (
+        motion.div
           key={i}
           className="absolute w-2 h-2 bg-yellow-400/30 rounded-full"
           style={{
@@ -62,11 +62,11 @@ export default function SkillsPage() {
             repeat: Infinity,
             delay: Math.random() * 2,
           }}
-        />
+        /
       ))}
-      </div>
+      /div
 
-      <div className="relative z-10 flex flex-col px-4 py-4">
+      div className="relative z-10 flex flex-col p-3 sm:p-4"
         <div className="text-center mb-6">
           {/* Header */}
           <motion.div

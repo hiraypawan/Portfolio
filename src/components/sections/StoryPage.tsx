@@ -65,7 +65,7 @@ const milestones = [
 
 export default function StoryPage() {
   return (
-    <div className="auto-fit-content w-full overflow-y-auto custom-scrollbar">
+    <div className="w-full h-full overflow-y-auto custom-scrollbar p-2 sm:p-4">
       {/* Background Animation */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-purple-600/10 animate-pulse" />

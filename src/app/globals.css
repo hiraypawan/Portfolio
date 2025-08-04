@@ -159,6 +159,7 @@ html {
     overflow-y: auto;
     height: 100vh;
     height: 100dvh;
+    touch-action: pan-y pan-x;
   }
   
   /* Enable natural scrolling on all elements */
@@ -167,6 +168,7 @@ html {
     -webkit-overflow-scrolling: touch;
     height: 100vh;
     height: 100dvh;
+    touch-action: pan-y;
   }
   
   /* Force scrollable containers */
@@ -177,12 +179,14 @@ html {
     height: 100dvh;
     max-height: 100vh;
     max-height: 100dvh;
+    touch-action: pan-y;
   }
   
   /* iOS specific fixes */
   .ios-scroll-fix {
     -webkit-overflow-scrolling: touch;
     transform: translateZ(0);
+    touch-action: pan-y;
   }
   
   /* Touch scroll improvements */
@@ -190,6 +194,14 @@ html {
     touch-action: pan-y !important;
     -webkit-overflow-scrolling: touch;
     will-change: scroll-position;
+  }
+  
+  /* Page container improvements */
+  .page {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    height: 100%;
   }
 }
 

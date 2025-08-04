@@ -50,8 +50,8 @@ export default function BookPortfolio() {
           <AnimatedCursor />
 
           <HTMLFlipBook
-            width={isMobile ? 300 : 400}
-            height={isMobile ? 500 : 600}
+            width={isMobile ? window.innerWidth - 20 : 400}
+            height={isMobile ? window.innerHeight - 40 : 600}
             size="stretch"
             minWidth={280}
             maxWidth={800}
@@ -70,7 +70,7 @@ export default function BookPortfolio() {
             autoSize={true}
             clickEventForward={true}
             useMouseEvents={true}
-            swipeDistance={30}
+            swipeDistance={50}
             showPageCorners={true}
             disableFlipByClick={false}
           >
