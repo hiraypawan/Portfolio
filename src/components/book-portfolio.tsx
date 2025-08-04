@@ -30,9 +30,9 @@ export default function BookPortfolio() {
       setIsMobile(isMobileDevice);
       
       if (isMobileDevice) {
-        // Mobile dimensions - smaller and more contained
-        const width = Math.min(window.innerWidth * 0.85, 400);
-        const height = Math.min(window.innerHeight * 0.75, 600);
+        // Mobile dimensions - much larger to show more content
+        const width = Math.min(window.innerWidth * 0.95, 450);
+        const height = Math.min(window.innerHeight * 0.85, 700);
         setDimensions({ width, height });
       } else {
         // Desktop dimensions - larger
@@ -68,19 +68,20 @@ export default function BookPortfolio() {
     background: 'linear-gradient(135deg, rgba(30, 27, 75, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%)',
     border: '2px solid rgba(99, 102, 241, 0.3)',
     borderRadius: '12px',
-    padding: isMobile ? '15px' : '25px',
+    padding: isMobile ? '12px' : '25px',
     display: 'flex',
     flexDirection: 'column' as const,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    overflow: 'auto',
+    overflow: 'hidden', // Changed from auto to hidden to prevent double scrollbars
     boxShadow: '0 20px 40px rgba(0,0,0,0.4)',
     backdropFilter: 'blur(10px)',
     width: '100%',
     height: '100%',
     color: '#ffffff',
     fontSize: isMobile ? '14px' : '16px',
-    lineHeight: '1.5'
+    lineHeight: '1.4',
+    position: 'relative' as const
   };
 
   return (
@@ -123,12 +124,13 @@ export default function BookPortfolio() {
               height: '100%',
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'center',
+              justifyContent: 'flex-start',
               alignItems: 'center',
               textAlign: 'center',
               color: '#ffffff',
               overflowY: 'auto',
-              overflowX: 'hidden'
+              overflowX: 'hidden',
+              paddingTop: isMobile ? '10px' : '20px'
             }}>
               {page.component}
             </div>
@@ -140,19 +142,20 @@ export default function BookPortfolio() {
       {isMobile && (
         <div style={{
           position: 'absolute',
-          bottom: '20px',
+          bottom: '10px',
           left: '50%',
           transform: 'translateX(-50%)',
-          backgroundColor: 'rgba(0,0,0,0.7)',
+          backgroundColor: 'rgba(0,0,0,0.8)',
           color: '#ffffff',
-          padding: '8px 16px',
-          borderRadius: '20px',
-          fontSize: '12px',
+          padding: '6px 12px',
+          borderRadius: '16px',
+          fontSize: '11px',
           textAlign: 'center',
           backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255,255,255,0.2)'
+          border: '1px solid rgba(255,255,255,0.2)',
+          zIndex: 1000
         }}>
-          ðŸ“± Swipe left/right to flip pages
+          📱 Swipe left/right to flip pages
         </div>
       )}
     </div>
