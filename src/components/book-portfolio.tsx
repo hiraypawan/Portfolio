@@ -22,65 +22,99 @@ const pages = [
 
 export default function BookPortfolio() {
   const [pageIndex, setPageIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [touchEndX, setTouchEndX] = useState(0);
   const mouseTrailRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (mouseTrailRef.current) {
-        mouseTrailRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-      }
-    };
+  const handleMouseMove = (e: MouseEvent) => {
+    if (mouseTrailRef.current) {
+      mouseTrailRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+    }
+  };
+
+  const handleTouchStart = (e: TouchEvent) => {
+    const touch = e.touches[0];
+    if (touch) {
+      setTouchStartX(touch.clientX);
+    }
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    const touch = e.touches[0];
+    if (touch) {
+      setTouchEndX(touch.clientX);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX - touchEndX > 50) {
+      setPageIndex((prev) => Math.min(pages.length - 1, prev + 1));
+    }
+
+    if (touchEndX - touchStartX > 50) {
+      setPageIndex((prev) => Math.max(0, prev - 1));
+    }
+  };
 
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd);
 
-	return (
-    	<div className="w-full min-h-screen min-h-[100dvh] flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-2 sm:p-4 md:p-6 lg:p-8">
-      	<AnimatedCursor />
-      	<div
-        ref={mouseTrailRef}
-        className="fixed w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none z-0"
-        style={{ transition: 'transform 0.1s ease', transform: 'translate(-50%, -50%)' }}
-      	/>
-      	<AnimatePresence mode="popLayout">
-      		<motion.div
-          key={pageIndex}
-          initial={{ opacity: 0, rotateY: -90 }}
-          animate={{ opacity: 1, rotateY: 0 }}
-          exit={{ opacity: 0, rotateY: 90 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="w-full max-w-sm sm:max-w-2xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl bg-white/10 backdrop-blur-lg border border-white/20 p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl shadow-2xl z-10 relative overflow-hidden"
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          <div className="w-full h-full overflow-y-auto max-h-[85vh] scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
-            {pages[pageIndex].component}
-          </div>
-        </motion.div>
-      </AnimatePresence>
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [touchStartX, touchEndX]);
 
-      <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row items-center gap-2 sm:gap-4 z-10">
-        <button
-          className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-gray-800/80 backdrop-blur-sm text-white rounded-xl disabled:opacity-50 hover:bg-gray-700/80 transition-all duration-300 flex items-center justify-center gap-2"
-          onClick={() => setPageIndex((prev) => Math.max(0, prev - 1))}
-          disabled={pageIndex === 0}
-        >
-          <FaArrowLeft className="text-sm" />
-          <span className="hidden sm:inline">Previous</span>
-        </button>
-        <div className="px-3 sm:px-4 py-2 sm:py-3 text-white/90 text-xs sm:text-sm font-medium bg-black/20 backdrop-blur-sm rounded-xl border border-white/10">
-          <span className="hidden sm:inline">{pages[pageIndex].name} • </span>
-          Page {pageIndex + 1} of {pages.length}
-        </div>
-        <button
-          className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-blue-600/80 backdrop-blur-sm text-white rounded-xl disabled:opacity-50 hover:bg-blue-700/80 transition-all duration-300 flex items-center justify-center gap-2"
-          onClick={() => setPageIndex((prev) => Math.min(pages.length - 1, prev + 1))}
-          disabled={pageIndex === pages.length - 1}
-        >
-          <span className="hidden sm:inline">Next</span>
-          <FaArrowRight className="text-sm" />
-        </button>
+  return (
+		<div className="flex items-center justify-center w-screen h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
+    		<AnimatedCursor />
+    		<div ref={mouseTrailRef} className="absolute w-64 h-64 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none" style={{ transition: 'transform 0.1s ease' }}/>
+    		<AnimatePresence mode="popLayout">
+			<motion.div
+				key={pageIndex}
+				initial={{ opacity: 0, rotateY: -90 }}
+				animate={{ opacity: 1, rotateY: 0 }}
+				exit={{ opacity: 0, rotateY: 90 }}
+				transition={{ duration: 0.6, ease: "easeInOut" }}
+				className="absolute w-full h-full max-w-4xl max-h-[90vh] bg-white/10 backdrop-blur-xl border border-white/30 p-8 rounded-3xl shadow-2xl flex items-center justify-center overflow-hidden"
+			style={{ transformStyle: 'preserve-3d' }}
+			>
+				<div className="flex items-center justify-center w-full h-full">
+					{pages[pageIndex].component}
+				</div>
+			</motion.div>
+		</AnimatePresence>
+  		<button 
+        className="absolute left-8 top-1/2 transform -translate-y-1/2 p-3 bg-gray-800/80 text-white rounded-full shadow-lg hover:bg-gray-700/80 transition-colors duration-300 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+        onClick={() => setPageIndex((prev) => Math.max(0, prev - 1))}
+        disabled={pageIndex === 0}
+      >
+    		<FaArrowLeft className="text-lg" />
+  		</button>
+  		<button 
+        className="absolute right-8 top-1/2 transform -translate-y-1/2 p-3 bg-blue-600/80 text-white rounded-full shadow-lg hover:bg-blue-700/80 transition-colors duration-300 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+        onClick={() => setPageIndex((prev) => Math.min(pages.length - 1, prev + 1))}
+        disabled={pageIndex === pages.length - 1}
+      >
+    		<FaArrowRight className="text-lg" />
+  		</button>
+      
+      {/* Page indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {pages.map((_, index) => (
+          <div
+            key={index}
+            className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+              index === pageIndex ? 'bg-white' : 'bg-white/30'
+            }`}
+          />
+        ))}
       </div>
-    </div>
+  		</div>
   );
 }
