@@ -28,7 +28,7 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
   }, []);
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-center items-center p-4">
+    <div className="relative w-full h-full flex flex-col justify-center items-center p-4 min-h-[500px]">
       {/* Animated Background */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 animate-pulse" />

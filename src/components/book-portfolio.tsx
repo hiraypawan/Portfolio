@@ -42,8 +42,8 @@ export default function BookPortfolio() {
   const isMobile = deviceType === 'mobile';
 
     return (
-        <div
-          className={`fixed inset-0 w-screen h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden ${
+<div
+          className={`flex justify-center items-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden ${
             isMobile ? 'p-2' : 'p-6'
           }`}
         >
