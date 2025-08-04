@@ -203,60 +203,64 @@ export default function BookPortfolio() {
         onLoadingComplete={() => setIsLoading(false)} 
       />
       
-      <div className="relative w-full min-h-screen bg-gradient-to-br from-slate-900 to-purple-900">
+      {/* Mobile-first scrollable container */}
+      <div className="relative w-full bg-gradient-to-br from-slate-900 to-purple-900">
         {/* Animated Cursor - Desktop only */}
         <div className="hidden md:block">
           <AnimatedCursor />
         </div>
       
-        {/* Book Container with mobile-first scrolling */}
-        <div className="relative w-full min-h-screen">
-          {/* Page Content */}
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={currentPage}
-              custom={direction}
-              variants={pageVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                duration: 0.8,
-                ease: [0.25, 0.46, 0.45, 0.94],
+        {/* Page transition wrapper */}
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={currentPage}
+            custom={pageVariants}
+            variants={{
+              enter: { opacity: 0, x: direction === 'forward' ? 100 : -100 },
+              center: { opacity: 1, x: 0 },
+              exit: { opacity: 0, x: direction === 'forward' ? -100 : 100 }
+            }}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              duration: 0.5,
+              ease: "easeInOut",
+            }}
+            className="w-full"
+          >
+            {/* Main scrollable container */}
+            <div 
+              className="w-full overflow-y-auto overflow-x-hidden"
+              style={{
+                minHeight: '100vh',
+                minHeight: '100dvh',
+                WebkitOverflowScrolling: 'touch',
+                touchAction: 'pan-y pinch-zoom'
               }}
-              className="w-full min-h-screen"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
-              {/* Scrollable content container with touch handlers */}
-              <div 
-                className="w-full min-h-screen overflow-y-auto overflow-x-hidden"
-                style={{
-                  height: '100vh',
-                  WebkitOverflowScrolling: 'touch',
-                  touchAction: 'pan-y pinch-zoom'
-                }}
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
-              >
-                <div className="w-full min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900">
-                  <CurrentPageComponent 
-                    onNavigate={(page: number) => {
-                      if (page !== currentPage && !isFlipping) {
-                        setIsFlipping(true);
-                        setDirection(page > currentPage ? 'forward' : 'backward');
-                        playPageFlipSound();
-                        setTimeout(() => {
-                          setCurrentPage(page);
-                          setIsFlipping(false);
-                        }, 300);
-                      }
-                    }}
-                  />
-                </div>
+              <div className="w-full min-h-screen min-h-[100dvh] bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900">
+                <CurrentPageComponent 
+                  onNavigate={(page: number) => {
+                    if (page !== currentPage && !isFlipping) {
+                      setIsFlipping(true);
+                      setDirection(page > currentPage ? 'forward' : 'backward');
+                      playPageFlipSound();
+                      setTimeout(() => {
+                        setCurrentPage(page);
+                        setIsFlipping(false);
+                      }, 300);
+                    }
+                  }}
+                />
               </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
 
       {/* Mobile Navigation - Bottom */}
       <div className="md:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
