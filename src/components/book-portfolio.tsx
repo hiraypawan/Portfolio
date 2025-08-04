@@ -92,30 +92,44 @@ export default function BookPortfolio() {
 
 
   // Touch handlers for mobile
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
+  const [touchEnd, setTouchEnd] = useState<{ x: number; y: number } | null>(null);
+  const [touchMove, setTouchMove] = useState<{ x: number; y: number } | null>(null);
 
   const minSwipeDistance = 50;
+  const maxVerticalDistance = 100; // Prevent horizontal swipe when user is trying to scroll vertically
 
   const onTouchStart = (e: React.TouchEvent) => {
+    const touch = e.targetTouches[0];
     setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
+    setTouchMove(null);
+    setTouchStart({ x: touch.clientX, y: touch.clientY });
   };
 
   const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientX);
+    const touch = e.targetTouches[0];
+    setTouchMove({ x: touch.clientX, y: touch.clientY });
+    setTouchEnd({ x: touch.clientX, y: touch.clientY });
   };
 
   const onTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
     
-    if (isLeftSwipe) {
-      nextPage();
-    } else if (isRightSwipe) {
-      prevPage();
+    const horizontalDistance = touchStart.x - touchEnd.x;
+    const verticalDistance = Math.abs(touchStart.y - touchEnd.y);
+    
+    // Only trigger page navigation if:
+    // 1. Horizontal swipe is significant enough
+    // 2. Vertical movement is minimal (user isn't trying to scroll)
+    if (Math.abs(horizontalDistance) > minSwipeDistance && verticalDistance < maxVerticalDistance) {
+      const isLeftSwipe = horizontalDistance > 0;
+      const isRightSwipe = horizontalDistance < 0;
+      
+      if (isLeftSwipe) {
+        nextPage();
+      } else if (isRightSwipe) {
+        prevPage();
+      }
     }
   };
 
@@ -170,13 +184,13 @@ export default function BookPortfolio() {
         onLoadingComplete={() => setIsLoading(false)} 
       />
       
-      <div className="relative min-h-screen min-h-[100dvh] overflow-hidden bg-gradient-to-br from-slate-900 to-purple-900">
+      <div className="relative min-h-screen min-h-[100dvh] bg-gradient-to-br from-slate-900 to-purple-900">
         {/* Animated Cursor - Now works on mobile too */}
         <AnimatedCursor />
       
         {/* Book Container */}
         <div 
-          className="flex items-center justify-center min-h-screen p-0 overflow-hidden"
+          className="flex items-center justify-center min-h-screen p-0"
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
@@ -197,7 +211,7 @@ export default function BookPortfolio() {
                     duration: 0.8,
                     ease: [0.25, 0.46, 0.45, 0.94],
                   }}
-                  className="absolute inset-0 w-full h-full overflow-hidden"
+                  className="absolute inset-0 w-full h-full"
                   style={{
                     transformStyle: 'preserve-3d',
                   }}

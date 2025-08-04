@@ -40,7 +40,7 @@ const expertiseCards = [
 
 export default function SkillsPage() {
   return (
-    <div className="relative min-h-screen min-h-[100dvh] bg-gradient-to-br from-slate-900 via-yellow-900/30 to-slate-900 overflow-hidden">
+    <div className="relative min-h-screen min-h-[100dvh] bg-gradient-to-br from-slate-900 via-yellow-900/30 to-slate-900">
       {/* Background Animation */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-yellow-600/10 to-orange-600/10 animate-pulse" />
@@ -66,7 +66,7 @@ export default function SkillsPage() {
         ))}
       </div>
 
-      <div className="flex flex-col h-full z-10 relative px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent smooth-scroll">
+      <div className="flex flex-col h-full z-10 relative px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 overflow-y-auto scrollable-content mobile-scroll ios-scroll-fix scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent touch-scroll">
         <div className="text-center mb-8">
           {/* Header */}
           <motion.div

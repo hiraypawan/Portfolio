@@ -57,19 +57,24 @@ body {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
+  overflow-y: auto;
   min-height: 100vh;
   min-height: 100dvh; /* Dynamic viewport height for mobile */
   margin: 0;
   padding: 0;
   position: relative;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
 html {
   overflow-x: hidden;
+  overflow-y: auto;
   min-height: 100vh;
   min-height: 100dvh; /* Dynamic viewport height for mobile */
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
 /* Scrollbar styling */
@@ -117,6 +122,12 @@ html {
   touch-action: manipulation;
 }
 
+/* Better touch action for scrollable areas */
+.touch-scroll {
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
 /* Prevent text selection on touch */
 .no-select {
   -webkit-touch-callout: none;
@@ -131,6 +142,39 @@ html {
 .smooth-scroll {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+}
+
+/* Scrollable container optimization */
+.scrollable-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  transform: translateZ(0); /* Enable hardware acceleration */
+  will-change: scroll-position;
+}
+
+/* Fix for iOS Safari scrolling */
+@supports (-webkit-touch-callout: none) {
+  .ios-scroll-fix {
+    -webkit-overflow-scrolling: touch;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Mobile viewport fixes */
+@media screen and (max-width: 768px) {
+  body {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+  
+  .mobile-scroll {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+  }
 }
 
 /* Wave animation for emoji */

@@ -38,7 +38,7 @@ const skillCards = [
 
 export default function IndexPage() {
   return (
-    <div className="relative min-h-screen min-h-[100dvh] bg-gradient-to-br from-slate-900 via-emerald-900 to-slate-900 overflow-hidden">
+    <div className="relative min-h-screen min-h-[100dvh] bg-gradient-to-br from-slate-900 via-emerald-900 to-slate-900">
       {/* Background Animation */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/10 to-teal-600/10 animate-pulse" />

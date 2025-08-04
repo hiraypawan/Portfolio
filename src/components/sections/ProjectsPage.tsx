@@ -88,13 +88,13 @@ const projects = [
 
 export default function ProjectsPage() {
   return (
-    <div className="relative min-h-screen min-h-[100dvh] bg-gradient-to-br from-slate-900 via-red-900/30 to-slate-900 overflow-hidden">
+    <div className="relative min-h-screen min-h-[100dvh] bg-gradient-to-br from-slate-900 via-red-900/30 to-slate-900">
       {/* Background Animation */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-pink-600/10 animate-pulse" />
       </div>
 
-      <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 h-full overflow-y-auto md:overflow-visible scrollbar-thin md:scrollbar-none scrollbar-thumb-white/20 scrollbar-track-transparent smooth-scroll">
+      <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 h-full overflow-y-auto scrollable-content mobile-scroll ios-scroll-fix scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent touch-scroll">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}

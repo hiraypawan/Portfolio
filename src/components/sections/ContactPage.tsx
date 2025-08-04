@@ -17,13 +17,13 @@ export default function ContactPage() {
     setFormData({ name: '', email: '', message: '' });
   };
   return (
-    <div className="relative min-h-screen min-h-[100dvh] bg-gradient-to-br from-slate-900 via-teal-900/30 to-slate-900 overflow-hidden">
+    <div className="relative min-h-screen min-h-[100dvh] bg-gradient-to-br from-slate-900 via-teal-900/30 to-slate-900">
       {/* Background Animation */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-teal-600/10 to-cyan-600/10 animate-pulse" />
       </div>
 
-      <div className="flex flex-col items-center justify-center min-h-screen min-h-[100dvh] text-center z-10 relative px-4 sm:px-6 lg:px-8 py-8 overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent smooth-scroll">
+      <div className="flex flex-col items-center justify-center min-h-screen min-h-[100dvh] text-center z-10 relative px-4 sm:px-6 lg:px-8 py-8 overflow-y-auto scrollable-content mobile-scroll ios-scroll-fix scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent touch-scroll">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
