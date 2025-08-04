@@ -28,13 +28,13 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
   }, []);
 
   return (
-    <div className="auto-fit-content w-full">
+    <div className="relative w-full h-full flex flex-col justify-center items-center p-4">
       {/* Animated Background */}
-      <div className="absolute inset-0 opacity-30">
+      <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 animate-pulse" />
-        {/* Floating Background Icons - Hidden on small screens */}
+        {/* Floating Background Icons - Smaller and fewer for card layout */}
         <div className="hidden sm:block">
-          {floatingIcons.map((item, index) => {
+          {floatingIcons.slice(0, 2).map((item, index) => {
             const IconComponent = item.icon;
             return (
               <motion.div
@@ -42,33 +42,21 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
                 className="absolute text-white/10"
                 style={{ left: `${item.x}%`, top: `${item.y}%` }}
                 animate={{
-                  y: [0, -20, 0],
-                  rotate: [0, 360],
+                  y: [0, -10, 0],
+                  rotate: [0, 180],
                 }}
                 transition={{
-                  duration: 6,
+                  duration: 4,
                   delay: item.delay,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
               >
-                <IconComponent size={60} />
+                <IconComponent size={30} />
               </motion.div>
             );
           })}
         </div>
-      </div>
-
-      {/* Mouse Trail Effect - Desktop only */}
-      <div className="hidden md:block">
-        <motion.div
-          className="absolute w-96 h-96 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none"
-          animate={{
-            x: mousePosition.x - 200,
-            y: mousePosition.y - 200,
-          }}
-          transition={{ type: "spring", damping: 30, stiffness: 200 }}
-        />
       </div>
 
       {/* Main Content */}
