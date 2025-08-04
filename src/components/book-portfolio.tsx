@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { useRef } from 'react';
+import HTMLFlipBook from 'react-pageflip';
 import CoverPage from './sections/CoverPage';
 import IndexPage from './sections/IndexPage';
 import StoryPage from './sections/StoryPage';
@@ -20,112 +19,66 @@ const pages = [
   { name: 'Contact', component: <ContactPage /> },
 ];
 
+const flipBookStyle = {
+  width: '100vw',
+  height: '100vh',
+  position: 'fixed' as const,
+  top: 0,
+  left: 0,
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  background: 'linear-gradient(135deg, #1e293b 0%, #6b46c1 50%, #1e293b 100%)',
+  overflow: 'hidden'
+};
+
 export default function BookPortfolio() {
-  const [pageIndex, setPageIndex] = useState(0);
-  const [touchStartX, setTouchStartX] = useState(0);
-  const [touchEndX, setTouchEndX] = useState(0);
-  const mouseTrailRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-  const handleMouseMove = (e: MouseEvent) => {
-    if (mouseTrailRef.current) {
-      mouseTrailRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-    }
-  };
-
-  const handleTouchStart = (e: TouchEvent) => {
-    const touch = e.touches[0];
-    if (touch) {
-      setTouchStartX(touch.clientX);
-    }
-  };
-
-  const handleTouchMove = (e: TouchEvent) => {
-    const touch = e.touches[0];
-    if (touch) {
-      setTouchEndX(touch.clientX);
-    }
-  };
-
-  const handleTouchEnd = () => {
-    if (touchStartX - touchEndX > 50) {
-      setPageIndex((prev) => Math.min(pages.length - 1, prev + 1));
-    }
-
-    if (touchEndX - touchStartX > 50) {
-      setPageIndex((prev) => Math.max(0, prev - 1));
-    }
-  };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchstart', handleTouchStart, { passive: false });
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    window.addEventListener('touchend', handleTouchEnd);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
-    };
-  }, [touchStartX, touchEndX]);
+  const flipBookRef = useRef(null);
 
   return (
-    <div className="book-page min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden px-4 py-8 box-border">
+    <div style={flipBookStyle}>
       <AnimatedCursor />
-      <div ref={mouseTrailRef} className="fixed w-64 h-64 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none" style={{ transition: 'transform 0.1s ease' }}/>
-      <AnimatePresence mode="popLayout">
-        <motion.div
-          key={pageIndex}
-          initial={{ opacity: 0, rotateY: -90 }}
-          animate={{ opacity: 1, rotateY: 0 }}
-          exit={{ opacity: 0, rotateY: 90 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-          className="card w-full max-w-6xl bg-white/5 backdrop-blur-xl border border-white/30 rounded-3xl shadow-2xl p-8 overflow-y-auto custom-scrollbar flex-shrink-0"
-          style={{ 
-            transformStyle: 'preserve-3d', 
-            overflowWrap: 'break-word', 
-            wordBreak: 'break-word',
-            height: 'calc(100vh - 120px)',
-            maxHeight: '800px'
-          }}
-        >
-          <div className="w-full h-full">
-            {pages[pageIndex].component}
+      <HTMLFlipBook
+        width={550}
+        height={733}
+        size="stretch"
+        minWidth={315}
+        maxWidth={1000}
+        minHeight={400}
+        maxHeight={1500}
+        maxShadowOpacity={0.5}
+        showCover={true}
+        mobileScrollSupport={true}
+        useMouseEvents={true}
+        style={{ backgroundColor: 'transparent' }}
+        drawShadow={true}
+        ref={flipBookRef}
+      >
+        {pages.map((page, index) => (
+          <div key={index} className="page" style={{
+            backgroundColor: '#1a1a2e',
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            borderRadius: '8px',
+            padding: '20px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflow: 'hidden',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
+            backdropFilter: 'blur(10px)'
+          }}>
+            <div className="w-full h-full flex items-center justify-center" style={{
+              color: 'white',
+              fontSize: '14px',
+              lineHeight: '1.6'
+            }}>
+              {page.component}
+            </div>
           </div>
-        </motion.div>
-      </AnimatePresence>
-      <button 
-        className="absolute left-8 top-1/2 transform -translate-y-1/2 p-3 bg-gray-800/80 text-white rounded-full shadow-lg hover:bg-gray-700/80 transition-colors duration-300 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
-        onClick={() => setPageIndex((prev) => Math.max(0, prev - 1))}
-        disabled={pageIndex === 0}
-      >
-        <FaArrowLeft className="text-lg" />
-      </button>
-      <button 
-        className="absolute right-8 top-1/2 transform -translate-y-1/2 p-3 bg-blue-600/80 text-white rounded-full shadow-lg hover:bg-blue-700/80 transition-colors duration-300 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
-        onClick={() => setPageIndex((prev) => Math.min(pages.length - 1, prev + 1))}
-        disabled={pageIndex === pages.length - 1}
-      >
-        <FaArrowRight className="text-lg" />
-      </button>
-      
-      {/* Page indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
-        {pages.map((_, index) => (
-          <div
-            key={index}
-            className={`w-2 h-2 rounded-full transition-colors duration-300 ${
-              index === pageIndex ? 'bg-white' : 'bg-white/30'
-            }`}
-          />
         ))}
-      </div>
-
-      {/* Page counter */}
-      <div className="absolute bottom-8 right-8 bg-black/50 backdrop-blur-sm px-3 py-1 rounded-full text-white text-sm">
-        {pageIndex + 1} / {pages.length}
-      </div>
+      </HTMLFlipBook>
     </div>
   );
 }
