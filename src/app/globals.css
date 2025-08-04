@@ -122,44 +122,9 @@ html {
   touch-action: manipulation;
 }
 
-/* Better touch action for scrollable areas */
-.touch-scroll {
-  touch-action: pan-y;
+/* Natural scrolling for mobile */
+* {
   -webkit-overflow-scrolling: touch;
-}
-
-/* Prevent text selection on touch */
-.no-select {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* Smooth scrolling */
-.smooth-scroll {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Scrollable container optimization */
-.scrollable-content {
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  scroll-behavior: smooth;
-  transform: translateZ(0); /* Enable hardware acceleration */
-  will-change: scroll-position;
-}
-
-/* Fix for iOS Safari scrolling */
-@supports (-webkit-touch-callout: none) {
-  .ios-scroll-fix {
-    -webkit-overflow-scrolling: touch;
-    transform: translate3d(0, 0, 0);
-  }
 }
 
 /* Mobile viewport fixes */
@@ -170,27 +135,10 @@ html {
     overflow-y: auto;
   }
   
+  /* Enable natural scrolling on all elements */
   .mobile-scroll {
-    overflow-y: auto;
+    overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-  }
-  
-  /* Force enable scrolling on mobile */
-  * {
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  /* Ensure touch events don't interfere with scrolling */
-  .touch-scroll {
-    touch-action: pan-y pinch-zoom;
-  }
-  
-  /* Mobile specific scrolling improvements */
-  .scrollable-content {
-    overflow-y: scroll !important;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior: contain;
   }
 }
 

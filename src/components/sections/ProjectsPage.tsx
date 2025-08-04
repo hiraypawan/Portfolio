@@ -94,7 +94,7 @@ export default function ProjectsPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-pink-600/10 animate-pulse" />
       </div>
 
-      <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 min-h-screen overflow-y-auto md:overflow-y-visible scrollable-content mobile-scroll ios-scroll-fix scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent" style={{ touchAction: 'pan-y' }}>
+      <div className="relative z-10 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 min-h-screen mobile-scroll">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
