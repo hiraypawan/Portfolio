@@ -1,3 +1,18 @@
+.demo-book {
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.demo-book .page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.demo-book .page > div {
+  padding: 20px;
+}
+
 @import "tailwindcss";
 
 :root {
