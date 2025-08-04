@@ -78,14 +78,14 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl w-full max-w-2xl"
+          className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-3xl p-12 shadow-2xl w-full max-w-4xl"
         >
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
             className="font-bold text-white mb-4 font-space-grotesk"
-            style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}
+            style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)' }}
           >
             Hi, I&apos;m Pawan Hiray <span className="wave">👋</span>
           </motion.h1>
@@ -94,7 +94,7 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-200 mb-6 font-light"
+            className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-200 mb-6 font-light"
           >
             Tech Builder • Web3 & AI Specialist • Growth Hacker
           </motion.div>
@@ -103,7 +103,7 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
-            className="text-gray-300 text-sm sm:text-base lg:text-lg leading-relaxed mb-8"
+            className="text-gray-300 text-lg sm:text-xl lg:text-2xl leading-relaxed mb-8"
           >
             I&apos;m a multi-skilled developer passionate about building automation tools,
             <br />

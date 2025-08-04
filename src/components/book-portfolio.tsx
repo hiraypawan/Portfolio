@@ -1,6 +1,6 @@
-'use client';
+﻿'use client';
 
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import CoverPage from './sections/CoverPage';
 import IndexPage from './sections/IndexPage';
@@ -34,18 +34,31 @@ const flipBookStyle = {
 
 export default function BookPortfolio() {
   const flipBookRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 600, height: 800 });
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      const width = Math.min(window.innerWidth * 0.9, 1000);
+      const height = Math.min(window.innerHeight * 0.9, 1200);
+      setDimensions({ width, height });
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
 
   return (
     <div style={flipBookStyle}>
       <AnimatedCursor />
       <HTMLFlipBook
-        width={550}
-        height={733}
+        width={dimensions.width}
+        height={dimensions.height}
         size="stretch"
-        minWidth={315}
-        maxWidth={1000}
-        minHeight={400}
-        maxHeight={1500}
+        minWidth={350}
+        maxWidth={1200}
+        minHeight={500}
+        maxHeight={1600}
         maxShadowOpacity={0.5}
         showCover={true}
         mobileScrollSupport={true}
@@ -70,25 +83,33 @@ export default function BookPortfolio() {
             background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%)',
             border: '1px solid rgba(255,255,255,0.2)',
             borderRadius: '8px',
-            padding: '20px',
+            padding: '50px',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
             overflow: 'hidden',
             boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-            backdropFilter: 'blur(10px)'
+            backdropFilter: 'blur(10px)',
+            width: '100%',
+            height: '100%'
           }}>
             <div className="w-full h-full flex items-center justify-center" style={{
               color: 'white',
-              fontSize: '14px',
-              lineHeight: '1.6'
+              fontSize: '18px',
+              lineHeight: '1.6',
+              textAlign: 'center'
             }}>
               {page.component}
             </div>
           </div>
         ))}
       </HTMLFlipBook>
+      
+      {/* Tutorial Directions for Mobile Users */}
+      <div className="absolute bottom-12 text-white text-sm text-center bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full">
+        <p>ðŸ“± Swipe left or right to turn the page</p>
+      </div>
     </div>
   );
 }
