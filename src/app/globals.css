@@ -175,6 +175,23 @@ html {
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
   }
+  
+  /* Force enable scrolling on mobile */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Ensure touch events don't interfere with scrolling */
+  .touch-scroll {
+    touch-action: pan-y pinch-zoom;
+  }
+  
+  /* Mobile specific scrolling improvements */
+  .scrollable-content {
+    overflow-y: scroll !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
 }
 
 /* Wave animation for emoji */

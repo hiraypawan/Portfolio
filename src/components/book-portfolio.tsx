@@ -110,6 +110,18 @@ export default function BookPortfolio() {
     const touch = e.targetTouches[0];
     setTouchMove({ x: touch.clientX, y: touch.clientY });
     setTouchEnd({ x: touch.clientX, y: touch.clientY });
+    
+    // Don't prevent default on touch move to allow scrolling
+    // Only prevent if it's clearly a horizontal swipe
+    if (touchStart) {
+      const horizontalDistance = Math.abs(touchStart.x - touch.clientX);
+      const verticalDistance = Math.abs(touchStart.y - touch.clientY);
+      
+      // Only prevent default if horizontal movement is significantly greater than vertical
+      if (horizontalDistance > verticalDistance * 1.5 && horizontalDistance > 30) {
+        e.preventDefault();
+      }
+    }
   };
 
   const onTouchEnd = () => {
@@ -121,7 +133,10 @@ export default function BookPortfolio() {
     // Only trigger page navigation if:
     // 1. Horizontal swipe is significant enough
     // 2. Vertical movement is minimal (user isn't trying to scroll)
-    if (Math.abs(horizontalDistance) > minSwipeDistance && verticalDistance < maxVerticalDistance) {
+    // 3. Horizontal movement is greater than vertical movement
+    if (Math.abs(horizontalDistance) > minSwipeDistance && 
+        verticalDistance < maxVerticalDistance &&
+        Math.abs(horizontalDistance) > verticalDistance) {
       const isLeftSwipe = horizontalDistance > 0;
       const isRightSwipe = horizontalDistance < 0;
       
