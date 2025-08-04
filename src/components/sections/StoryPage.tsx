@@ -65,13 +65,13 @@ const milestones = [
 
 export default function StoryPage() {
   return (
-    <div className="w-full h-full overflow-y-auto custom-scrollbar">
+    <div className="auto-fit-content w-full overflow-y-auto custom-scrollbar">
       {/* Background Animation */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-purple-600/10 animate-pulse" />
       </div>
 
-      <div className="relative z-10 w-full px-4 py-4">
+      <div className="relative z-10 w-full">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -89,7 +89,7 @@ export default function StoryPage() {
 
         {/* Timeline */}
         <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <div className="auto-grid gap-3">
             {milestones.map((milestone, index) => {
               const IconComponent = milestone.icon;
               return (
@@ -133,6 +133,10 @@ export default function StoryPage() {
               );
             })}          </div>
         </div>
+        
+        {/* Scroll Hint */}
+        <div className="scroll-hint">
+          ↓ Scroll for more
         </div>
 
         {/* Bottom Summary */}

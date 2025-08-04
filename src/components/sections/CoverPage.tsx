@@ -28,9 +28,9 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
   }, []);
 
   return (
-<div className="w-full">
+    <div className="auto-fit-content w-full">
       {/* Animated Background */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 opacity-30">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 animate-pulse" />
         {/* Floating Background Icons - Hidden on small screens */}
         <div className="hidden sm:block">
@@ -72,21 +72,22 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col items-center justify-center text-center z-10 relative px-4 py-8 min-h-[60vh]">
+      <div className="flex flex-col items-center justify-center text-center z-10 relative w-full">
         {/* Glassmorphism Card */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-2xl w-full max-w-xs sm:max-w-md md:max-w-2xl"
+          className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl w-full max-w-2xl"
         >
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 font-space-grotesk"
+            className="font-bold text-white mb-4 font-space-grotesk"
+            style={{ fontSize: 'clamp(1.75rem, 5vw, 3rem)' }}
           >
-            Hi, I&apos;m Pawan Hiray 👋
+            Hi, I&apos;m Pawan Hiray <span className="wave">👋</span>
           </motion.h1>
           
           <motion.div

@@ -38,13 +38,13 @@ const skillCards = [
 
 export default function IndexPage() {
   return (
-    <div className="w-full h-full">
+    <div className="auto-fit-content w-full">
       {/* Background Animation */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/10 to-teal-600/10 animate-pulse" />
       </div>
 
-      <div className="flex flex-col items-center justify-center w-full h-full text-center z-10 relative px-4 py-2">
+      <div className="flex flex-col items-center justify-center w-full text-center z-10 relative">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -52,11 +52,11 @@ export default function IndexPage() {
           transition={{ duration: 0.8 }}
           className="mb-6 px-2"
         >
-          <h1 className="text-3xl lg:text-4xl font-bold text-white mb-4 font-space-grotesk">
+          <h1 className="font-bold text-white mb-4 font-space-grotesk" style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}>
             About Me
           </h1>
           <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-xl p-4 max-w-2xl mx-auto">
-            <p className="text-sm lg:text-base text-gray-200 leading-relaxed">
+            <p className="text-gray-200 leading-relaxed" style={{ fontSize: 'clamp(1rem, 2vw, 1.25rem)' }}>
               &ldquo;I&apos;m a multi-skilled developer passionate about building automation tools, 
               AI agents, crypto systems, and viral growth tools.&rdquo;
             </p>
@@ -64,7 +64,7 @@ export default function IndexPage() {
         </motion.div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 max-w-4xl px-2">
+        <div className="auto-grid max-w-4xl w-full">
           {skillCards.map((skill, index) => {
             const IconComponent = skill.icon;
             return (
