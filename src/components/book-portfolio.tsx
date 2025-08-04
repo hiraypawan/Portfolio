@@ -9,6 +9,7 @@ import StoryPage from './sections/StoryPage';
 import ProjectsPage from './sections/ProjectsPage';
 import SkillsPage from './sections/SkillsPage';
 import ContactPage from './sections/ContactPage';
+import AnimatedCursor from './ui/AnimatedCursor';
 
 const pages = [
   { name: 'Cover', component: <CoverPage /> },
@@ -35,42 +36,48 @@ export default function BookPortfolio() {
   }, []);
 
   return (
-    <div className="w-full min-h-[100dvh] flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 px-4 py-8">
+    <div className="w-full min-h-screen min-h-[100dvh] flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-2 sm:p-4 md:p-6 lg:p-8">
+      <AnimatedCursor />
       <div
         ref={mouseTrailRef}
-        className="fixed w-96 h-96 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none"
-        style={{ transition: 'transform 0.1s ease' }}
+        className="fixed w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none z-0"
+        style={{ transition: 'transform 0.1s ease', transform: 'translate(-50%, -50%)' }}
       />
       <AnimatePresence mode="wait">
         <motion.div
           key={pageIndex}
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -50 }}
-          transition={{ duration: 0.5 }}
-          className="w-full max-w-3xl bg-white/10 backdrop-blur-lg border border-white/20 p-6 rounded-2xl shadow-xl"
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.95, y: -20 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+          className="w-full max-w-sm sm:max-w-2xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl bg-white/10 backdrop-blur-lg border border-white/20 p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl shadow-2xl z-10 relative overflow-hidden"
         >
-          {pages[pageIndex].component}
+          <div className="w-full h-full overflow-y-auto max-h-[85vh] scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+            {pages[pageIndex].component}
+          </div>
         </motion.div>
       </AnimatePresence>
 
-      <div className="mt-6 flex gap-4">
+      <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row items-center gap-2 sm:gap-4 z-10">
         <button
-          className="px-6 py-3 bg-gray-800 text-white rounded-xl disabled:opacity-50 hover:bg-gray-700 transition-colors"
+          className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-gray-800/80 backdrop-blur-sm text-white rounded-xl disabled:opacity-50 hover:bg-gray-700/80 transition-all duration-300 flex items-center justify-center gap-2"
           onClick={() => setPageIndex((prev) => Math.max(0, prev - 1))}
           disabled={pageIndex === 0}
         >
-          <FaArrowLeft />
+          <FaArrowLeft className="text-sm" />
+          <span className="hidden sm:inline">Previous</span>
         </button>
-        <div className="px-4 py-3 text-white/80 text-sm font-medium">
-          {pages[pageIndex].name} ({pageIndex + 1}/{pages.length})
+        <div className="px-3 sm:px-4 py-2 sm:py-3 text-white/90 text-xs sm:text-sm font-medium bg-black/20 backdrop-blur-sm rounded-xl border border-white/10">
+          <span className="hidden sm:inline">{pages[pageIndex].name} • </span>
+          Page {pageIndex + 1} of {pages.length}
         </div>
         <button
-          className="px-6 py-3 bg-blue-600 text-white rounded-xl disabled:opacity-50 hover:bg-blue-700 transition-colors"
+          className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-blue-600/80 backdrop-blur-sm text-white rounded-xl disabled:opacity-50 hover:bg-blue-700/80 transition-all duration-300 flex items-center justify-center gap-2"
           onClick={() => setPageIndex((prev) => Math.min(pages.length - 1, prev + 1))}
           disabled={pageIndex === pages.length - 1}
         >
-          <FaArrowRight />
+          <span className="hidden sm:inline">Next</span>
+          <FaArrowRight className="text-sm" />
         </button>
       </div>
     </div>
