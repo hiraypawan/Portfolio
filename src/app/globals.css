@@ -65,6 +65,11 @@ body {
   position: relative;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  /* Enhanced smoothness */
+  will-change: scroll-position;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 html {
@@ -76,6 +81,9 @@ html {
   padding: 0;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  /* Enhanced smoothness */
+  will-change: scroll-position;
+  transform: translateZ(0);
 }
 
 /* Scrollbar styling */
@@ -170,6 +178,51 @@ html {
   }
 }
 
+/* Smooth scroll container */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  will-change: scroll-position;
+  transform: translateZ(0);
+}
+
+/* Enhanced animations */
+.smooth-transform {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Highlight effects */
+.highlight-glow {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.highlight-glow:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Mobile optimized containers */
+@media (max-width: 768px) {
+  .mobile-container {
+    max-width: 100vw;
+    padding: 1rem;
+    margin: 0;
+  }
+  
+  .mobile-text {
+    font-size: clamp(0.875rem, 2.5vw, 1.25rem);
+    line-height: 1.5;
+  }
+  
+  .mobile-heading {
+    font-size: clamp(1.5rem, 6vw, 3rem);
+    line-height: 1.2;
+  }
+}
+
 /* Wave animation for emoji */
 .wave {
   animation: wave 2.5s ease-in-out infinite;
@@ -196,4 +249,34 @@ html {
   60% {
     transform: rotate(0deg);
   }
+}
+
+/* Smooth page transitions */
+.page-transition {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+/* Custom scrollbar improvements */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
