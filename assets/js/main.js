@@ -10,21 +10,59 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Mouse trail effect
+    // Enhanced mouse trail effect with business icons and code snippets
     document.addEventListener('mousemove', (e) => {
         const trail = document.createElement('span');
-        const chars = ['{', '}', '<', '>', '/', '*', '0', '1', 'λ', '⚡', '🔥'];
-        trail.textContent = chars[Math.floor(Math.random() * chars.length)];
+        const symbols = [
+            // Code characters
+            '{', '}', '<', '>', '/', '*', '0', '1', 'λ', '!=', '&&', '||', '++', '--',
+            // Business & crypto icons
+            '💼', '💰', '💎', '📊', '📈', '📉', '💳', '🏦', '🚀', '🎯',
+            // Stars and effects
+            '⭐', '✨', '🌟', '💫', '⚡', '🔥', '💥', '✦', '❇️', '🔮',
+            // Tech symbols
+            '⚙️', '🔧', '💻', '📱', '🖥️', '⌨️', '🖱️', '🔌', '📡', '🛸',
+            // Additional code snippets
+            'fn', 'var', 'let', 'const', '=>', 'if', 'else', 'for', 'while', 'return'
+        ];
+        
+        const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+        trail.textContent = randomSymbol;
+        
+        // Add different colors based on symbol type
+        let symbolColor = '#333';
+        if (['💼', '💰', '💎', '📊', '📈', '💳', '🏦'].includes(randomSymbol)) {
+            symbolColor = '#2ecc71'; // Green for business
+        } else if (['⭐', '✨', '🌟', '💫', '⚡'].includes(randomSymbol)) {
+            symbolColor = '#f39c12'; // Orange for stars/effects
+        } else if (['🔥', '💥', '🚀'].includes(randomSymbol)) {
+            symbolColor = '#e74c3c'; // Red for energy
+        } else if (['⚙️', '🔧', '💻', '📱'].includes(randomSymbol)) {
+            symbolColor = '#3498db'; // Blue for tech
+        }
+        
+        trail.textContent = randomSymbol;
+        // Choose animation based on symbol type
+        let animationType = 'trail';
+        if (['⭐', '✨', '🌟', '💫', '✦', '❇️'].includes(randomSymbol)) {
+            animationType = 'sparkle';
+        } else if (['💼', '💰', '💎', '🚀', '🎯'].includes(randomSymbol)) {
+            animationType = 'float';
+        }
+        
         trail.style.position = 'absolute';
         trail.style.left = `${e.pageX}px`;
         trail.style.top = `${e.pageY}px`;
-        trail.style.animation = 'trail 1s linear';
+        trail.style.animation = `${animationType} 1s linear`;
         trail.style.opacity = '0';
-        trail.style.color = '#333';
-        trail.style.fontSize = '16px';
+        trail.style.color = symbolColor;
+        trail.style.fontSize = Math.random() > 0.5 ? '16px' : '18px'; // Random size variation
         trail.style.fontWeight = 'bold';
         trail.style.pointerEvents = 'none';
         trail.style.zIndex = '999';
+        trail.style.textShadow = `0 0 5px ${symbolColor}40`; // Glow effect with symbol color
+        trail.style.transform = 'translate(-50%, -50%)';
+        trail.style.userSelect = 'none';
         
         document.body.appendChild(trail);
         

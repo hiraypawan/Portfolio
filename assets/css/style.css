@@ -52,6 +52,46 @@ body, html {
 }
 
 @keyframes trail {
-    0% { transform: translateY(0) scale(1); opacity: 1; }
-    100% { transform: translateY(-20px) scale(0.5); opacity: 0; }
+    0% { 
+        transform: translateY(0) scale(1) rotate(0deg); 
+        opacity: 1; 
+    }
+    50% {
+        transform: translateY(-10px) scale(1.2) rotate(180deg);
+        opacity: 0.8;
+    }
+    100% { 
+        transform: translateY(-25px) scale(0.3) rotate(360deg); 
+        opacity: 0; 
+    }
+}
+
+/* Additional animation variants */
+@keyframes sparkle {
+    0% { 
+        transform: scale(0) rotate(0deg); 
+        opacity: 1;
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(1.5) rotate(180deg);
+        opacity: 0.8;
+        filter: brightness(1.5);
+    }
+    100% { 
+        transform: scale(0) rotate(360deg); 
+        opacity: 0;
+        filter: brightness(0.5);
+    }
+}
+
+@keyframes float {
+    0% { 
+        transform: translateY(0) translateX(0) scale(1); 
+        opacity: 1; 
+    }
+    100% { 
+        transform: translateY(-30px) translateX(10px) scale(0.4); 
+        opacity: 0; 
+    }
 }
