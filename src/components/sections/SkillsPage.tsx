@@ -66,7 +66,7 @@ export default function SkillsPage() {
         ))}
       </div>
 
-      <div className="flex flex-col min-h-full z-10 relative px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 overflow-y-auto scrollable-content mobile-scroll ios-scroll-fix scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent touch-scroll">
+      <div className="flex flex-col min-h-screen z-10 relative px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 overflow-y-visible scrollable-content mobile-scroll ios-scroll-fix scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent touch-scroll">
         <div className="text-center mb-8">
           {/* Header */}
           <motion.div

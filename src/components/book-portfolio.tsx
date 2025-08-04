@@ -188,52 +188,46 @@ export default function BookPortfolio() {
         {/* Animated Cursor - Now works on mobile too */}
         <AnimatedCursor />
       
-        {/* Book Container */}
-        <div className="relative w-full h-screen max-w-none perspective-1000">
-          {/* 3D Book Effect Container */}
-          <div className="relative w-full h-full preserve-3d">
-            {/* Page Content */}
-            <AnimatePresence mode="wait" custom={direction}>
-              <motion.div
-                key={currentPage}
-                custom={direction}
-                variants={pageVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{
-                  duration: 0.8,
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                }}
-                className="absolute inset-0 w-full h-full"
-                style={{
-                  transformStyle: 'preserve-3d',
-                }}
+        {/* Book Container - Remove height constraints */}
+        <div className="relative w-full min-h-screen max-w-none">
+          {/* Page Content - Direct rendering without 3D constraints */}
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={currentPage}
+              custom={direction}
+              variants={pageVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                duration: 0.8,
+                ease: [0.25, 0.46, 0.45, 0.94],
+              }}
+              className="w-full min-h-screen"
+            >
+              <div 
+                className="w-full min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900"
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+                style={{ touchAction: 'pan-y' }}
               >
-                <div 
-                  className="w-full h-full bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900 shadow-2xl"
-                  onTouchStart={onTouchStart}
-                  onTouchMove={onTouchMove}
-                  onTouchEnd={onTouchEnd}
-                  style={{ touchAction: 'pan-y' }}
-                >
-                  <CurrentPageComponent 
-                    onNavigate={(page: number) => {
-                      if (page !== currentPage && !isFlipping) {
-                        setIsFlipping(true);
-                        setDirection(page > currentPage ? 'forward' : 'backward');
-                        playPageFlipSound();
-                        setTimeout(() => {
-                          setCurrentPage(page);
-                          setIsFlipping(false);
-                        }, 300);
-                      }
-                    }}
-                  />
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+                <CurrentPageComponent 
+                  onNavigate={(page: number) => {
+                    if (page !== currentPage && !isFlipping) {
+                      setIsFlipping(true);
+                      setDirection(page > currentPage ? 'forward' : 'backward');
+                      playPageFlipSound();
+                      setTimeout(() => {
+                        setCurrentPage(page);
+                        setIsFlipping(false);
+                      }, 300);
+                    }
+                  }}
+                />
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
       {/* Mobile Navigation - Bottom */}
