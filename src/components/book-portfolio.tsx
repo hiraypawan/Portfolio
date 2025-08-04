@@ -178,15 +178,8 @@ export default function BookPortfolio() {
           <AnimatedCursor />
         </div>
       
-        {/* Simple Page Container with Touch Support */}
-        <div 
-          className="w-full min-h-[100dvh] overflow-y-auto overflow-x-hidden"
-          style={{
-            WebkitOverflowScrolling: 'touch'
-          }}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
+        {/* Page Container with Proper Scrolling */}
+        <div className="w-full h-[100dvh] relative overflow-hidden">
           {/* Page Transition */}
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
@@ -204,12 +197,22 @@ export default function BookPortfolio() {
                 duration: 0.3,
                 ease: "easeInOut",
               }}
-              className="w-full min-h-[100dvh]"
+              className="w-full h-full absolute inset-0"
             >
-              <div className="w-full min-h-[100dvh] bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900">
-                <CurrentPageComponent 
-                  onNavigate={goToPage}
-                />
+              {/* Scrollable Content Area with Touch Handlers */}
+              <div 
+                className="w-full h-full overflow-y-auto overflow-x-hidden bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900"
+                style={{
+                  WebkitOverflowScrolling: 'touch'
+                }}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+              >
+                <div className="min-h-full">
+                  <CurrentPageComponent 
+                    onNavigate={goToPage}
+                  />
+                </div>
               </div>
             </motion.div>
           </AnimatePresence>
