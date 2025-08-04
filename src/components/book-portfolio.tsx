@@ -39,6 +39,12 @@ export default function BookPortfolio() {
 
   // Audio reference for better performance
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  
+  // Touch handling refs
+  const touchStartX = useRef<number>(0);
+  const touchStartY = useRef<number>(0);
+  const touchStartTime = useRef<number>(0);
+  const isDragging = useRef<boolean>(false);
 
   // Initialize audio on component mount
   useEffect(() => {
@@ -91,7 +97,59 @@ export default function BookPortfolio() {
   }, [isFlipping, playPageFlipSound]);
 
 
-  // Removed all touch handlers to enable natural scrolling
+  // Smart touch handlers - only handle horizontal swipes, allow vertical scrolling
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    touchStartX.current = touch.clientX;
+    touchStartY.current = touch.clientY;
+    touchStartTime.current = Date.now();
+    isDragging.current = false;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!touchStartX.current) return;
+    
+    const touch = e.touches[0];
+    const deltaX = Math.abs(touch.clientX - touchStartX.current);
+    const deltaY = Math.abs(touch.clientY - touchStartY.current);
+    
+    // Only consider it dragging if horizontal movement is significant
+    if (deltaX > 10 && deltaX > deltaY * 1.5) {
+      isDragging.current = true;
+      // Only prevent default for clear horizontal swipes
+      e.preventDefault();
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touchStartX.current || isFlipping) return;
+    
+    const touch = e.changedTouches[0];
+    const deltaX = touch.clientX - touchStartX.current;
+    const deltaY = Math.abs(touch.clientY - touchStartY.current);
+    const deltaTime = Date.now() - touchStartTime.current;
+    
+    // Only trigger page change for clear horizontal swipes
+    const isHorizontalSwipe = Math.abs(deltaX) > 50 && 
+                             Math.abs(deltaX) > deltaY * 1.5 && 
+                             deltaTime < 500;
+    
+    if (isHorizontalSwipe) {
+      if (deltaX > 0) {
+        // Swipe right - go to previous page
+        prevPage();
+      } else {
+        // Swipe left - go to next page  
+        nextPage();
+      }
+    }
+    
+    // Reset values
+    touchStartX.current = 0;
+    touchStartY.current = 0;
+    touchStartTime.current = 0;
+    isDragging.current = false;
+  }, [isFlipping, nextPage, prevPage]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -144,13 +202,18 @@ export default function BookPortfolio() {
         onLoadingComplete={() => setIsLoading(false)} 
       />
       
-      <div className="relative min-h-screen min-h-[100dvh] bg-gradient-to-br from-slate-900 to-purple-900">
+      <div className="relative w-full min-h-screen bg-gradient-to-br from-slate-900 to-purple-900 overflow-hidden">
         {/* Animated Cursor - Now works on mobile too */}
         <AnimatedCursor />
       
-        {/* Book Container - Remove height constraints */}
-        <div className="relative w-full min-h-screen max-w-none">
-          {/* Page Content - Direct rendering without 3D constraints */}
+        {/* Book Container with touch handlers */}
+        <div 
+          className="relative w-full h-screen overflow-hidden"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Page Content */}
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
               key={currentPage}
@@ -163,11 +226,14 @@ export default function BookPortfolio() {
                 duration: 0.8,
                 ease: [0.25, 0.46, 0.45, 0.94],
               }}
-              className="w-full min-h-[100dvh] overflow-y-auto"
+              className="absolute inset-0 w-full h-full"
+              style={{
+                touchAction: 'pan-y pinch-zoom', // Allow vertical scrolling and zoom
+                overflowY: 'auto',
+                WebkitOverflowScrolling: 'touch'
+              }}
             >
-              <div 
-                className="w-full min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900"
-              >
+              <div className="w-full min-h-full bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900">
                 <CurrentPageComponent 
                   onNavigate={(page: number) => {
                     if (page !== currentPage && !isFlipping) {
@@ -332,7 +398,7 @@ export default function BookPortfolio() {
       {/* Mobile swipe indicator */}
       <div className="md:hidden absolute top-4 left-1/2 transform -translate-x-1/2 z-50 text-white/60 text-xs">
         <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg px-3 py-1">
-          Swipe or use buttons to navigate
+          Swipe horizontally or use buttons to navigate
         </div>
       </div>
       </div>
