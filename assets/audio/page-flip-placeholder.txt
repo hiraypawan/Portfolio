@@ -1,0 +1,13 @@
+This is a placeholder for the page-flip.mp3 file.
+
+To add the actual page flip sound:
+1. Find a suitable page flip sound effect (MP3 format)
+2. Rename it to "page-flip.mp3"
+3. Place it in the assets/audio/ directory
+4. Delete this placeholder file
+
+You can find free page flip sounds from:
+- Freesound.org
+- Zapsplat.com
+- YouTube Audio Library
+- Or record your own flipping a book page
