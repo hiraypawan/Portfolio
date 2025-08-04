@@ -14,6 +14,7 @@ Built using [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.co
 - **Accessibility**: Built with semantic HTML and ARIA labels
 - **SEO Optimized**: Meta tags and structured data
 - **Dark/Light Mode**: Theme toggle with system preference detection
+- **Interactive Book Portfolio**: Additional book-style SPA with page transitions
 
 ## 🛠️ Tech Stack
 
@@ -23,9 +24,11 @@ Built using [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.co
 - **Icons**: Lucide React
 - **Typography**: Geist Sans & Geist Mono
 - **Deployment**: Vercel
+- **Additional**: Interactive Book Portfolio with vanilla HTML/CSS/JS
 
 ## 🚀 Getting Started
 
+### Next.js Portfolio
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/hiraypawan/Portfolio.git
@@ -45,25 +48,26 @@ Built using [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.co
 4. **Open your browser**:
    Navigate to [http://localhost:3000](http://localhost:3000)
 
+### Book Portfolio
+Alternatively, you can open `index.html` directly in your browser for the interactive book experience.
+
 ## 📁 Project Structure
 
 ```
-src/
-├── app/
-│   ├── globals.css      # Global styles and Tailwind config
-│   ├── layout.tsx       # Root layout with theme provider
-│   └── page.tsx         # Main page component
-├── components/
-│   ├── about.tsx        # About section
-│   ├── contact.tsx      # Contact section with form
-│   ├── expertise.tsx    # Skills and expertise
-│   ├── footer.tsx       # Footer component
-│   ├── header.tsx       # Navigation header
-│   ├── hero.tsx         # Hero section
-│   ├── projects.tsx     # Projects showcase
-│   ├── theme-provider.tsx
-│   └── theme-toggle.tsx
-└── lib/                 # Utility functions
+Portfolio/
+├── index.html              # Interactive book portfolio
+├── assets/                 # Book portfolio assets
+│   ├── css/style.css      # Book styling
+│   ├── js/main.js         # Book interactivity
+│   └── audio/             # Sound effects
+├── src/                   # Next.js application
+│   ├── app/
+│   │   ├── globals.css    # Global styles
+│   │   ├── layout.tsx     # Root layout
+│   │   └── page.tsx       # Main page
+│   ├── components/        # React components
+│   └── lib/              # Utilities
+└── ...
 ```
 
 ## 🎨 Customization
