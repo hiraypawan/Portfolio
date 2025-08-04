@@ -233,7 +233,6 @@ export default function BookPortfolio() {
             <div 
               className="w-full overflow-y-auto overflow-x-hidden"
               style={{
-                minHeight: '100vh',
                 minHeight: '100dvh',
                 WebkitOverflowScrolling: 'touch',
                 touchAction: 'pan-y pinch-zoom'
