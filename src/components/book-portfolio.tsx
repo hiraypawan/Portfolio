@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import CoverPage from './sections/CoverPage';
 import IndexPage from './sections/IndexPage';
 import StoryPage from './sections/StoryPage';
@@ -20,19 +21,38 @@ const pages = [
 
 export default function BookPortfolio() {
   const [pageIndex, setPageIndex] = useState(0);
+  const mouseTrailRef = useRef(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (mouseTrailRef.current) {
+        mouseTrailRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   return (
-    <div className="w-full min-h-[100dvh] flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-purple-900 px-4 py-8">
-      <motion.div
-        key={pageIndex}
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -50 }}
-        transition={{ duration: 0.5 }}
-        className="w-full max-w-6xl bg-white/10 backdrop-blur-lg border border-white/20 p-6 rounded-2xl shadow-xl"
-      >
-        {pages[pageIndex].component}
-      </motion.div>
+    <div className="w-full min-h-[100dvh] flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 px-4 py-8">
+      <div
+        ref={mouseTrailRef}
+        className="fixed w-96 h-96 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none"
+        style={{ transition: 'transform 0.1s ease' }}
+      />
+      <AnimatePresence exitBeforeEnter>
+        <motion.div
+          key={pageIndex}
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -50 }}
+          transition={{ duration: 0.5 }}
+          className="w-full max-w-3xl bg-white/10 backdrop-blur-lg border border-white/20 p-6 rounded-2xl shadow-xl"
+        >
+          {pages[pageIndex].component}
+        </motion.div>
+      </AnimatePresence>
 
       <div className="mt-6 flex gap-4">
         <button
@@ -40,9 +60,9 @@ export default function BookPortfolio() {
           onClick={() => setPageIndex((prev) => Math.max(0, prev - 1))}
           disabled={pageIndex === 0}
         >
-          Previous
+          <FaArrowLeft />
         </button>
-        <div className="px-4 py-3 text-white/80 text-sm font-medium bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl">
+        <div className="px-4 py-3 text-white/80 text-sm font-medium">
           {pages[pageIndex].name} ({pageIndex + 1}/{pages.length})
         </div>
         <button
@@ -50,7 +70,7 @@ export default function BookPortfolio() {
           onClick={() => setPageIndex((prev) => Math.min(pages.length - 1, prev + 1))}
           disabled={pageIndex === pages.length - 1}
         >
-          Next
+          <FaArrowRight />
         </button>
       </div>
     </div>
