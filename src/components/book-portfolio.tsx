@@ -53,6 +53,16 @@ export default function BookPortfolio() {
         style={{ backgroundColor: 'transparent' }}
         drawShadow={true}
         ref={flipBookRef}
+        className=""
+        startPage={0}
+        flippingTime={1000}
+        usePortrait={true}
+        startZIndex={0}
+        autoSize={true}
+        clickEventForward={true}
+        swipeDistance={30}
+        showPageCorners={true}
+        disableFlipByClick={false}
       >
         {pages.map((page, index) => (
           <div key={index} className="page" style={{
