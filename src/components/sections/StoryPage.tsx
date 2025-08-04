@@ -88,8 +88,8 @@ export default function StoryPage() {
         </motion.div>
 
         {/* Timeline */}
-        <div className="max-w-4xl mx-auto">
-          <div className="auto-grid gap-3">
+        <div className="w-full max-w-none mx-auto">
+          <div className="grid grid-cols-1 gap-4 w-full">
             {milestones.map((milestone, index) => {
               const IconComponent = milestone.icon;
               return (

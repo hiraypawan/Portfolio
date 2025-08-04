@@ -69,65 +69,65 @@ export default function SkillsPage() {
       div className="relative z-10 flex flex-col p-3 sm:p-4"
         <div className="text-center mb-6">
           {/* Header */}
-          <motion.div
+          motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="mb-4"
-          >
-          <h1 className="text-2xl font-bold text-white mb-4 font-space-grotesk">
+          
+          h1 className="text-3xl font-bold text-white mb-4 font-space-grotesk"
             Expertise Grid
-          </h1>
-          <p className="text-sm text-gray-300 max-w-xl mx-auto">
+          /h1
+          p className="text-base text-gray-300 max-w-full mx-auto"
             Core areas where I excel in building innovative solutions
-          </p>
-          </motion.div>
-        </div>
+          /p
+          /motion.div
+        /div
 
         {/* Expertise Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-3xl mx-auto mb-4">
-          {expertiseCards.map((card, index) => {
+        div className="grid grid-cols-1 gap-6 max-w-none mx-auto mb-6"
+          {expertiseCards.map((card, index) = {
             const IconComponent = card.icon;
             return (
-              <motion.div
+              motion.div
                 key={index}
                 initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.2, duration: 0.8 }}
-                whileHover={{ scale: 1.02, y: -2 }}
-                className={`backdrop-blur-lg bg-gradient-to-br ${card.bgColor} border border-white/20 rounded-xl p-4 hover:bg-white/10 transition-all duration-300 group`}
-              >
+                whileHover={{ scale: 1.05, y: -2 }}
+                className={`backdrop-blur-lg bg-gradient-to-br ${card.bgColor} border border-white/20 rounded-xl p-6 hover:bg-white/10 transition-all duration-300 group`}
+              
                 {/* Icon */}
-                <div className={`w-16 h-16 rounded-lg bg-gradient-to-r ${card.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200`}>
-                  <IconComponent className="text-white text-2xl" />
-                </div>
+                div className={`w-20 h-20 rounded-lg bg-gradient-to-r ${card.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200`}
+                  IconComponent className="text-white text-3xl" /
+                /div
 
                 {/* Content */}
-                <h3 className="text-lg font-bold text-white mb-2">
+                h3 className="text-xl font-bold text-white mb-3"
                   {card.title}
-                </h3>
-                <p className="text-gray-300 text-xs leading-relaxed mb-3">
+                /h3
+                p className="text-gray-300 text-sm leading-relaxed mb-4"
                   {card.description}
-                </p>
+                /p
 
                 {/* Technologies */}
-                <div className="flex flex-wrap gap-1">
-                  {card.technologies.map((tech, techIndex) => (
-                    <motion.span
+                div className="flex flex-wrap gap-2"
+                  {card.technologies.map((tech, techIndex) = (
+                    motion.span
                       key={techIndex}
                       initial={{ opacity: 0, scale: 0 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: (index * 0.2) + (techIndex * 0.1) + 0.5 }}
-                      className="px-2 py-1 bg-white/10 backdrop-blur-sm rounded-full text-xs text-gray-200 hover:bg-white/20 transition-colors duration-200"
-                    >
+                      className="px-3 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm text-gray-200 hover:bg-white/20 transition-colors duration-200"
+                    
                       {tech}
-                    </motion.span>
+                    /motion.span
                   ))}
-                </div>
-              </motion.div>
+                /div
+              /motion.div
             );
           })}
-        </div>
+        /div
 
         {/* Bottom Stats */}
         <motion.div

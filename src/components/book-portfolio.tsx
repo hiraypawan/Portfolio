@@ -50,27 +50,27 @@ export default function BookPortfolio() {
           <AnimatedCursor />
 
           <HTMLFlipBook
-            width={isMobile ? window.innerWidth - 20 : 400}
-            height={isMobile ? window.innerHeight - 40 : 600}
+            width={isMobile ? Math.min(window.innerWidth - 10, 400) : 400}
+            height={isMobile ? Math.min(window.innerHeight - 20, 700) : 600}
             size="stretch"
-            minWidth={280}
-            maxWidth={800}
-            minHeight={400}
-            maxHeight={900}
-            maxShadowOpacity={0.5}
+            minWidth={300}
+            maxWidth={900}
+            minHeight={500}
+            maxHeight={1000}
+            maxShadowOpacity={0.3}
             showCover={true}
             mobileScrollSupport={true}
-            className="demo-book"
-            style={{}}
+            className="demo-book mobile-optimized"
+            style={{ touchAction: 'pan-x pan-y' }}
             startPage={0}
             drawShadow={true}
-            flippingTime={1000}
+            flippingTime={800}
             usePortrait={true}
             startZIndex={0}
             autoSize={true}
             clickEventForward={true}
             useMouseEvents={true}
-            swipeDistance={50}
+            swipeDistance={30}
             showPageCorners={true}
             disableFlipByClick={false}
           >

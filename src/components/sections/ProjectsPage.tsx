@@ -120,16 +120,16 @@ export default function ProjectsPage() {
           {projects.filter(p => p.featured).map((project) => {
             const IconComponent = project.icon;
             return (
-              <div key={project.id} className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 hover:bg-white/15 transition-all duration-500 w-full">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-center">
+              <div key={project.id} className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-6 sm:p-8 hover:bg-white/15 transition-all duration-500 w-full">
+                <div className="space-y-6">
                   <div>
-                    <div className={`inline-flex items-center px-3 py-1 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r ${project.color} text-white text-xs sm:text-sm font-semibold mb-3 sm:mb-4`}>
+                    <div className={`inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r ${project.color} text-white text-sm font-semibold mb-4`}>
                       <IconComponent className="mr-2" />
                       FEATURED PROJECT
                     </div>
-                    <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">{project.title}</h3>
-                    <p className="text-base sm:text-lg text-gray-300 mb-3 sm:mb-4">{project.subtitle}</p>
-                    <p className="text-sm sm:text-base text-gray-300 leading-relaxed mb-4 sm:mb-6">{project.description}</p>
+                    <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">{project.title}</h3>
+                    <p className="text-lg sm:text-xl text-gray-300 mb-4">{project.subtitle}</p>
+                    <p className="text-base sm:text-lg text-gray-300 leading-relaxed mb-6">{project.description}</p>
                     
                     <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
                       {project.technologies.map((tech, index) => (
