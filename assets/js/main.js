@@ -50,19 +50,20 @@ document.addEventListener('DOMContentLoaded', () => {
             animationType = 'float';
         }
         
-        trail.style.position = 'absolute';
-        trail.style.left = `${e.pageX}px`;
-        trail.style.top = `${e.pageY}px`;
-        trail.style.animation = `${animationType} 1s linear`;
-        trail.style.opacity = '0';
+        trail.style.position = 'fixed';
+        trail.style.left = `${e.clientX}px`;
+        trail.style.top = `${e.clientY}px`;
+        trail.style.animation = `${animationType} 1.5s ease-out forwards`;
+        trail.style.opacity = '1';
         trail.style.color = symbolColor;
-        trail.style.fontSize = Math.random() > 0.5 ? '16px' : '18px'; // Random size variation
+        trail.style.fontSize = Math.random() > 0.5 ? '20px' : '24px'; // Larger size for visibility
         trail.style.fontWeight = 'bold';
         trail.style.pointerEvents = 'none';
-        trail.style.zIndex = '999';
-        trail.style.textShadow = `0 0 5px ${symbolColor}40`; // Glow effect with symbol color
+        trail.style.zIndex = '9999';
+        trail.style.textShadow = `0 0 10px ${symbolColor}, 0 0 20px ${symbolColor}80`; // Enhanced glow
         trail.style.transform = 'translate(-50%, -50%)';
         trail.style.userSelect = 'none';
+        trail.style.filter = 'drop-shadow(0 0 5px currentColor)';
         
         document.body.appendChild(trail);
         

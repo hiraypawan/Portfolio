@@ -53,15 +53,15 @@ body, html {
 
 @keyframes trail {
     0% { 
-        transform: translateY(0) scale(1) rotate(0deg); 
+        transform: translate(-50%, -50%) translateY(0) scale(1) rotate(0deg); 
         opacity: 1; 
     }
     50% {
-        transform: translateY(-10px) scale(1.2) rotate(180deg);
-        opacity: 0.8;
+        transform: translate(-50%, -50%) translateY(-15px) scale(1.1) rotate(180deg);
+        opacity: 0.7;
     }
     100% { 
-        transform: translateY(-25px) scale(0.3) rotate(360deg); 
+        transform: translate(-50%, -50%) translateY(-30px) scale(0.2) rotate(360deg); 
         opacity: 0; 
     }
 }
@@ -69,17 +69,17 @@ body, html {
 /* Additional animation variants */
 @keyframes sparkle {
     0% { 
-        transform: scale(0) rotate(0deg); 
+        transform: translate(-50%, -50%) scale(0) rotate(0deg); 
         opacity: 1;
         filter: brightness(1);
     }
     50% {
-        transform: scale(1.5) rotate(180deg);
+        transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
         opacity: 0.8;
         filter: brightness(1.5);
     }
     100% { 
-        transform: scale(0) rotate(360deg); 
+        transform: translate(-50%, -50%) scale(0) rotate(360deg); 
         opacity: 0;
         filter: brightness(0.5);
     }
@@ -87,11 +87,11 @@ body, html {
 
 @keyframes float {
     0% { 
-        transform: translateY(0) translateX(0) scale(1); 
+        transform: translate(-50%, -50%) translateY(0) translateX(0) scale(1); 
         opacity: 1; 
     }
     100% { 
-        transform: translateY(-30px) translateX(10px) scale(0.4); 
+        transform: translate(-50%, -50%) translateY(-30px) translateX(10px) scale(0.4); 
         opacity: 0; 
     }
 }
