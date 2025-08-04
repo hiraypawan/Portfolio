@@ -134,12 +134,39 @@ html {
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
+    height: 100vh;
+    height: 100dvh;
   }
   
   /* Enable natural scrolling on all elements */
   .mobile-scroll {
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
+    height: 100vh;
+    height: 100dvh;
+  }
+  
+  /* Force scrollable containers */
+  .scrollable-content {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+  }
+  
+  /* iOS specific fixes */
+  .ios-scroll-fix {
+    -webkit-overflow-scrolling: touch;
+    transform: translateZ(0);
+  }
+  
+  /* Touch scroll improvements */
+  .touch-scroll {
+    touch-action: pan-y !important;
+    -webkit-overflow-scrolling: touch;
+    will-change: scroll-position;
   }
 }
 

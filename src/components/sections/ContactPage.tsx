@@ -23,7 +23,7 @@ export default function ContactPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-teal-600/10 to-cyan-600/10 animate-pulse" />
       </div>
 
-      <div className="flex flex-col items-center justify-center min-h-full text-center z-10 relative px-4 sm:px-6 lg:px-8 py-8 overflow-y-auto scrollable-content mobile-scroll ios-scroll-fix scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent touch-scroll">
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}

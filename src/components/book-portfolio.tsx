@@ -114,10 +114,11 @@ export default function BookPortfolio() {
     const deltaY = Math.abs(touch.clientY - touchStartY.current);
     
     // Only consider it dragging if horizontal movement is significant
-    if (deltaX > 10 && deltaX > deltaY * 1.5) {
+    if (deltaX > 15 && deltaX > deltaY * 2) {
       isDragging.current = true;
       // Only prevent default for clear horizontal swipes
       e.preventDefault();
+      e.stopPropagation();
     }
   }, []);
 
@@ -202,17 +203,14 @@ export default function BookPortfolio() {
         onLoadingComplete={() => setIsLoading(false)} 
       />
       
-      <div className="relative w-full min-h-screen bg-gradient-to-br from-slate-900 to-purple-900 overflow-hidden">
-        {/* Animated Cursor - Now works on mobile too */}
-        <AnimatedCursor />
+      <div className="relative w-full min-h-screen bg-gradient-to-br from-slate-900 to-purple-900">
+        {/* Animated Cursor - Desktop only */}
+        <div className="hidden md:block">
+          <AnimatedCursor />
+        </div>
       
-        {/* Book Container with touch handlers */}
-        <div 
-          className="relative w-full h-screen overflow-hidden"
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
+        {/* Book Container with mobile-first scrolling */}
+        <div className="relative w-full min-h-screen">
           {/* Page Content */}
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
@@ -226,27 +224,35 @@ export default function BookPortfolio() {
                 duration: 0.8,
                 ease: [0.25, 0.46, 0.45, 0.94],
               }}
-              className="absolute inset-0 w-full h-full"
-              style={{
-                touchAction: 'pan-y pinch-zoom', // Allow vertical scrolling and zoom
-                overflowY: 'auto',
-                WebkitOverflowScrolling: 'touch'
-              }}
+              className="w-full min-h-screen"
             >
-              <div className="w-full min-h-full bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900">
-                <CurrentPageComponent 
-                  onNavigate={(page: number) => {
-                    if (page !== currentPage && !isFlipping) {
-                      setIsFlipping(true);
-                      setDirection(page > currentPage ? 'forward' : 'backward');
-                      playPageFlipSound();
-                      setTimeout(() => {
-                        setCurrentPage(page);
-                        setIsFlipping(false);
-                      }, 300);
-                    }
-                  }}
-                />
+              {/* Scrollable content container with touch handlers */}
+              <div 
+                className="w-full min-h-screen overflow-y-auto overflow-x-hidden"
+                style={{
+                  height: '100vh',
+                  WebkitOverflowScrolling: 'touch',
+                  touchAction: 'pan-y pinch-zoom'
+                }}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              >
+                <div className="w-full min-h-screen bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900">
+                  <CurrentPageComponent 
+                    onNavigate={(page: number) => {
+                      if (page !== currentPage && !isFlipping) {
+                        setIsFlipping(true);
+                        setDirection(page > currentPage ? 'forward' : 'backward');
+                        playPageFlipSound();
+                        setTimeout(() => {
+                          setCurrentPage(page);
+                          setIsFlipping(false);
+                        }, 300);
+                      }
+                    }}
+                  />
+                </div>
               </div>
             </motion.div>
           </AnimatePresence>

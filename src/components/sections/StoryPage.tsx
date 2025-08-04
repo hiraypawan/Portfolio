@@ -65,13 +65,13 @@ const milestones = [
 
 export default function StoryPage() {
   return (
-    <div className="relative w-full h-full bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900">
+    <div className="relative w-full min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900">
       {/* Background Animation */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-purple-600/10 animate-pulse" />
       </div>
 
-      <div className="w-full h-full overflow-y-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 py-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
