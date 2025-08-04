@@ -3,58 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Pawan Hiray - Portfolio</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div id="home" class="page active">
-        <h1>Pawan Hiray | Tech Generalist & Visionary</h1>
-        <p>Turning Code into Reality Since Age 16</p>
-        <p>Swipe Right to Begin the Journey</p>
+    <div class="container">
+        <!-- Navigation -->
+        <nav class="nav-arrows">
+            <button class="nav-arrow left" onclick="navigateArrow('left')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <span class="nav-text">Navigate with arrows</span>
+            <button class="nav-arrow right" onclick="navigateArrow('right')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </nav>
+
+        <!-- Main Content Card -->
+        <div class="portfolio-card">
+            <div class="card-content">
+                <div class="profile-section">
+                    <div class="profile-circle">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    
+                    <h1 class="name">I'm a multi-skilled developer passionate about building automation tools,</h1>
+                    <h2 class="title">AI agents, crypto systems, and viral growth tools.</h2>
+                    <p class="stats">30,000+ students trust my work at MuStudentsUnited.</p>
+                    
+                    <div class="action-buttons">
+                        <button class="btn-primary" onclick="viewWork()">View My Work</button>
+                        <button class="btn-secondary" onclick="contactMe()">Contact Me</button>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="#" class="social-link" title="Website">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="badges">
+                        <span class="badge">
+                            <i class="fas fa-code"></i>
+                            Developer
+                        </span>
+                        <span class="badge">
+                            <i class="fas fa-brain"></i>
+                            AI Expert
+                        </span>
+                        <span class="badge">
+                            <i class="fas fa-rocket"></i>
+                            Innovator
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div id="index" class="page">
-        <h2>Table of Contents</h2>
-        <ul>
-            <li><a href="#" data-target="story">My Story</a></li>
-            <li><a href="#" data-target="projects">Projects</a></li>
-            <li><a href="#" data-target="skills">Skills</a></li>
-            <li><a href="#" data-target="community">Community Impact</a></li>
-            <li><a href="#" data-target="certifications">Certifications</a></li>
-            <li><a href="#" data-target="contact">Contact</a></li>
-        </ul>
-    </div>
-    <div id="story" class="page">
-        <h1>My Story</h1>
-        <p>Content about your personal background and journey.</p>
-        <a href="#" data-target="index">Back to Index</a>
-    </div>
-    <div id="projects" class="page">
-        <h1>Projects</h1>
-        <p>Showcase of technical projects.</p>
-        <a href="#" data-target="index">Back to Index</a>
-    </div>
-    <div id="skills" class="page">
-        <h1>Skills</h1>
-        <p>Your technical skills and expertise.</p>
-        <a href="#" data-target="index">Back to Index</a>
-    </div>
-    <div id="community" class="page">
-        <h1>Community Impact</h1>
-        <p>Your community involvement and impact.</p>
-        <a href="#" data-target="index">Back to Index</a>
-    </div>
-    <div id="certifications" class="page">
-        <h1>Certifications</h1>
-        <p>Professional certifications.</p>
-        <a href="#" data-target="index">Back to Index</a>
-    </div>
-    <div id="contact" class="page">
-        <h1>Contact</h1>
-        <p>Contact information and social links.</p>
-        <a href="#" data-target="index">Back to Index</a>
-    </div>
-    <div id="cursor-trail"></div>
-    <audio id="pageFlipSound" src="assets/audio/page-flip.mp3"></audio>
+    
     <script src="assets/js/main.js"></script>
 </body>
 </html>
