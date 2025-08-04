@@ -21,10 +21,10 @@ const pages = [
 
 export default function BookPortfolio() {
   const [pageIndex, setPageIndex] = useState(0);
-  const mouseTrailRef = useRef(null);
+  const mouseTrailRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       if (mouseTrailRef.current) {
         mouseTrailRef.current.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
       }
@@ -41,7 +41,7 @@ export default function BookPortfolio() {
         className="fixed w-96 h-96 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none"
         style={{ transition: 'transform 0.1s ease' }}
       />
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         <motion.div
           key={pageIndex}
           initial={{ opacity: 0, x: 50 }}
