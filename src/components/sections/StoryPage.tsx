@@ -65,31 +65,31 @@ const milestones = [
 
 export default function StoryPage() {
   return (
-<div className="w-full">
+    <div className="w-full h-full overflow-y-auto custom-scrollbar">
       {/* Background Animation */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-purple-600/10 animate-pulse" />
       </div>
 
-      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 py-6">
+      <div className="relative z-10 w-full px-4 py-4">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-8"
+          className="text-center mb-6"
         >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 font-space-grotesk">
+          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 font-space-grotesk">
             My Journey (2018–2025)
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-sm md:text-base text-gray-300 max-w-2xl mx-auto">
             From 16-year-old beginner to full-stack innovator
           </p>
         </motion.div>
 
         {/* Timeline */}
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
             {milestones.map((milestone, index) => {
               const IconComponent = milestone.icon;
               return (
@@ -98,23 +98,23 @@ export default function StoryPage() {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.6 }}
-                  whileHover={{ scale: 1.02, y: -5 }}
-                  className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300 group"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-all duration-300 group"
                 >
-                  <div className="flex items-start space-x-4">
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-r ${milestone.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
-                      <IconComponent className="text-white text-xl" />
+                  <div className="flex items-start space-x-3">
+                    <div className={`w-10 h-10 rounded-lg bg-gradient-to-r ${milestone.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                      <IconComponent className="text-white text-sm" />
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className={`text-sm font-semibold bg-gradient-to-r ${milestone.color} bg-clip-text text-transparent`}>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className={`text-xs font-semibold bg-gradient-to-r ${milestone.color} bg-clip-text text-transparent`}>
                           {milestone.year} • Age {milestone.age}
                         </span>
                       </div>
-                      <h3 className="text-lg font-bold text-white mb-2">
+                      <h3 className="text-sm font-bold text-white mb-1">
                         {milestone.title}
                       </h3>
-                      <p className="text-gray-300 text-sm leading-relaxed">
+                      <p className="text-gray-300 text-xs leading-relaxed">
                         {milestone.description}
                         {milestone.link && (
                           <a 
@@ -131,8 +131,8 @@ export default function StoryPage() {
                   </div>
                 </motion.div>
               );
-            })}
-          </div>
+            })}          </div>
+        </div>
         </div>
 
         {/* Bottom Summary */}
@@ -140,13 +140,13 @@ export default function StoryPage() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2, duration: 0.8 }}
-          className="mt-8 backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-6 max-w-4xl mx-auto"
+          className="mt-4 backdrop-blur-lg bg-white/10 border border-white/20 rounded-xl p-4 max-w-2xl mx-auto"
         >
           <div className="text-center">
-            <h3 className="text-2xl font-bold text-white mb-4">
+            <h3 className="text-lg font-bold text-white mb-2">
               The Journey Continues...
             </h3>
-            <p className="text-gray-300 text-lg">
+            <p className="text-gray-300 text-sm">
               From building simple apps to creating comprehensive platforms serving thousands of users. 
               Every challenge has been a stepping stone to innovation.
             </p>

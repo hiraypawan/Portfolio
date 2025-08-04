@@ -88,27 +88,27 @@ const projects = [
 
 export default function ProjectsPage() {
   return (
-    <div className="relative w-full bg-gradient-to-br from-slate-900 via-red-900/30 to-slate-900">
+    div className="w-full h-full overflow-y-auto custom-scrollbar"
       {/* Background Animation */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-pink-600/10 animate-pulse" />
-      </div>
+      div className="absolute inset-0 opacity-20"
+        div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-pink-600/10 animate-pulse" /
+      /div
 
-      <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 py-6">
+      div className="relative z-10 w-full px-4 py-4"
         {/* Header */}
-        <motion.div
+        motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-8 sm:mb-12"
-        >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 font-space-grotesk">
+          className="text-center mb-4"
+        
+          h1 className="text-2xl font-bold text-white mb-2 font-space-grotesk"
             Featured Projects
-          </h1>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto">
+          /h1
+          p className="text-sm text-gray-300 max-w-xl mx-auto"
             Showcase of innovative projects built with modern technologies
-          </p>
-        </motion.div>
+          /p
+        /motion.div
 
         {/* Featured Project - MUStudentsUnited */}
         <motion.div
