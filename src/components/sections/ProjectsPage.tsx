@@ -88,7 +88,7 @@ const projects = [
 
 export default function ProjectsPage() {
   return (
-    <div className="relative min-h-screen min-h-[100dvh] bg-gradient-to-br from-slate-900 via-red-900/30 to-slate-900">
+    <div className="relative w-full h-full bg-gradient-to-br from-slate-900 via-red-900/30 to-slate-900">
       {/* Background Animation */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-pink-600/10 animate-pulse" />
