@@ -40,94 +40,94 @@ const expertiseCards = [
 
 export default function SkillsPage() {
   return (
-    div className="w-full h-full overflow-y-auto custom-scrollbar"
+    <div className="w-full h-full overflow-y-auto custom-scrollbar">
       {/* Background Animation */}
-      div className="absolute inset-0 opacity-20"
-        div className="absolute inset-0 bg-gradient-to-r from-yellow-600/10 to-orange-600/10 animate-pulse" /
-      {/* Floating particles */}
-      {[...Array(20)].map((_, i) = (
-        motion.div
-          key={i}
-          className="absolute w-2 h-2 bg-yellow-400/30 rounded-full"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -10, 0],
-            opacity: [0.3, 0.8, 0.3],
-          }}
-          transition={{
-            duration: 3 + Math.random() * 2,
-            repeat: Infinity,
-            delay: Math.random() * 2,
-          }}
-        /
-      ))}
-      /div
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 bg-gradient-to-r from-yellow-600/10 to-orange-600/10 animate-pulse" />
+        {/* Floating particles */}
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-yellow-400/30 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -10, 0],
+              opacity: [0.3, 0.8, 0.3],
+            }}
+            transition={{
+              duration: 3 + Math.random() * 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
 
-      div className="relative z-10 flex flex-col p-3 sm:p-4"
+      <div className="relative z-10 flex flex-col p-3 sm:p-4">
         <div className="text-center mb-6">
           {/* Header */}
-          motion.div
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             className="mb-4"
-          
-          h1 className="text-3xl font-bold text-white mb-4 font-space-grotesk"
-            Expertise Grid
-          /h1
-          p className="text-base text-gray-300 max-w-full mx-auto"
-            Core areas where I excel in building innovative solutions
-          /p
-          /motion.div
-        /div
+          >
+            <h1 className="text-3xl font-bold text-white mb-4 font-space-grotesk">
+              Expertise Grid
+            </h1>
+            <p className="text-base text-gray-300 max-w-full mx-auto">
+              Core areas where I excel in building innovative solutions
+            </p>
+          </motion.div>
+        </div>
 
         {/* Expertise Cards Grid */}
-        div className="grid grid-cols-1 gap-6 max-w-none mx-auto mb-6"
-          {expertiseCards.map((card, index) = {
+        <div className="grid grid-cols-1 gap-6 max-w-none mx-auto mb-6">
+          {expertiseCards.map((card, index) => {
             const IconComponent = card.icon;
             return (
-              motion.div
+              <motion.div
                 key={index}
                 initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.2, duration: 0.8 }}
                 whileHover={{ scale: 1.05, y: -2 }}
                 className={`backdrop-blur-lg bg-gradient-to-br ${card.bgColor} border border-white/20 rounded-xl p-6 hover:bg-white/10 transition-all duration-300 group`}
-              
+              >
                 {/* Icon */}
-                div className={`w-20 h-20 rounded-lg bg-gradient-to-r ${card.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200`}
-                  IconComponent className="text-white text-3xl" /
-                /div
+                <div className={`w-20 h-20 rounded-lg bg-gradient-to-r ${card.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200`}>
+                  <IconComponent className="text-white text-3xl" />
+                </div>
 
                 {/* Content */}
-                h3 className="text-xl font-bold text-white mb-3"
+                <h3 className="text-xl font-bold text-white mb-3">
                   {card.title}
-                /h3
-                p className="text-gray-300 text-sm leading-relaxed mb-4"
+                </h3>
+                <p className="text-gray-300 text-sm leading-relaxed mb-4">
                   {card.description}
-                /p
+                </p>
 
                 {/* Technologies */}
-                div className="flex flex-wrap gap-2"
-                  {card.technologies.map((tech, techIndex) = (
-                    motion.span
+                <div className="flex flex-wrap gap-2">
+                  {card.technologies.map((tech, techIndex) => (
+                    <motion.span
                       key={techIndex}
                       initial={{ opacity: 0, scale: 0 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: (index * 0.2) + (techIndex * 0.1) + 0.5 }}
                       className="px-3 py-2 bg-white/10 backdrop-blur-sm rounded-full text-sm text-gray-200 hover:bg-white/20 transition-colors duration-200"
-                    
+                    >
                       {tech}
-                    /motion.span
+                    </motion.span>
                   ))}
-                /div
-              /motion.div
+                </div>
+              </motion.div>
             );
           })}
-        /div
+        </div>
 
         {/* Bottom Stats */}
         <motion.div
