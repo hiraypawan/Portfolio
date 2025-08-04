@@ -162,30 +162,6 @@ export default function BookPortfolio() {
 
   const CurrentPageComponent = pageComponents[currentPageIndex];
 
-  // Enhanced 3D page flip animation variants
-  const pageVariants = {
-    enter: (direction: string) => ({
-      rotateY: direction === 'forward' ? 180 : -180,
-      opacity: 0,
-      scale: 0.8,
-      transformOrigin: direction === 'forward' ? 'left center' : 'right center',
-      x: direction === 'forward' ? 100 : -100,
-    }),
-    center: {
-      rotateY: 0,
-      opacity: 1,
-      scale: 1,
-      x: 0,
-      transformOrigin: 'center center',
-    },
-    exit: (direction: string) => ({
-      rotateY: direction === 'forward' ? -180 : 180,
-      opacity: 0,
-      scale: 0.8,
-      transformOrigin: direction === 'forward' ? 'right center' : 'left center',
-      x: direction === 'forward' ? -100 : 100,
-    }),
-  };
 
   return (
     <>
@@ -195,62 +171,49 @@ export default function BookPortfolio() {
         onLoadingComplete={() => setIsLoading(false)} 
       />
       
-      {/* Mobile-first scrollable container */}
-      <div className="relative w-full bg-gradient-to-br from-slate-900 to-purple-900">
+      {/* Pagination-based Portfolio - No Scroll Issues */}
+      <div className="relative w-full min-h-[100dvh] bg-gradient-to-br from-slate-900 to-purple-900">
         {/* Animated Cursor - Desktop only */}
         <div className="hidden md:block">
           <AnimatedCursor />
         </div>
       
-        {/* Page transition wrapper */}
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.div
-            key={currentPage}
-            custom={pageVariants}
-            variants={{
-              enter: { opacity: 0, x: direction === 'forward' ? 100 : -100 },
-              center: { opacity: 1, x: 0 },
-              exit: { opacity: 0, x: direction === 'forward' ? -100 : 100 }
-            }}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{
-              duration: 0.5,
-              ease: "easeInOut",
-            }}
-            className="w-full"
-          >
-            {/* Main scrollable container */}
-            <div 
-              className="w-full overflow-y-auto overflow-x-hidden"
-              style={{
-                minHeight: '100dvh',
-                WebkitOverflowScrolling: 'touch',
-                touchAction: 'pan-y pinch-zoom'
+        {/* Simple Page Container with Touch Support */}
+        <div 
+          className="w-full min-h-[100dvh] overflow-y-auto overflow-x-hidden"
+          style={{
+            WebkitOverflowScrolling: 'touch'
+          }}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Page Transition */}
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={currentPageIndex}
+              custom={direction}
+              variants={{
+                enter: { opacity: 0, x: direction === 'forward' ? 50 : -50 },
+                center: { opacity: 1, x: 0 },
+                exit: { opacity: 0, x: direction === 'forward' ? -50 : 50 }
               }}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                duration: 0.3,
+                ease: "easeInOut",
+              }}
+              className="w-full min-h-[100dvh]"
             >
-              <div className="w-full min-h-screen min-h-[100dvh] bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900">
+              <div className="w-full min-h-[100dvh] bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900">
                 <CurrentPageComponent 
-                  onNavigate={(page: number) => {
-                    if (page !== currentPage && !isFlipping) {
-                      setIsFlipping(true);
-                      setDirection(page > currentPage ? 'forward' : 'backward');
-                      playPageFlipSound();
-                      setTimeout(() => {
-                        setCurrentPage(page);
-                        setIsFlipping(false);
-                      }, 300);
-                    }
-                  }}
+                  onNavigate={goToPage}
                 />
               </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
 
       {/* Mobile Navigation - Bottom */}
@@ -258,34 +221,26 @@ export default function BookPortfolio() {
         <div className="flex items-center space-x-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-4 py-2">
           <motion.button
             onClick={prevPage}
-            disabled={isFlipping}
-            className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-50"
+            disabled={isTransitioning || currentPageIndex === 0}
+            className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-30"
             whileTap={{ scale: 0.95 }}
             aria-label="Previous Page"
           >
-            <FaArrowLeft size={16} />
+            <FaChevronLeft size={14} />
           </motion.button>
           
           <div className="flex space-x-1">
             {pageComponents.map((_, index) => (
               <motion.button
                 key={index}
-                onClick={() => {
-                  if (index !== currentPage && !isFlipping) {
-                    setIsFlipping(true);
-                    setDirection(index > currentPage ? 'forward' : 'backward');
-                    playPageFlipSound();
-                    setTimeout(() => {
-                      setCurrentPage(index);
-                      setIsFlipping(false);
-                    }, 300);
-                  }
-                }}
+                onClick={() => goToPage(index)}
+                disabled={isTransitioning}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === currentPage
+                  index === currentPageIndex
                     ? 'bg-white scale-125'
-                    : 'bg-white/40'
+                    : 'bg-white/40 hover:bg-white/60'
                 }`}
+                whileHover={{ scale: 1.2 }}
                 aria-label={`Go to ${pageNames[index]}`}
               />
             ))}
@@ -293,12 +248,12 @@ export default function BookPortfolio() {
           
           <motion.button
             onClick={nextPage}
-            disabled={isFlipping}
-            className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-50"
+            disabled={isTransitioning || currentPageIndex === pageComponents.length - 1}
+            className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-30"
             whileTap={{ scale: 0.95 }}
             aria-label="Next Page"
           >
-            <FaArrowRight size={16} />
+            <FaChevronRight size={14} />
           </motion.button>
         </div>
       </div>
@@ -306,8 +261,8 @@ export default function BookPortfolio() {
       {/* Desktop Navigation Buttons */}
       <motion.button
         onClick={prevPage}
-        disabled={isFlipping}
-        className="hidden md:block absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 z-50 p-3 lg:p-4 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={isTransitioning || currentPageIndex === 0}
+        className="hidden md:block absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 z-50 p-3 lg:p-4 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Previous Page"
@@ -317,8 +272,8 @@ export default function BookPortfolio() {
 
       <motion.button
         onClick={nextPage}
-        disabled={isFlipping}
-        className="hidden md:block absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 z-50 p-3 lg:p-4 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        disabled={isTransitioning || currentPageIndex === pageComponents.length - 1}
+        className="hidden md:block absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 z-50 p-3 lg:p-4 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Next Page"
@@ -350,19 +305,10 @@ export default function BookPortfolio() {
             {pageComponents.map((_, index) => (
               <motion.button
                 key={index}
-                onClick={() => {
-                  if (index !== currentPage && !isFlipping) {
-                    setIsFlipping(true);
-                    setDirection(index > currentPage ? 'forward' : 'backward');
-                    playPageFlipSound();
-                    setTimeout(() => {
-                      setCurrentPage(index);
-                      setIsFlipping(false);
-                    }, 300);
-                  }
-                }}
+                onClick={() => goToPage(index)}
+                disabled={isTransitioning}
                 className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentPage
+                  index === currentPageIndex
                     ? 'bg-white scale-125'
                     : 'bg-white/40 hover:bg-white/60'
                 }`}
@@ -372,7 +318,7 @@ export default function BookPortfolio() {
             ))}
           </div>
           <div className="text-white/80 text-sm font-medium hidden lg:block">
-            {pageNames[currentPage]}
+            {pageNames[currentPageIndex]} ({currentPageIndex + 1}/{pageComponents.length})
           </div>
         </div>
       </div>
