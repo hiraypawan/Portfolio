@@ -121,6 +121,7 @@ export default function BookPortfolio() {
           }}
           drawShadow={true}
           ref={flipBookRef}
+          className="flipbook"
           startPage={0}
           flippingTime={600}
           usePortrait={true}
