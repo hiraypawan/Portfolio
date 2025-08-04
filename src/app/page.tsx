@@ -1,5 +1,5 @@
-import BookPortfolio from '@/components/book-portfolio';
+import PortfolioFlipbook from '@/components/PortfolioFlipbook';
 
 export default function Home() {
-  return <BookPortfolio />;
+  return <PortfolioFlipbook />;
 }
