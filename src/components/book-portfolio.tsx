@@ -35,22 +35,23 @@ export default function BookPortfolio() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  return (
-    <div className="w-full min-h-screen min-h-[100dvh] flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-2 sm:p-4 md:p-6 lg:p-8">
-      <AnimatedCursor />
-      <div
+	return (
+    	<div className="w-full min-h-screen min-h-[100dvh] flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-2 sm:p-4 md:p-6 lg:p-8">
+      	<AnimatedCursor />
+      	<div
         ref={mouseTrailRef}
         className="fixed w-64 h-64 sm:w-96 sm:h-96 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none z-0"
         style={{ transition: 'transform 0.1s ease', transform: 'translate(-50%, -50%)' }}
-      />
-      <AnimatePresence mode="wait">
-        <motion.div
+      	/>
+      	<AnimatePresence mode="popLayout">
+      		<motion.div
           key={pageIndex}
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: -20 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          initial={{ opacity: 0, rotateY: -90 }}
+          animate={{ opacity: 1, rotateY: 0 }}
+          exit={{ opacity: 0, rotateY: 90 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
           className="w-full max-w-sm sm:max-w-2xl md:max-w-4xl lg:max-w-6xl xl:max-w-7xl bg-white/10 backdrop-blur-lg border border-white/20 p-4 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl shadow-2xl z-10 relative overflow-hidden"
+          style={{ transformStyle: 'preserve-3d' }}
         >
           <div className="w-full h-full overflow-y-auto max-h-[85vh] scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
             {pages[pageIndex].component}
