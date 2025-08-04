@@ -65,7 +65,7 @@ const milestones = [
 
 export default function StoryPage() {
   return (
-    <div className="relative w-full bg-gradient-to-br from-slate-900 via-indigo-900 to-slate-900">
+<div className="w-full">
       {/* Background Animation */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-purple-600/10 animate-pulse" />

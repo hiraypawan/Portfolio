@@ -1,356 +1,58 @@
 'use client';
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaArrowLeft, FaArrowRight, FaVolumeUp, FaVolumeMute, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import CoverPage from './sections/CoverPage';
 import IndexPage from './sections/IndexPage';
 import StoryPage from './sections/StoryPage';
 import ProjectsPage from './sections/ProjectsPage';
 import SkillsPage from './sections/SkillsPage';
 import ContactPage from './sections/ContactPage';
-import AnimatedCursor from './ui/AnimatedCursor';
-import BookLoader from './ui/BookLoader';
 
-const pageComponents = [
-  CoverPage,
-  IndexPage,
-  StoryPage,
-  ProjectsPage,
-  SkillsPage,
-  ContactPage,
-];
-
-const pageNames = [
-  'Cover',
-  'Index',
-  'My Story',
-  'Projects',
-  'Skills',
-  'Contact',
+const pages = [
+  { name: 'Cover', component: <CoverPage /> },
+  { name: 'Index', component: <IndexPage /> },
+  { name: 'My Story', component: <StoryPage /> },
+  { name: 'Projects', component: <ProjectsPage /> },
+  { name: 'Skills', component: <SkillsPage /> },
+  { name: 'Contact', component: <ContactPage /> },
 ];
 
 export default function BookPortfolio() {
-  const [currentPageIndex, setCurrentPageIndex] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(true);
-  const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Audio reference for better performance
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  
-  // Touch handling refs for swipe navigation
-  const touchStartX = useRef<number>(0);
-  const touchStartY = useRef<number>(0);
-  const touchStartTime = useRef<number>(0);
-
-  // Initialize audio on component mount
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        audioRef.current = new Audio('/sounds/page-flip.mp3');
-        audioRef.current.volume = 0.3;
-        audioRef.current.preload = 'auto';
-      } catch (error) {
-        console.warn('Audio initialization failed:', error);
-      }
-    }
-  }, []);
-
-  // Play page flip sound
-  const playPageFlipSound = useCallback(() => {
-    if (soundEnabled && audioRef.current) {
-      try {
-        // Reset audio to beginning for rapid clicks
-        audioRef.current.currentTime = 0;
-        audioRef.current.play().catch((error) => {
-          console.warn('Audio playback failed:', error);
-        });
-      } catch (error) {
-        console.warn('Audio play error:', error);
-      }
-    }
-  }, [soundEnabled]);
-
-  const nextPage = useCallback(() => {
-    if (isTransitioning || currentPageIndex >= pageComponents.length - 1) return;
-    setIsTransitioning(true);
-    setDirection('forward');
-    playPageFlipSound();
-    setTimeout(() => {
-      setCurrentPageIndex(prev => prev + 1);
-      setIsTransitioning(false);
-    }, 200);
-  }, [isTransitioning, currentPageIndex, playPageFlipSound]);
-
-  const prevPage = useCallback(() => {
-    if (isTransitioning || currentPageIndex <= 0) return;
-    setIsTransitioning(true);
-    setDirection('backward');
-    playPageFlipSound();
-    setTimeout(() => {
-      setCurrentPageIndex(prev => prev - 1);
-      setIsTransitioning(false);
-    }, 200);
-  }, [isTransitioning, currentPageIndex, playPageFlipSound]);
-
-  const goToPage = useCallback((pageIndex: number) => {
-    if (isTransitioning || pageIndex === currentPageIndex) return;
-    setIsTransitioning(true);
-    setDirection(pageIndex > currentPageIndex ? 'forward' : 'backward');
-    playPageFlipSound();
-    setTimeout(() => {
-      setCurrentPageIndex(pageIndex);
-      setIsTransitioning(false);
-    }, 200);
-  }, [isTransitioning, currentPageIndex, playPageFlipSound]);
-
-
-  // Simplified touch handlers for swipe navigation
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    const touch = e.touches[0];
-    touchStartX.current = touch.clientX;
-    touchStartY.current = touch.clientY;
-    touchStartTime.current = Date.now();
-  }, []);
-
-  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (!touchStartX.current || isTransitioning) return;
-    
-    const touch = e.changedTouches[0];
-    const deltaX = touch.clientX - touchStartX.current;
-    const deltaY = Math.abs(touch.clientY - touchStartY.current);
-    const deltaTime = Date.now() - touchStartTime.current;
-    
-    // Only trigger page change for clear horizontal swipes
-    const isHorizontalSwipe = Math.abs(deltaX) > 80 && 
-                             Math.abs(deltaX) > deltaY * 2 && 
-                             deltaTime < 500;
-    
-    if (isHorizontalSwipe) {
-      if (deltaX > 0) {
-        // Swipe right - go to previous page
-        prevPage();
-      } else {
-        // Swipe left - go to next page  
-        nextPage();
-      }
-    }
-    
-    // Reset values
-    touchStartX.current = 0;
-    touchStartY.current = 0;
-    touchStartTime.current = 0;
-  }, [isTransitioning, nextPage, prevPage]);
-
-  // Keyboard navigation
-  useEffect(() => {
-    const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight' || e.key === ' ') {
-        e.preventDefault();
-        nextPage();
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        prevPage();
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [nextPage, prevPage]);
-
-  const CurrentPageComponent = pageComponents[currentPageIndex];
-
+  const [pageIndex, setPageIndex] = useState(0);
 
   return (
-    <>
-      {/* Book Loader */}
-      <BookLoader 
-        isLoading={isLoading} 
-        onLoadingComplete={() => setIsLoading(false)} 
-      />
-      
-      {/* Pagination-based Portfolio - No Scroll Issues */}
-      <div className="relative w-full min-h-[100dvh] bg-gradient-to-br from-slate-900 to-purple-900">
-        {/* Animated Cursor - Desktop only */}
-        <div className="hidden md:block">
-          <AnimatedCursor />
-        </div>
-      
-        {/* Page Container with Proper Scrolling */}
-        <div className="w-full h-[100dvh] relative overflow-hidden">
-          {/* Page Transition */}
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={currentPageIndex}
-              custom={direction}
-              variants={{
-                enter: { opacity: 0, x: direction === 'forward' ? 50 : -50 },
-                center: { opacity: 1, x: 0 },
-                exit: { opacity: 0, x: direction === 'forward' ? -50 : 50 }
-              }}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                duration: 0.3,
-                ease: "easeInOut",
-              }}
-              className="w-full h-full absolute inset-0"
-            >
-              {/* Scrollable Content Area with Touch Handlers */}
-              <div 
-                className="w-full h-full overflow-y-auto overflow-x-hidden bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900"
-                style={{
-                  WebkitOverflowScrolling: 'touch'
-                }}
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-              >
-                <div className="min-h-full">
-                  <CurrentPageComponent 
-                    onNavigate={goToPage}
-                  />
-                </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </div>
-
-      {/* Mobile Navigation - Bottom */}
-      <div className="md:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
-        <div className="flex items-center space-x-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-4 py-2">
-          <motion.button
-            onClick={prevPage}
-            disabled={isTransitioning || currentPageIndex === 0}
-            className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-30"
-            whileTap={{ scale: 0.95 }}
-            aria-label="Previous Page"
-          >
-            <FaChevronLeft size={14} />
-          </motion.button>
-          
-          <div className="flex space-x-1">
-            {pageComponents.map((_, index) => (
-              <motion.button
-                key={index}
-                onClick={() => goToPage(index)}
-                disabled={isTransitioning}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === currentPageIndex
-                    ? 'bg-white scale-125'
-                    : 'bg-white/40 hover:bg-white/60'
-                }`}
-                whileHover={{ scale: 1.2 }}
-                aria-label={`Go to ${pageNames[index]}`}
-              />
-            ))}
-          </div>
-          
-          <motion.button
-            onClick={nextPage}
-            disabled={isTransitioning || currentPageIndex === pageComponents.length - 1}
-            className="p-2 rounded-full bg-white/10 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-30"
-            whileTap={{ scale: 0.95 }}
-            aria-label="Next Page"
-          >
-            <FaChevronRight size={14} />
-          </motion.button>
-        </div>
-      </div>
-
-      {/* Desktop Navigation Buttons */}
-      <motion.button
-        onClick={prevPage}
-        disabled={isTransitioning || currentPageIndex === 0}
-        className="hidden md:block absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 z-50 p-3 lg:p-4 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label="Previous Page"
+    <div className="w-full min-h-[100dvh] flex flex-col items-center justify-center bg-gradient-to-br from-slate-900 to-purple-900 px-4 py-8">
+      <motion.div
+        key={pageIndex}
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 1, x: 0 }}
+        exit={{ opacity: 0, x: -50 }}
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-6xl bg-white/10 backdrop-blur-lg border border-white/20 p-6 rounded-2xl shadow-xl"
       >
-        <FaArrowLeft size={20} />
-      </motion.button>
+        {pages[pageIndex].component}
+      </motion.div>
 
-      <motion.button
-        onClick={nextPage}
-        disabled={isTransitioning || currentPageIndex === pageComponents.length - 1}
-        className="hidden md:block absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 z-50 p-3 lg:p-4 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label="Next Page"
-      >
-        <FaArrowRight size={20} />
-      </motion.button>
-
-      {/* Folded Page Corner - Mobile */}
-      <div className="md:hidden fixed bottom-0 right-0 z-40">
-        <motion.div
-          onClick={nextPage}
-          className="relative w-16 h-16 cursor-pointer overflow-hidden"
-          whileTap={{ scale: 0.95 }}
+      <div className="mt-6 flex gap-4">
+        <button
+          className="px-6 py-3 bg-gray-800 text-white rounded-xl disabled:opacity-50 hover:bg-gray-700 transition-colors"
+          onClick={() => setPageIndex((prev) => Math.max(0, prev - 1))}
+          disabled={pageIndex === 0}
         >
-          {/* Folded corner triangle */}
-          <div className="absolute bottom-0 right-0 w-16 h-16">
-            <div className="absolute bottom-0 right-0 w-0 h-0 border-l-16 border-b-16 border-l-transparent border-b-white/20"></div>
-            <div className="absolute bottom-0 right-0 w-0 h-0 border-l-12 border-b-12 border-l-transparent border-b-white/10"></div>
-          </div>
-          {/* Page curl shadow */}
-          <div className="absolute bottom-0 right-0 w-4 h-4 bg-gradient-to-tl from-black/30 to-transparent"></div>
-        </motion.div>
-      </div>
-
-      {/* Desktop Page Indicator */}
-      <div className="hidden md:block absolute bottom-6 lg:bottom-8 left-1/2 transform -translate-x-1/2 z-50">
-        <div className="flex items-center space-x-4 bg-white/10 backdrop-blur-lg border border-white/20 rounded-full px-4 lg:px-6 py-2 lg:py-3">
-          <div className="flex space-x-2">
-            {pageComponents.map((_, index) => (
-              <motion.button
-                key={index}
-                onClick={() => goToPage(index)}
-                disabled={isTransitioning}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentPageIndex
-                    ? 'bg-white scale-125'
-                    : 'bg-white/40 hover:bg-white/60'
-                }`}
-                whileHover={{ scale: 1.2 }}
-                aria-label={`Go to ${pageNames[index]}`}
-              />
-            ))}
-          </div>
-          <div className="text-white/80 text-sm font-medium hidden lg:block">
-            {pageNames[currentPageIndex]} ({currentPageIndex + 1}/{pageComponents.length})
-          </div>
+          Previous
+        </button>
+        <div className="px-4 py-3 text-white/80 text-sm font-medium bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl">
+          {pages[pageIndex].name} ({pageIndex + 1}/{pages.length})
         </div>
+        <button
+          className="px-6 py-3 bg-blue-600 text-white rounded-xl disabled:opacity-50 hover:bg-blue-700 transition-colors"
+          onClick={() => setPageIndex((prev) => Math.min(pages.length - 1, prev + 1))}
+          disabled={pageIndex === pages.length - 1}
+        >
+          Next
+        </button>
       </div>
-
-      {/* Sound Toggle */}
-      <motion.button
-        onClick={() => setSoundEnabled(!soundEnabled)}
-        className="absolute top-4 right-4 lg:top-8 lg:right-8 z-50 p-2 lg:p-3 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        aria-label={soundEnabled ? 'Mute Sound' : 'Enable Sound'}
-      >
-        {soundEnabled ? <FaVolumeUp size={16} /> : <FaVolumeMute size={16} />}
-      </motion.button>
-
-      {/* Keyboard Hints - Desktop only */}
-      <div className="hidden lg:block absolute top-4 lg:top-8 left-4 lg:left-8 z-50 text-white/60 text-xs lg:text-sm">
-        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-2 lg:p-3">
-          <div>← → Arrow keys to navigate</div>
-          <div>Space bar for next page</div>
-        </div>
-      </div>
-
-      {/* Mobile swipe indicator */}
-      <div className="md:hidden absolute top-4 left-1/2 transform -translate-x-1/2 z-50 text-white/60 text-xs">
-        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg px-3 py-1">
-          Swipe horizontally or use buttons to navigate
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
