@@ -6,7 +6,7 @@
   overflow: hidden;
   background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
   position: relative;
-  padding: 20px;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -19,16 +19,15 @@
 }
 
 .flipbook {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-  border-radius: 16px;
+  box-shadow: none;
+  border-radius: 0;
   overflow: visible;
 }
 
 .page {
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
   overflow: hidden;
   position: relative;
 }

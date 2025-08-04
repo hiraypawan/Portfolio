@@ -71,7 +71,7 @@ export default function BookPortfolio() {
   }, [touchStartX, touchEndX]);
 
   return (
-		<div className="book-page min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-y-auto px-4 py-8 box-border">
+		<div className="book-page min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden px-4 py-8 box-border">
     		<AnimatedCursor />
     		<div ref={mouseTrailRef} className="fixed w-64 h-64 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl pointer-events-none" style={{ transition: 'transform 0.1s ease' }}/>
     		<AnimatePresence mode="popLayout">
@@ -81,7 +81,7 @@ export default function BookPortfolio() {
 				animate={{ opacity: 1, rotateY: 0 }}
 				exit={{ opacity: 0, rotateY: 90 }}
 				transition={{ duration: 0.6, ease: "easeInOut" }}
-				className="card w-full max-w-4xl bg-white/5 backdrop-blur-xl border border-white/30 rounded-3xl shadow-2xl p-8 overflow-auto flex-shrink-0"
+				className="card w-full max-w-4xl bg-white/5 backdrop-blur-xl border border-white/30 rounded-3xl shadow-2xl p-8 overflow-hidden flex-shrink-0"
 			style={{ transformStyle: 'preserve-3d', overflowWrap: 'break-word', wordBreak: 'break-word' }}
 			>
 				<div className="w-full">

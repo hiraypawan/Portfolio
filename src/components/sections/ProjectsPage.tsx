@@ -88,7 +88,7 @@ const projects = [
 
 export default function ProjectsPage() {
   return (
-    <div className="w-full h-full overflow-y-auto custom-scrollbar">
+    <div className="w-full h-full overflow-hidden">
       {/* Background Animation */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-pink-600/10 animate-pulse" />

@@ -40,7 +40,7 @@ const expertiseCards = [
 
 export default function SkillsPage() {
   return (
-    <div className="w-full h-full overflow-y-auto custom-scrollbar">
+    <div className="w-full h-full overflow-hidden">
       {/* Background Animation */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-r from-yellow-600/10 to-orange-600/10 animate-pulse" />
