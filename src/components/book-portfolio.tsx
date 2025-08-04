@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaArrowLeft, FaArrowRight, FaVolumeUp, FaVolumeMute } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight, FaVolumeUp, FaVolumeMute, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import CoverPage from './sections/CoverPage';
 import IndexPage from './sections/IndexPage';
 import StoryPage from './sections/StoryPage';
@@ -31,8 +31,8 @@ const pageNames = [
 ];
 
 export default function BookPortfolio() {
-  const [currentPage, setCurrentPage] = useState(0);
-  const [isFlipping, setIsFlipping] = useState(false);
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [direction, setDirection] = useState<'forward' | 'backward'>('forward');
   const [isLoading, setIsLoading] = useState(true);
@@ -40,11 +40,10 @@ export default function BookPortfolio() {
   // Audio reference for better performance
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
-  // Touch handling refs
+  // Touch handling refs for swipe navigation
   const touchStartX = useRef<number>(0);
   const touchStartY = useRef<number>(0);
   const touchStartTime = useRef<number>(0);
-  const isDragging = useRef<boolean>(false);
 
   // Initialize audio on component mount
   useEffect(() => {
@@ -75,55 +74,49 @@ export default function BookPortfolio() {
   }, [soundEnabled]);
 
   const nextPage = useCallback(() => {
-    if (isFlipping) return;
-    setIsFlipping(true);
+    if (isTransitioning || currentPageIndex >= pageComponents.length - 1) return;
+    setIsTransitioning(true);
     setDirection('forward');
     playPageFlipSound();
     setTimeout(() => {
-      setCurrentPage((prevPage) => (prevPage + 1) % pageComponents.length);
-      setIsFlipping(false);
-    }, 300);
-  }, [isFlipping, playPageFlipSound]);
+      setCurrentPageIndex(prev => prev + 1);
+      setIsTransitioning(false);
+    }, 200);
+  }, [isTransitioning, currentPageIndex, playPageFlipSound]);
 
   const prevPage = useCallback(() => {
-    if (isFlipping) return;
-    setIsFlipping(true);
+    if (isTransitioning || currentPageIndex <= 0) return;
+    setIsTransitioning(true);
     setDirection('backward');
     playPageFlipSound();
     setTimeout(() => {
-      setCurrentPage((prevPage) => (prevPage - 1 + pageComponents.length) % pageComponents.length);
-      setIsFlipping(false);
-    }, 300);
-  }, [isFlipping, playPageFlipSound]);
+      setCurrentPageIndex(prev => prev - 1);
+      setIsTransitioning(false);
+    }, 200);
+  }, [isTransitioning, currentPageIndex, playPageFlipSound]);
+
+  const goToPage = useCallback((pageIndex: number) => {
+    if (isTransitioning || pageIndex === currentPageIndex) return;
+    setIsTransitioning(true);
+    setDirection(pageIndex > currentPageIndex ? 'forward' : 'backward');
+    playPageFlipSound();
+    setTimeout(() => {
+      setCurrentPageIndex(pageIndex);
+      setIsTransitioning(false);
+    }, 200);
+  }, [isTransitioning, currentPageIndex, playPageFlipSound]);
 
 
-  // Smart touch handlers - only handle horizontal swipes, allow vertical scrolling
+  // Simplified touch handlers for swipe navigation
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     const touch = e.touches[0];
     touchStartX.current = touch.clientX;
     touchStartY.current = touch.clientY;
     touchStartTime.current = Date.now();
-    isDragging.current = false;
-  }, []);
-
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (!touchStartX.current) return;
-    
-    const touch = e.touches[0];
-    const deltaX = Math.abs(touch.clientX - touchStartX.current);
-    const deltaY = Math.abs(touch.clientY - touchStartY.current);
-    
-    // Only consider it dragging if horizontal movement is significant
-    if (deltaX > 15 && deltaX > deltaY * 2) {
-      isDragging.current = true;
-      // Only prevent default for clear horizontal swipes
-      e.preventDefault();
-      e.stopPropagation();
-    }
   }, []);
 
   const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (!touchStartX.current || isFlipping) return;
+    if (!touchStartX.current || isTransitioning) return;
     
     const touch = e.changedTouches[0];
     const deltaX = touch.clientX - touchStartX.current;
@@ -131,8 +124,8 @@ export default function BookPortfolio() {
     const deltaTime = Date.now() - touchStartTime.current;
     
     // Only trigger page change for clear horizontal swipes
-    const isHorizontalSwipe = Math.abs(deltaX) > 50 && 
-                             Math.abs(deltaX) > deltaY * 1.5 && 
+    const isHorizontalSwipe = Math.abs(deltaX) > 80 && 
+                             Math.abs(deltaX) > deltaY * 2 && 
                              deltaTime < 500;
     
     if (isHorizontalSwipe) {
@@ -149,8 +142,7 @@ export default function BookPortfolio() {
     touchStartX.current = 0;
     touchStartY.current = 0;
     touchStartTime.current = 0;
-    isDragging.current = false;
-  }, [isFlipping, nextPage, prevPage]);
+  }, [isTransitioning, nextPage, prevPage]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -168,7 +160,7 @@ export default function BookPortfolio() {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [nextPage, prevPage]);
 
-  const CurrentPageComponent = pageComponents[currentPage];
+  const CurrentPageComponent = pageComponents[currentPageIndex];
 
   // Enhanced 3D page flip animation variants
   const pageVariants = {
