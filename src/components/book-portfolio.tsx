@@ -23,19 +23,33 @@ const pages = [
 export default function BookPortfolio() {
   const [currentPage, setCurrentPage] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [dimensions, setDimensions] = useState({ width: 900, height: 700 });
   const mouseTrailRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const flipBookRef = useRef<any>(null);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const updateDimensions = () => {
+      const isMobileDevice = window.innerWidth < 768;
+      setIsMobile(isMobileDevice);
+      
+      if (isMobileDevice) {
+        setDimensions({
+          width: Math.min(window.innerWidth - 40, 380),
+          height: Math.min(window.innerHeight - 120, 600)
+        });
+      } else {
+        setDimensions({
+          width: Math.min(window.innerWidth - 200, 1000),
+          height: Math.min(window.innerHeight - 180, 750)
+        });
+      }
     };
     
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
     
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', updateDimensions);
   }, []);
 
   useEffect(() => {
@@ -85,16 +99,16 @@ export default function BookPortfolio() {
       )}
 
       {/* React PageFlip Book */}
-      <div className="relative z-10">
+      <div className="relative z-10 flex items-center justify-center w-full h-full">
         <HTMLFlipBook
           ref={flipBookRef}
-          width={isMobile ? 320 : 480}
-          height={isMobile ? 520 : 680}
+          width={dimensions.width}
+          height={dimensions.height}
           size="stretch"
           minWidth={300}
-          maxWidth={800}
+          maxWidth={1200}
           minHeight={400}
-          maxHeight={1000}
+          maxHeight={800}
           showCover={true}
           mobileScrollSupport={true}
           useMouseEvents={true}
@@ -111,11 +125,11 @@ export default function BookPortfolio() {
           maxShadowOpacity={0.3}
           onFlip={handleFlip}
           className="drop-shadow-2xl"
-          style={{ margin: '0 auto' }}
+          style={{ margin: '0 auto', display: 'block' }}
         >
           {pages.map((page, index) => (
-            <div key={index} className="w-full h-full bg-white/5 backdrop-blur-xl border border-white/30 rounded-3xl shadow-2xl overflow-hidden" style={{ transformStyle: 'preserve-3d' }}>
-              <div className="w-full h-full p-6 overflow-hidden">
+            <div key={index} className="w-full h-full bg-white/5 backdrop-blur-xl border border-white/30 rounded-2xl shadow-2xl overflow-hidden" style={{ transformStyle: 'preserve-3d' }}>
+              <div className="w-full h-full p-3 sm:p-4 md:p-6 overflow-y-auto custom-scrollbar" style={{ maxHeight: '100%' }}>
                 {page.component}
               </div>
             </div>
