@@ -75,18 +75,18 @@ export default function BookPortfolio() {
 
           <HTMLFlipBook
             ref={flipBookRef}
-            width={isMobile ? Math.min(window.innerWidth - 20, 500) : 250}
-            height={isMobile ? Math.min(window.innerHeight - 40, 800) : 350}
+            width={isMobile ? Math.min(window.innerWidth - 20, 500) : 400}
+            height={isMobile ? Math.min(window.innerHeight - 40, 800) : 500}
             size="stretch"
-            minWidth={isMobile ? 350 : 200}
-            maxWidth={isMobile ? 1000 : 500}
-            minHeight={isMobile ? 600 : 300}
-            maxHeight={isMobile ? 1200 : 600}
+            minWidth={isMobile ? 350 : 300}
+            maxWidth={isMobile ? 1000 : 800}
+            minHeight={isMobile ? 600 : 400}
+            maxHeight={isMobile ? 1200 : 800}
             maxShadowOpacity={0.3}
             showCover={true}
             mobileScrollSupport={true}
-            className="demo-book mobile-optimized"
-            style={{ touchAction: 'auto' }}
+            className={`demo-book ${isMobile ? 'mobile-optimized' : ''}`}
+            style={{ touchAction: isMobile ? 'pan-y' : 'auto' }}
             startPage={0}
             drawShadow={true}
             flippingTime={800}
@@ -97,7 +97,7 @@ export default function BookPortfolio() {
             useMouseEvents={!isMobile}
             swipeDistance={isMobile ? 100 : 30}
             showPageCorners={!isMobile}
-            disableFlipByClick={isMobile}
+            disableFlipByClick={false}
             onFlip={handleFlip}
           >
             {pages.map((page, index) => (
@@ -113,7 +113,7 @@ export default function BookPortfolio() {
                   overflowY: 'auto',
                   overflowX: 'hidden',
                   WebkitOverflowScrolling: 'touch',
-                  touchAction: 'auto'
+                  touchAction: isMobile ? 'pan-y' : 'auto'
                 }}
               >
                 <div className="flex-1" style={{

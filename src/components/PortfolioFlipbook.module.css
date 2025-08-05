@@ -10,7 +10,7 @@
   padding: 20px;
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
-  touch-action: auto;
+  touch-action: pan-y;
 }
 
 .flipbookWrapper {
@@ -42,7 +42,7 @@
   overflow-x: hidden;
   position: relative;
   -webkit-overflow-scrolling: touch;
-  touch-action: auto;
+  touch-action: pan-y;
 }
 
 /* Navigation Buttons */
