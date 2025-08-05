@@ -22,6 +22,7 @@ const pages = [
 export default function BookPortfolio() {
   const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
   const [currentPage, setCurrentPage] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const flipBookRef = useRef<any>(null);
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function BookPortfolio() {
     }
   };
 
-  const handleFlip = (e: any) => {
+  const handleFlip = (e: { data: number }) => {
     setCurrentPage(e.data);
   };
 

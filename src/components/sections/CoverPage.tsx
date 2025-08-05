@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { FaCode, FaBrain, FaRocket, FaGithub, FaLinkedin, FaEnvelope, FaGlobe } from 'react-icons/fa';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 interface CoverPageProps {
   onNavigate?: (page: number) => void;
@@ -16,11 +16,10 @@ const floatingIcons = [
 ];
 
 export default function CoverPage({ onNavigate }: CoverPageProps) {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    const handleMouseMove = (_e: MouseEvent) => {
+      // Mouse position tracking for future interactive effects
+      // Currently unused but ready for enhancement
     };
 
     window.addEventListener('mousemove', handleMouseMove);
