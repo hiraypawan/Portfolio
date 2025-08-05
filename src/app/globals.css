@@ -157,8 +157,9 @@ html {
     position: relative;
     overflow-x: hidden;
     overflow-y: auto;
-    height: 100vh;
-    height: 100dvh;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
     touch-action: pan-y pan-x;
   }
   
@@ -166,8 +167,9 @@ html {
   .mobile-scroll {
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
-    height: 100vh;
-    height: 100dvh;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
     touch-action: pan-y;
   }
   
@@ -175,10 +177,10 @@ html {
   .scrollable-content {
     overflow-y: auto !important;
     -webkit-overflow-scrolling: touch;
-    height: 100vh;
-    height: 100dvh;
-    max-height: 100vh;
-    max-height: 100dvh;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-height: none;
     touch-action: pan-y;
   }
   
@@ -202,6 +204,21 @@ html {
     -webkit-overflow-scrolling: touch;
     overflow-y: auto;
     height: 100%;
+    min-height: 100%;
+  }
+  
+  /* Flipbook specific mobile fixes */
+  .demo-book {
+    touch-action: pan-x pan-y !important;
+  }
+  
+  .demo-book .page {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y !important;
+    height: 100%;
+    max-height: none;
   }
 }
 

@@ -87,13 +87,13 @@ export default function PortfolioFlipbook() {
       <div className={styles.flipbookWrapper}>
         <HTMLFlipBook
           ref={flipBookRef}
-          width={isMobile ? 300 : 400}
-          height={isMobile ? 500 : 600}
+          width={isMobile ? Math.min(window.innerWidth - 20, 500) : 500}
+          height={isMobile ? Math.min(window.innerHeight - 40, 800) : 700}
           size="stretch"
-          minWidth={280}
-          maxWidth={800}
-          minHeight={400}
-          maxHeight={1000}
+          minWidth={350}
+          maxWidth={1000}
+          minHeight={600}
+          maxHeight={1200}
           showCover={true}
           mobileScrollSupport={true}
           useMouseEvents={true}
@@ -101,7 +101,7 @@ export default function PortfolioFlipbook() {
           swipeDistance={30}
           showPageCorners={true}
           disableFlipByClick={false}
-          style={{ margin: '0 auto' }}
+          style={{ margin: '0 auto', touchAction: 'pan-x pan-y' }}
           onFlip={handleFlip}
           className={styles.flipbook}
           startPage={0}
@@ -113,8 +113,18 @@ export default function PortfolioFlipbook() {
           maxShadowOpacity={0.5}
         >
           {pages.map((page, index) => (
-            <div key={index} className={styles.page}>
-              <div className={styles.pageContent}>
+            <div key={index} className={styles.page} style={{
+              overflowY: 'auto',
+              overflowX: 'hidden',
+              WebkitOverflowScrolling: 'touch',
+              touchAction: 'pan-y'
+            }}>
+              <div className={styles.pageContent} style={{
+                overflowY: 'auto',
+                overflowX: 'hidden',
+                WebkitOverflowScrolling: 'touch',
+                height: '100%'
+              }}>
                 {page.component}
               </div>
             </div>

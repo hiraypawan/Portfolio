@@ -43,20 +43,25 @@ export default function BookPortfolio() {
 
     return (
 <div
-          className={`flex justify-center items-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden ${
-            isMobile ? 'p-2' : 'p-6'
+          className={`flex justify-center items-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 ${
+            isMobile ? 'p-2 overflow-y-auto overflow-x-hidden' : 'p-6 overflow-hidden'
           }`}
+          style={{
+            height: isMobile ? 'auto' : '100vh',
+            minHeight: '100vh',
+            touchAction: isMobile ? 'pan-y' : 'auto'
+          }}
         >
           <AnimatedCursor />
 
           <HTMLFlipBook
-            width={isMobile ? Math.min(window.innerWidth - 10, 400) : 400}
-            height={isMobile ? Math.min(window.innerHeight - 20, 700) : 600}
+            width={isMobile ? Math.min(window.innerWidth - 20, 500) : 500}
+            height={isMobile ? Math.min(window.innerHeight - 40, 800) : 700}
             size="stretch"
-            minWidth={300}
-            maxWidth={900}
-            minHeight={500}
-            maxHeight={1000}
+            minWidth={350}
+            maxWidth={1000}
+            minHeight={600}
+            maxHeight={1200}
             maxShadowOpacity={0.3}
             showCover={true}
             mobileScrollSupport={true}
@@ -77,15 +82,25 @@ export default function BookPortfolio() {
             {pages.map((page, index) => (
               <div
                 key={index}
-                className="page flex flex-col p-6 bg-gradient-to-br from-purple-900 to-slate-900 border border-indigo-500/30 shadow-lg text-white overflow-y-auto"
+                className="page flex flex-col p-4 sm:p-6 bg-gradient-to-br from-purple-900 to-slate-900 border border-indigo-500/30 shadow-lg text-white"
                 style={{
                   minHeight: '100%',
+                  height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'flex-start'
+                  justifyContent: 'flex-start',
+                  overflowY: 'auto',
+                  overflowX: 'hidden',
+                  WebkitOverflowScrolling: 'touch',
+                  touchAction: 'pan-y'
                 }}
               >
-                <div className="flex-1 overflow-y-auto">
+                <div className="flex-1" style={{
+                  overflowY: 'auto',
+                  overflowX: 'hidden',
+                  WebkitOverflowScrolling: 'touch',
+                  height: '100%'
+                }}>
                   {page.component}
                 </div>
               </div>

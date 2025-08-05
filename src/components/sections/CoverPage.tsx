@@ -66,14 +66,15 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 md:p-10 shadow-2xl w-full max-w-full"
+          className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 md:p-12 shadow-2xl w-full max-w-full"
+          style={{ minHeight: 'fit-content' }}
         >
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
             className="font-bold text-white mb-4 font-space-grotesk"
-            style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)' }}
+            style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)' }}
           >
             Hi, I&apos;m Pawan Hiray <span className="wave">👋</span>
           </motion.h1>
@@ -82,7 +83,7 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="text-sm sm:text-base md:text-lg text-gray-100 mb-4 font-light"
+            className="text-base sm:text-lg md:text-xl text-gray-100 mb-6 font-light"
           >
             Tech Builder • Web3 & AI Specialist • Growth Hacker
           </motion.div>
@@ -91,7 +92,7 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.8 }}
-            className="text-gray-200 text-xs sm:text-sm md:text-base leading-relaxed mb-6"
+            className="text-gray-200 text-sm sm:text-base md:text-lg leading-relaxed mb-8"
           >
             I&apos;m a multi-skilled developer passionate about building automation tools,
             <br />
