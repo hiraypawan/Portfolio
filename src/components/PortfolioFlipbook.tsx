@@ -87,13 +87,13 @@ export default function PortfolioFlipbook() {
       <div className={styles.flipbookWrapper}>
         <HTMLFlipBook
           ref={flipBookRef}
-          width={isMobile ? Math.min(window.innerWidth - 20, 500) : 500}
-          height={isMobile ? Math.min(window.innerHeight - 40, 800) : 700}
+          width={isMobile ? Math.min(window.innerWidth - 20, 500) : 250}
+          height={isMobile ? Math.min(window.innerHeight - 40, 800) : 350}
           size="stretch"
-          minWidth={350}
-          maxWidth={1000}
-          minHeight={600}
-          maxHeight={1200}
+          minWidth={isMobile ? 350 : 200}
+          maxWidth={isMobile ? 1000 : 500}
+          minHeight={isMobile ? 600 : 300}
+          maxHeight={isMobile ? 1200 : 600}
           showCover={true}
           mobileScrollSupport={true}
           useMouseEvents={true}
@@ -101,7 +101,7 @@ export default function PortfolioFlipbook() {
           swipeDistance={30}
           showPageCorners={true}
           disableFlipByClick={false}
-          style={{ margin: '0 auto', touchAction: 'pan-y slide-y' }}
+          style={{ margin: '0 auto', touchAction: 'auto' }}
           onFlip={handleFlip}
           className={styles.flipbook}
           startPage={0}
@@ -117,7 +117,7 @@ export default function PortfolioFlipbook() {
               overflowY: 'auto',
               overflowX: 'hidden',
               WebkitOverflowScrolling: 'touch',
-              touchAction: 'pan-y'
+              touchAction: 'auto'
             }}>
               <div className={styles.pageContent} style={{
                 overflowY: 'auto',

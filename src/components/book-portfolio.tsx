@@ -75,18 +75,18 @@ export default function BookPortfolio() {
 
           <HTMLFlipBook
             ref={flipBookRef}
-            width={isMobile ? Math.min(window.innerWidth - 20, 500) : 500}
-            height={isMobile ? Math.min(window.innerHeight - 40, 800) : 700}
+            width={isMobile ? Math.min(window.innerWidth - 20, 500) : 250}
+            height={isMobile ? Math.min(window.innerHeight - 40, 800) : 350}
             size="stretch"
-            minWidth={350}
-            maxWidth={1000}
-            minHeight={600}
-            maxHeight={1200}
+            minWidth={isMobile ? 350 : 200}
+            maxWidth={isMobile ? 1000 : 500}
+            minHeight={isMobile ? 600 : 300}
+            maxHeight={isMobile ? 1200 : 600}
             maxShadowOpacity={0.3}
             showCover={true}
             mobileScrollSupport={true}
             className="demo-book mobile-optimized"
-            style={{ touchAction: isMobile ? 'pan-y' : 'auto' }}
+            style={{ touchAction: 'auto' }}
             startPage={0}
             drawShadow={true}
             flippingTime={800}
@@ -113,7 +113,7 @@ export default function BookPortfolio() {
                   overflowY: 'auto',
                   overflowX: 'hidden',
                   WebkitOverflowScrolling: 'touch',
-                  touchAction: 'pan-y'
+                  touchAction: 'auto'
                 }}
               >
                 <div className="flex-1" style={{
