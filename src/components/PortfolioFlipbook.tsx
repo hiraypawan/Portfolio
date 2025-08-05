@@ -101,7 +101,7 @@ export default function PortfolioFlipbook() {
           swipeDistance={30}
           showPageCorners={true}
           disableFlipByClick={false}
-          style={{ margin: '0 auto', touchAction: 'pan-x pan-y' }}
+          style={{ margin: '0 auto', touchAction: 'pan-y slide-y' }}
           onFlip={handleFlip}
           className={styles.flipbook}
           startPage={0}

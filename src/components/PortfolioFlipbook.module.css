@@ -3,11 +3,11 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
+  height: 100vh;
+  overflow: hidden;
   background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
   position: relative;
-  padding: 0;
+  padding: 20px;
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;
@@ -90,11 +90,11 @@
 }
 
 .prevButton {
-  margin-left: -70px;
+  margin-left: -60px;
 }
 
 .nextButton {
-  margin-right: -70px;
+  margin-right: -60px;
 }
 
 /* Page Indicator */
@@ -170,6 +170,19 @@
     right: 10px;
     padding: 6px 12px;
     font-size: 0.75rem;
+  }
+}
+
+/* Desktop specific positioning fixes */
+@media (min-width: 769px) {
+  .container {
+    padding: 40px 20px;
+  }
+  
+  .navigationButtons {
+    max-width: calc(100vw - 40px);
+    left: 20px;
+    right: 20px;
   }
 }
 
