@@ -38,13 +38,13 @@ const skillCards = [
 
 export default function IndexPage() {
   return (
-    <div className="auto-fit-content w-full">
+    <div className="auto-fit-content w-full h-full">
       {/* Background Animation */}
-      <div className="absolute inset-0 opacity-30">
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/10 to-teal-600/10 animate-pulse" />
       </div>
 
-      <div className="flex flex-col items-center justify-center w-full text-center z-10 relative">
+      <div className="flex flex-col items-center justify-start w-full text-center z-10 relative space-y-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}

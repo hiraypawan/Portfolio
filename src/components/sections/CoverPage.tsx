@@ -27,9 +27,9 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
   }, []);
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-center items-center p-2 sm:p-4 min-h-screen">
+    <div className="auto-fit-content w-full h-full">
       {/* Animated Background */}
-      <div className="absolute inset-0 opacity-20">
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 animate-pulse" />
         {/* Floating Background Icons - Smaller and fewer for card layout */}
         <div className="hidden sm:block">

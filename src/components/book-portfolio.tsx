@@ -103,25 +103,36 @@ export default function BookPortfolio() {
             {pages.map((page, index) => (
               <div
                 key={index}
-                className="page flex flex-col p-4 sm:p-6 bg-gradient-to-br from-purple-900 to-slate-900 border border-indigo-500/30 shadow-lg text-white"
+                className="page bg-gradient-to-br from-purple-900 to-slate-900 border border-indigo-500/30 shadow-lg text-white"
                 style={{
-                  minHeight: '100%',
+                  width: '100%',
                   height: '100%',
+                  minHeight: '100%',
+                  padding: 0,
+                  margin: 0,
                   display: 'flex',
                   flexDirection: 'column',
-                  justifyContent: 'flex-start',
-                  overflowY: 'auto',
-                  overflowX: 'hidden',
-                  WebkitOverflowScrolling: 'touch',
-                  touchAction: isMobile ? 'pan-y' : 'auto'
+                  position: 'relative',
+                  overflow: 'hidden',
+                  boxSizing: 'border-box'
                 }}
               >
-                <div className="flex-1" style={{
-                  overflowY: 'auto',
-                  overflowX: 'hidden',
-                  WebkitOverflowScrolling: 'touch',
-                  height: '100%'
-                }}>
+                <div 
+                  className="w-full h-full"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    minHeight: '100%',
+                    overflowY: 'auto',
+                    overflowX: 'hidden',
+                    WebkitOverflowScrolling: 'touch',
+                    touchAction: isMobile ? 'pan-y' : 'auto',
+                    padding: isMobile ? '1rem' : '1.5rem',
+                    boxSizing: 'border-box',
+                    scrollbarWidth: 'thin'
+                  }}
+                  className="custom-scrollbar"
+                >
                   {page.component}
                 </div>
               </div>
