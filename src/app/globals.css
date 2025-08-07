@@ -125,6 +125,26 @@
   -webkit-backface-visibility: hidden;
 }
 
+/* Desktop flipbook enhancements */
+.desktop-flipbook {
+  cursor: grab;
+}
+
+.desktop-flipbook:active {
+  cursor: grabbing;
+}
+
+/* Enhanced page turning for desktop */
+.desktop-flipbook .stf__item {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.desktop-flipbook .stf__item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+}
+
 .demo-book::before {
   content: '';
   position: absolute;
