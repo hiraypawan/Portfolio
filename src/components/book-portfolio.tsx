@@ -118,7 +118,7 @@ export default function BookPortfolio() {
                 }}
               >
                 <div 
-                  className="w-full h-full"
+                  className="w-full h-full custom-scrollbar"
                   style={{
                     width: '100%',
                     height: '100%',
@@ -131,7 +131,6 @@ export default function BookPortfolio() {
                     boxSizing: 'border-box',
                     scrollbarWidth: 'thin'
                   }}
-                  className="custom-scrollbar"
                 >
                   {page.component}
                 </div>

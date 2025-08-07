@@ -17,8 +17,8 @@ const floatingIcons = [
 
 export default function CoverPage({ onNavigate }: CoverPageProps) {
   useEffect(() => {
-    const handleMouseMove = (_e: MouseEvent) => {
-      // Mouse position tracking for future interactive effects
+    // Mouse position tracking for future interactive effects
+    const handleMouseMove = () => {
       // Currently unused but ready for enhancement
     };
 
