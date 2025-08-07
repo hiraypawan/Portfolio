@@ -43,15 +43,15 @@ export default function BookPortfolio() {
       } else if (screenWidth < 1024) {
         setDeviceType('tablet');
         newDimensions = {
-          width: Math.min(screenWidth * 0.6, 650),
+          width: Math.min(screenWidth * 0.85, 900), // Increased from 0.6 to 0.85 and max from 650 to 900
           height: Math.min(screenHeight * 0.85, 750),
           scale: 1.0
         };
       } else {
         setDeviceType('desktop');
-        // Much larger dimensions for desktop - proper book size
-        const optimalWidth = Math.min(screenWidth * 0.6, 800);
-        const optimalHeight = Math.min(screenHeight * 0.9, 900);
+        // Extended dimensions for desktop - much wider book layout
+        const optimalWidth = Math.min(screenWidth * 0.9, 1200); // Increased from 0.6 to 0.9 and max from 800 to 1200
+        const optimalHeight = Math.min(screenHeight * 0.85, 800);
         
         newDimensions = {
           width: optimalWidth,
@@ -95,7 +95,7 @@ export default function BookPortfolio() {
     return (
 <div
           className={`flex justify-center items-center min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 ${
-            isMobile ? 'p-2 overflow-y-auto overflow-x-hidden' : 'p-6 overflow-hidden'
+            isMobile ? 'p-2 overflow-y-auto overflow-x-hidden' : 'p-2 overflow-hidden'
           }`}
           style={{
             height: isMobile ? 'auto' : '100vh',
