@@ -101,14 +101,14 @@ export default function BookPortfolio() {
 
           <HTMLFlipBook
             ref={flipBookRef}
-            width={dimensions.width / 2}
+            width={Math.floor(dimensions.width / 2)}
             height={dimensions.height}
             size="fixed"
-            minWidth={isMobile ? 200 : 300}
-            maxWidth={isMobile ? 400 : 600}
+            minWidth={isMobile ? 200 : 350}
+            maxWidth={isMobile ? 400 : 500}
             minHeight={isMobile ? 600 : 700}
             maxHeight={isMobile ? 1000 : 1200}
-            maxShadowOpacity={0.4}
+            maxShadowOpacity={0.5}
             showCover={false}
             mobileScrollSupport={true}
             className={`demo-book ${isMobile ? 'mobile-optimized' : ''}`}
@@ -117,11 +117,14 @@ export default function BookPortfolio() {
               transform: `scale(${dimensions.scale})`,
               transformOrigin: 'center center',
               margin: 'auto',
-              display: 'block'
+              display: 'block',
+              border: '2px solid rgba(139, 69, 19, 0.4)',
+              borderRadius: '12px',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.1)'
             }}
             startPage={0}
             drawShadow={true}
-            flippingTime={600}
+            flippingTime={700}
             usePortrait={false}
             startZIndex={0}
             autoSize={false}
