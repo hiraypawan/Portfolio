@@ -71,14 +71,20 @@ export default function BookPortfolio() {
   const isMobile = deviceType === 'mobile';
 
   const nextPage = () => {
-    if (flipBookRef.current) {
+    if (isMobile && flipBookRef.current) {
       flipBookRef.current.pageFlip().flipNext();
+    } else if (!isMobile) {
+      // For desktop two-page spread, advance by 2 pages
+      setCurrentPage(prev => Math.min(prev + 2, pages.length - 1));
     }
   };
 
   const prevPage = () => {
-    if (flipBookRef.current) {
+    if (isMobile && flipBookRef.current) {
       flipBookRef.current.pageFlip().flipPrev();
+    } else if (!isMobile) {
+      // For desktop two-page spread, go back by 2 pages
+      setCurrentPage(prev => Math.max(prev - 2, 0));
     }
   };
 
@@ -99,79 +105,148 @@ export default function BookPortfolio() {
         >
           <AnimatedCursor />
 
-          <HTMLFlipBook
-            ref={flipBookRef}
-            width={Math.floor(dimensions.width / 2)}
-            height={dimensions.height}
-            size="fixed"
-            minWidth={isMobile ? 200 : 350}
-            maxWidth={isMobile ? 400 : 500}
-            minHeight={isMobile ? 600 : 700}
-            maxHeight={isMobile ? 1000 : 1200}
-            maxShadowOpacity={0.5}
-            showCover={false}
-            mobileScrollSupport={true}
-            className={`demo-book ${isMobile ? 'mobile-optimized' : ''}`}
-            style={{ 
-              touchAction: isMobile ? 'pan-y' : 'auto',
-              transform: `scale(${dimensions.scale})`,
-              transformOrigin: 'center center',
-              margin: 'auto',
-              display: 'block',
-              border: '2px solid rgba(139, 69, 19, 0.4)',
-              borderRadius: '12px',
-              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.1)'
-            }}
-            startPage={0}
-            drawShadow={true}
-            flippingTime={700}
-            usePortrait={false}
-            startZIndex={0}
-            autoSize={false}
-            clickEventForward={!isMobile}
-            useMouseEvents={!isMobile}
-            swipeDistance={isMobile ? 100 : 30}
-            showPageCorners={true}
-            disableFlipByClick={false}
-            onFlip={handleFlip}
-          >
-            {pages.map((page, index) => (
-              <div
-                key={index}
-                className="page bg-gradient-to-br from-purple-900 to-slate-900 border border-indigo-500/30 shadow-lg text-white"
+          {/* Custom Two-Page Book Layout for Desktop */}
+          {!isMobile ? (
+            <div 
+              className="demo-book open-book-spread"
+              style={{
+                width: dimensions.width,
+                height: dimensions.height,
+                transform: `scale(${dimensions.scale})`,
+                transformOrigin: 'center center',
+                margin: 'auto',
+                display: 'flex',
+                border: '2px solid rgba(139, 69, 19, 0.4)',
+                borderRadius: '12px',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.1)',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+            >
+              {/* Left Page */}
+              <div 
+                className="page-left bg-gradient-to-br from-purple-900 to-slate-900 border-r border-indigo-500/30 text-white"
                 style={{
-                  width: '100%',
+                  width: '50%',
                   height: '100%',
-                  minHeight: '100%',
-                  padding: 0,
-                  margin: 0,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  position: 'relative',
-                  overflow: 'hidden',
-                  boxSizing: 'border-box'
+                  borderRadius: '12px 0 0 12px',
+                  borderRight: '3px solid rgba(139, 69, 19, 0.5)',
+                  boxShadow: '2px 0 8px rgba(0,0,0,0.3)'
                 }}
               >
                 <div 
                   className="w-full h-full custom-scrollbar"
                   style={{
+                    overflowY: 'auto',
+                    overflowX: 'hidden',
+                    padding: '1.5rem',
+                    boxSizing: 'border-box'
+                  }}
+                >
+                  {pages[currentPage] && pages[currentPage].component}
+                </div>
+              </div>
+              
+              {/* Right Page */}
+              <div 
+                className="page-right bg-gradient-to-br from-purple-900 to-slate-900 border-l border-indigo-500/30 text-white"
+                style={{
+                  width: '50%',
+                  height: '100%',
+                  borderRadius: '0 12px 12px 0',
+                  borderLeft: '3px solid rgba(139, 69, 19, 0.5)',
+                  boxShadow: '-2px 0 8px rgba(0,0,0,0.3)'
+                }}
+              >
+                <div 
+                  className="w-full h-full custom-scrollbar"
+                  style={{
+                    overflowY: 'auto',
+                    overflowX: 'hidden',
+                    padding: '1.5rem',
+                    boxSizing: 'border-box'
+                  }}
+                >
+                  {pages[currentPage + 1] && pages[currentPage + 1].component}
+                </div>
+              </div>
+            </div>
+          ) : (
+            /* Mobile Single Page Layout */
+            <HTMLFlipBook
+              ref={flipBookRef}
+              width={dimensions.width}
+              height={dimensions.height}
+              size="fixed"
+              minWidth={200}
+              maxWidth={400}
+              minHeight={600}
+              maxHeight={1000}
+              maxShadowOpacity={0.5}
+              showCover={false}
+              mobileScrollSupport={true}
+              className="demo-book mobile-optimized"
+              style={{ 
+                touchAction: 'pan-y',
+                transform: `scale(${dimensions.scale})`,
+                transformOrigin: 'center center',
+                margin: 'auto',
+                display: 'block',
+                border: '2px solid rgba(139, 69, 19, 0.4)',
+                borderRadius: '12px',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.1)'
+              }}
+              startPage={0}
+              drawShadow={true}
+              flippingTime={700}
+              usePortrait={true}
+              startZIndex={0}
+              autoSize={false}
+              clickEventForward={false}
+              useMouseEvents={false}
+              swipeDistance={100}
+              showPageCorners={true}
+              disableFlipByClick={false}
+              onFlip={handleFlip}
+            >
+              {pages.map((page, index) => (
+                <div
+                  key={index}
+                  className="page bg-gradient-to-br from-purple-900 to-slate-900 border border-indigo-500/30 shadow-lg text-white"
+                  style={{
                     width: '100%',
                     height: '100%',
                     minHeight: '100%',
-                    overflowY: 'auto',
-                    overflowX: 'hidden',
-                    WebkitOverflowScrolling: 'touch',
-                    touchAction: isMobile ? 'pan-y' : 'auto',
-                    padding: isMobile ? '1rem' : '1.5rem',
-                    boxSizing: 'border-box',
-                    scrollbarWidth: 'thin'
+                    padding: 0,
+                    margin: 0,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    boxSizing: 'border-box'
                   }}
                 >
-                  {page.component}
+                  <div 
+                    className="w-full h-full custom-scrollbar"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      minHeight: '100%',
+                      overflowY: 'auto',
+                      overflowX: 'hidden',
+                      WebkitOverflowScrolling: 'touch',
+                      touchAction: isMobile ? 'pan-y' : 'auto',
+                      padding: isMobile ? '1rem' : '1.5rem',
+                      boxSizing: 'border-box',
+                      scrollbarWidth: 'thin'
+                    }}
+                  >
+                    {page.component}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </HTMLFlipBook>
+              ))}
+            </HTMLFlipBook>
+          )}
 
           {/* Navigation Buttons for all devices */}
           <div className="fixed top-1/2 left-4 transform -translate-y-1/2 z-50">

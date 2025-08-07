@@ -14,6 +14,57 @@
   background-repeat: no-repeat;
 }
 
+/* Custom open book spread styling */
+.open-book-spread {
+  position: relative;
+}
+
+/* Book spine for custom two-page layout */
+.open-book-spread::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(to right, 
+    rgba(0,0,0,0.4) 0%, 
+    rgba(0,0,0,0.6) 50%, 
+    rgba(0,0,0,0.4) 100%);
+  border-radius: 3px;
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 
+    0 0 10px rgba(0,0,0,0.8) inset,
+    2px 0 6px rgba(0,0,0,0.3),
+    -2px 0 6px rgba(0,0,0,0.3);
+}
+
+/* Page texture effects for custom layout */
+.page-left::before,
+.page-right::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 25px 25px, rgba(255,255,255,0.02) 2%, transparent 50%),
+    radial-gradient(circle at 75px 75px, rgba(255,255,255,0.01) 2%, transparent 50%);
+  background-size: 100px 100px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Enhanced page content positioning for custom layout */
+.page-left > div,
+.page-right > div {
+  position: relative;
+  z-index: 1;
+}
+
 .demo-book::before {
   content: '';
   position: absolute;
