@@ -74,8 +74,19 @@ export default function BookPortfolio() {
     if (isMobile && flipBookRef.current) {
       flipBookRef.current.pageFlip().flipNext();
     } else if (!isMobile) {
-      // For desktop two-page spread, advance by 2 pages
-      setCurrentPage(prev => Math.min(prev + 2, pages.length - 1));
+      // Add smooth animation for desktop page transitions
+      const bookElement = document.querySelector('.open-book-spread');
+      if (bookElement) {
+        bookElement.classList.add('page-flip-animation');
+        setTimeout(() => {
+          setCurrentPage(prev => Math.min(prev + 2, pages.length - 1));
+          setTimeout(() => {
+            bookElement.classList.remove('page-flip-animation');
+          }, 350);
+        }, 350);
+      } else {
+        setCurrentPage(prev => Math.min(prev + 2, pages.length - 1));
+      }
     }
   };
 
@@ -83,8 +94,19 @@ export default function BookPortfolio() {
     if (isMobile && flipBookRef.current) {
       flipBookRef.current.pageFlip().flipPrev();
     } else if (!isMobile) {
-      // For desktop two-page spread, go back by 2 pages
-      setCurrentPage(prev => Math.max(prev - 2, 0));
+      // Add smooth animation for desktop page transitions
+      const bookElement = document.querySelector('.open-book-spread');
+      if (bookElement) {
+        bookElement.classList.add('page-flip-animation');
+        setTimeout(() => {
+          setCurrentPage(prev => Math.max(prev - 2, 0));
+          setTimeout(() => {
+            bookElement.classList.remove('page-flip-animation');
+          }, 350);
+        }, 350);
+      } else {
+        setCurrentPage(prev => Math.max(prev - 2, 0));
+      }
     }
   };
 
