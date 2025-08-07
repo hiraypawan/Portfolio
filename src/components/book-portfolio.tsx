@@ -22,19 +22,46 @@ const pages = [
 export default function BookPortfolio() {
   const [deviceType, setDeviceType] = useState<'mobile' | 'tablet' | 'desktop'>('desktop');
   const [currentPage, setCurrentPage] = useState(0);
+  const [dimensions, setDimensions] = useState({ width: 400, height: 500, scale: 0.85 });
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const flipBookRef = useRef<any>(null);
 
   useEffect(() => {
     const updateDeviceType = () => {
       const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      
+      let newDimensions = { width: 400, height: 500, scale: 0.85 };
+      
       if (screenWidth < 640) {
         setDeviceType('mobile');
+        newDimensions = {
+          width: Math.min(screenWidth - 40, 360),
+          height: Math.min(screenHeight - 120, 540),
+          scale: 0.9
+        };
       } else if (screenWidth < 1024) {
         setDeviceType('tablet');
+        newDimensions = {
+          width: Math.min(screenWidth * 0.4, 400),
+          height: Math.min(screenHeight * 0.7, 500),
+          scale: 0.8
+        };
       } else {
         setDeviceType('desktop');
+        // Calculate optimal size for desktop based on screen size
+        const optimalWidth = Math.min(screenWidth * 0.3, 380);
+        const optimalHeight = Math.min(screenHeight * 0.75, 480);
+        const optimalScale = screenWidth > 1920 ? 0.9 : screenWidth > 1440 ? 0.8 : 0.75;
+        
+        newDimensions = {
+          width: optimalWidth,
+          height: optimalHeight,
+          scale: optimalScale
+        };
       }
+      
+      setDimensions(newDimensions);
     };
 
     updateDeviceType();
@@ -75,24 +102,30 @@ export default function BookPortfolio() {
 
           <HTMLFlipBook
             ref={flipBookRef}
-            width={isMobile ? Math.min(window.innerWidth - 20, 500) : 400}
-            height={isMobile ? Math.min(window.innerHeight - 40, 800) : 500}
+            width={dimensions.width}
+            height={dimensions.height}
             size="stretch"
-            minWidth={isMobile ? 350 : 300}
-            maxWidth={isMobile ? 1000 : 800}
-            minHeight={isMobile ? 600 : 400}
-            maxHeight={isMobile ? 1200 : 800}
+            minWidth={isMobile ? 280 : 250}
+            maxWidth={isMobile ? 500 : 450}
+            minHeight={isMobile ? 400 : 350}
+            maxHeight={isMobile ? 700 : 600}
             maxShadowOpacity={0.3}
             showCover={true}
             mobileScrollSupport={true}
             className={`demo-book ${isMobile ? 'mobile-optimized' : ''}`}
-            style={{ touchAction: isMobile ? 'pan-y' : 'auto' }}
+            style={{ 
+              touchAction: isMobile ? 'pan-y' : 'auto',
+              transform: `scale(${dimensions.scale})`,
+              transformOrigin: 'center center',
+              margin: 'auto',
+              display: 'block'
+            }}
             startPage={0}
             drawShadow={true}
             flippingTime={800}
             usePortrait={true}
             startZIndex={0}
-            autoSize={true}
+            autoSize={false}
             clickEventForward={!isMobile}
             useMouseEvents={!isMobile}
             swipeDistance={isMobile ? 100 : 30}
