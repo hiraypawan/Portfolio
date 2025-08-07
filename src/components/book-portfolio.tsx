@@ -101,15 +101,15 @@ export default function BookPortfolio() {
 
           <HTMLFlipBook
             ref={flipBookRef}
-            width={dimensions.width}
+            width={dimensions.width / 2}
             height={dimensions.height}
-            size="stretch"
-            minWidth={isMobile ? 400 : 500}
-            maxWidth={isMobile ? 800 : 1200}
+            size="fixed"
+            minWidth={isMobile ? 200 : 300}
+            maxWidth={isMobile ? 400 : 600}
             minHeight={isMobile ? 600 : 700}
             maxHeight={isMobile ? 1000 : 1200}
-            maxShadowOpacity={0.3}
-            showCover={true}
+            maxShadowOpacity={0.4}
+            showCover={false}
             mobileScrollSupport={true}
             className={`demo-book ${isMobile ? 'mobile-optimized' : ''}`}
             style={{ 
@@ -121,14 +121,14 @@ export default function BookPortfolio() {
             }}
             startPage={0}
             drawShadow={true}
-            flippingTime={800}
-            usePortrait={true}
+            flippingTime={600}
+            usePortrait={false}
             startZIndex={0}
             autoSize={false}
             clickEventForward={!isMobile}
             useMouseEvents={!isMobile}
             swipeDistance={isMobile ? 100 : 30}
-            showPageCorners={!isMobile}
+            showPageCorners={true}
             disableFlipByClick={false}
             onFlip={handleFlip}
           >
@@ -170,35 +170,40 @@ export default function BookPortfolio() {
             ))}
           </HTMLFlipBook>
 
+          {/* Navigation Buttons for all devices */}
+          <div className="fixed top-1/2 left-4 transform -translate-y-1/2 z-50">
+            <button
+              onClick={prevPage}
+              disabled={currentPage === 0}
+              className="bg-black/80 text-white w-14 h-14 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20 disabled:opacity-30 hover:bg-white/20 transition-all duration-300 text-xl font-bold"
+            >
+              ‹
+            </button>
+          </div>
+          <div className="fixed top-1/2 right-4 transform -translate-y-1/2 z-50">
+            <button
+              onClick={nextPage}
+              disabled={currentPage >= pages.length - 1}
+              className="bg-black/80 text-white w-14 h-14 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20 disabled:opacity-30 hover:bg-white/20 transition-all duration-300 text-xl font-bold"
+            >
+              ›
+            </button>
+          </div>
+          
+          {/* Page Indicator */}
+          <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-50">
+            <div className="bg-black/80 text-white px-4 py-2 rounded-full text-sm backdrop-blur-sm border border-white/20">
+              Page {currentPage + 1} of {pages.length}
+            </div>
+          </div>
+
+          {/* Instructions */}
           {isMobile && (
-            <>
-              {/* Mobile Navigation Buttons */}
-              <div className="fixed top-1/2 left-4 transform -translate-y-1/2 z-50">
-                <button
-                  onClick={prevPage}
-                  disabled={currentPage === 0}
-                  className="bg-black/80 text-white w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20 disabled:opacity-30"
-                >
-                  ‹
-                </button>
+            <div className="fixed bottom-20 left-1/2 transform -translate-x-1/2 z-50">
+              <div className="bg-black/80 text-white px-3 py-2 rounded-full text-xs backdrop-blur-sm border border-white/20">
+                📱 Use arrows or scroll content vertically
               </div>
-              <div className="fixed top-1/2 right-4 transform -translate-y-1/2 z-50">
-                <button
-                  onClick={nextPage}
-                  disabled={currentPage >= pages.length - 1}
-                  className="bg-black/80 text-white w-12 h-12 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20 disabled:opacity-30"
-                >
-                  ›
-                </button>
-              </div>
-              
-              {/* Mobile Instructions */}
-              <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
-                <div className="bg-black/80 text-white px-3 py-2 rounded-full text-xs backdrop-blur-sm border border-white/20">
-                  📱 Use arrows or scroll content vertically
-                </div>
-              </div>
-            </>
+            </div>
           )}
         </div>
       );
