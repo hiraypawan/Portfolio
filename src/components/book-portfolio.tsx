@@ -36,23 +36,23 @@ export default function BookPortfolio() {
       if (screenWidth < 640) {
         setDeviceType('mobile');
         newDimensions = {
-          width: Math.min(screenWidth - 40, 360),
-          height: Math.min(screenHeight - 120, 540),
-          scale: 0.9
+          width: Math.min(screenWidth - 40, 400),
+          height: Math.min(screenHeight - 100, 600),
+          scale: 1.0
         };
       } else if (screenWidth < 1024) {
         setDeviceType('tablet');
         newDimensions = {
-          width: Math.min(screenWidth * 0.4, 400),
-          height: Math.min(screenHeight * 0.7, 500),
-          scale: 0.8
+          width: Math.min(screenWidth * 0.5, 500),
+          height: Math.min(screenHeight * 0.8, 650),
+          scale: 1.0
         };
       } else {
         setDeviceType('desktop');
-        // Calculate optimal size for desktop based on screen size
-        const optimalWidth = Math.min(screenWidth * 0.3, 380);
-        const optimalHeight = Math.min(screenHeight * 0.75, 480);
-        const optimalScale = screenWidth > 1920 ? 0.9 : screenWidth > 1440 ? 0.8 : 0.75;
+        // Make it bigger for desktop - more like the working 67% zoom
+        const optimalWidth = Math.min(screenWidth * 0.4, 600);
+        const optimalHeight = Math.min(screenHeight * 0.85, 700);
+        const optimalScale = 1.0; // No scaling needed with proper dimensions
         
         newDimensions = {
           width: optimalWidth,
@@ -105,10 +105,10 @@ export default function BookPortfolio() {
             width={dimensions.width}
             height={dimensions.height}
             size="stretch"
-            minWidth={isMobile ? 280 : 250}
-            maxWidth={isMobile ? 500 : 450}
-            minHeight={isMobile ? 400 : 350}
-            maxHeight={isMobile ? 700 : 600}
+            minWidth={isMobile ? 350 : 400}
+            maxWidth={isMobile ? 600 : 800}
+            minHeight={isMobile ? 500 : 600}
+            maxHeight={isMobile ? 800 : 1000}
             maxShadowOpacity={0.3}
             showCover={true}
             mobileScrollSupport={true}
