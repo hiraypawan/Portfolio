@@ -16,9 +16,9 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Pawan Hiray - Full-Stack Developer & AI Innovator",
-  description: "Interactive book-style portfolio showcasing full-stack development, AI projects, and Web3 innovations. Featured project: MUStudentsUnited with 20K+ active students.",
-  keywords: "Full-Stack Developer, AI, Web3, React, Next.js, Portfolio, MUStudentsUnited, Pawan Hiray",
+  title: "Pawan Hiray - Interactive Treasure Hunt Portfolio",
+  description: "Embark on a digital treasure hunt through Pawan's world! Discover projects, skills, and hidden achievements in this interactive map-based portfolio. Featured: MUStudentsUnited with 30K+ students.",
+  keywords: "Interactive Portfolio, Treasure Hunt, Full-Stack Developer, AI, Web3, React, Next.js, MUStudentsUnited, Pawan Hiray, Game Portfolio",
   authors: [{ name: "Pawan Hiray" }],
   creator: "Pawan Hiray",
   viewport: {
@@ -28,16 +28,16 @@ export const metadata: Metadata = {
     userScalable: true,
   },
   openGraph: {
-    title: "Pawan Hiray - Full-Stack Developer & AI Innovator",
-    description: "Interactive book-style portfolio showcasing full-stack development, AI projects, and Web3 innovations.",
+    title: "Pawan Hiray - Interactive Treasure Hunt Portfolio",
+    description: "Embark on a digital treasure hunt through Pawan's interactive world! Discover projects, skills, and hidden achievements.",
     url: "https://pawanhiray.vercel.app",
-    siteName: "Pawan Hiray Portfolio",
+    siteName: "Pawan Hiray - Treasure Hunt Portfolio",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pawan Hiray - Full-Stack Developer & AI Innovator",
-    description: "Interactive book-style portfolio showcasing full-stack development, AI projects, and Web3 innovations.",
+    title: "Pawan Hiray - Interactive Treasure Hunt Portfolio",
+    description: "Embark on a digital treasure hunt through Pawan's interactive world! Discover projects, skills, and hidden achievements.",
   },
   robots: {
     index: true,

@@ -861,3 +861,242 @@ html, body {
     font-size: 16px;
   }
 }
+
+/* ========================================
+   TREASURE MAP STYLES
+   Interactive map-based portfolio styles
+   ======================================== */
+
+/* Custom scrollbar styles for treasure map */
+.treasure-map .custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(147, 197, 253, 0.5) rgba(0, 0, 0, 0.1);
+}
+
+.treasure-map .custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.treasure-map .custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.treasure-map .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(147, 197, 253, 0.5);
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.treasure-map .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(147, 197, 253, 0.7);
+}
+
+/* Treasure map specific animations */
+@keyframes mapGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
+}
+
+@keyframes treasureFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes compassSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes treasurePulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes mapReveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.treasure-glow {
+  animation: mapGlow 2s ease-in-out infinite;
+}
+
+.treasure-float {
+  animation: treasureFloat 3s ease-in-out infinite;
+}
+
+.compass-spin {
+  animation: compassSpin 8s linear infinite;
+}
+
+.treasure-pulse {
+  animation: treasurePulse 2s ease-in-out infinite;
+}
+
+.map-reveal {
+  animation: mapReveal 0.8s ease-out forwards;
+}
+
+/* Disable text selection on map elements */
+.map-container {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Touch optimization for mobile */
+.touch-optimized {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Glassmorphism effect for modals */
+.glass-modal {
+  backdrop-filter: blur(20px);
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Map texture pattern */
+.map-texture {
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(139, 69, 19, 0.15) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* Particle effects */
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0.8;
+  }
+}
+
+.particle {
+  animation: particleFloat 6s ease-in-out infinite;
+}
+
+/* Map marker hover effects */
+.map-marker {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: center;
+}
+
+.map-marker:hover {
+  transform: scale(1.1) translateY(-2px);
+  z-index: 100;
+}
+
+/* Progress tracker styles */
+.progress-tracker {
+  backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Treasure chest animation */
+@keyframes chestOpen {
+  0% {
+    transform: rotateY(0deg) scale(1);
+  }
+  50% {
+    transform: rotateY(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotateY(360deg) scale(1);
+  }
+}
+
+.chest-open {
+  animation: chestOpen 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Location tooltip styles */
+.location-tooltip {
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Map zoom controls */
+.zoom-control {
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.zoom-control:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+/* Mobile gesture hints */
+@keyframes gestureHint {
+  0%, 100% {
+    transform: translateX(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateX(10px);
+    opacity: 1;
+  }
+}
+
+.gesture-hint {
+  animation: gestureHint 2s ease-in-out infinite;
+}
+
+/* Path drawing animation */
+@keyframes drawPath {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+  100% {
+    stroke-dasharray: 100 0;
+  }
+}
+
+.path-draw {
+  animation: drawPath 2s ease-in-out forwards;
+}
+
+/* Achievement celebration */
+@keyframes celebration {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    opacity: 1;
+  }
+}
+
+.achievement-celebrate {
+  animation: celebration 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}

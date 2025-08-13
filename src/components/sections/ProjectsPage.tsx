@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { FaExternalLinkAlt, FaGithub, FaUsers, FaRobot, FaGamepad, FaChartLine } from 'react-icons/fa';
+import FitToPage from '../layout/FitToPage';
 
 const projects = [
   {
@@ -90,13 +91,13 @@ export default function ProjectsPage() {
   const topProjects = projects.slice(0, 4);
 
   return (
-    <div className="w-full h-full flex flex-col overflow-hidden">
+    <FitToPage designWidth={1280} designHeight={800} className="no-scroll">
       {/* Background Animation */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-pink-600/10 animate-pulse" />
       </div>
 
-      <div className="flex flex-col items-center justify-center w-full text-center z-10 relative px-6 py-8 h-full">
+      <div className="flex flex-col items-center justify-center w-full text-center px-16 py-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -176,6 +177,6 @@ export default function ProjectsPage() {
             })}
         </div>
       </div>
-    </div>
+    </FitToPage>
   );
 }

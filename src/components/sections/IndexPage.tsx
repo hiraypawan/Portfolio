@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { FaLaptopCode, FaGlobe, FaTools, FaRocket, FaBrain } from 'react-icons/fa';
+import FitToPage from '../layout/FitToPage';
 
 const skillCards = [
   {
@@ -38,13 +39,13 @@ const skillCards = [
 
 export default function IndexPage() {
   return (
-    <div className="w-full h-full flex flex-col overflow-hidden">
+    <FitToPage designWidth={1280} designHeight={800} className="no-scroll">
       {/* Background Animation */}
       <div className="absolute inset-0 opacity-30 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/10 to-teal-600/10 animate-pulse" />
       </div>
 
-      <div className="flex flex-col items-center justify-center w-full text-center z-10 relative px-6 py-8 h-full">
+      <div className="flex flex-col items-center justify-center w-full text-center px-16 py-12">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -109,6 +110,6 @@ export default function IndexPage() {
           </div>
         </motion.div>
       </div>
-    </div>
+    </FitToPage>
   );
 }

@@ -1,5 +1,5 @@
-import BookPortfolio from '@/components/book-portfolio';
+import TreasureMap from '@/components/TreasureMap';
 
 export default function Home() {
-  return <BookPortfolio />;
+  return <TreasureMap />;
 }
