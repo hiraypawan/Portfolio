@@ -59,30 +59,28 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
       </div>
 
       {/* Main Content */}
-      <div className="flex flex-col items-center justify-center text-center z-10 relative w-full">
-        {/* Glassmorphism Card */}
+      <div className="flex flex-col items-center justify-center text-center z-10 relative w-full h-full">
+        {/* Clean Content Container */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          className="backdrop-blur-lg bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8 md:p-12 shadow-2xl w-full max-w-full"
-          style={{ minHeight: 'fit-content' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="w-full max-w-4xl mx-auto px-8 py-16"
         >
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.8 }}
-            className="font-bold text-white mb-4 font-space-grotesk"
-            style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)' }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="text-6xl md:text-7xl font-bold text-white mb-8 leading-tight"
           >
-            Hi, I&apos;m Pawan Hiray <span className="wave">👋</span>
+            Hi, I'm Pawan Hiray <span className="wave">👋</span>
           </motion.h1>
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            className="text-base sm:text-lg md:text-xl text-gray-100 mb-6 font-light"
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-2xl md:text-3xl text-gray-200 mb-12 font-light tracking-wide"
           >
             Tech Builder • Web3 & AI Specialist • Growth Hacker
           </motion.div>
@@ -90,28 +88,27 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
-            className="text-gray-200 text-sm sm:text-base md:text-lg leading-relaxed mb-8"
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-16 max-w-3xl"
           >
-            I&apos;m a multi-skilled developer passionate about building automation tools,
-            <br />
+            I'm a multi-skilled developer passionate about building automation tools,
             AI agents, crypto systems, and viral growth tools.
-            <br />
-            <span className="text-blue-300 font-semibold">30,000+ students</span> trust my work at MuStudentsUnited.
+            <br className="hidden md:block" />
+            <span className="text-blue-400 font-semibold">30,000+ students</span> trust my work.
           </motion.p>
           
           {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2, duration: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 mb-8"
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="flex flex-col sm:flex-row gap-6 mb-16"
           >
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => onNavigate && onNavigate(3)}
-              className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-full hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
+              className="px-12 py-4 text-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-2xl hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-xl"
             >
               View My Work
             </motion.button>
@@ -119,7 +116,7 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => onNavigate && onNavigate(5)}
-              className="px-8 py-3 border-2 border-white/30 text-white font-semibold rounded-full hover:bg-white/10 transition-all duration-300"
+              className="px-12 py-4 text-lg border-2 border-white/30 text-white font-semibold rounded-2xl hover:bg-white/10 transition-all duration-300"
             >
               Contact Me
             </motion.button>
@@ -129,8 +126,8 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, duration: 0.8 }}
-            className="flex justify-center space-x-6"
+            transition={{ delay: 1.0, duration: 0.8 }}
+            className="flex justify-center space-x-8 mb-8"
           >
             <motion.a
               href="https://github.com/hiraypawan"
@@ -139,7 +136,7 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
               whileHover={{ scale: 1.2, rotate: 5 }}
               className="text-white/70 hover:text-white transition-colors"
             >
-              <FaGithub size={24} />
+              <FaGithub size={28} />
             </motion.a>
             <motion.a
               href="https://linkedin.com/in/pawanhiray"
@@ -148,14 +145,14 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
               whileHover={{ scale: 1.2, rotate: -5 }}
               className="text-white/70 hover:text-blue-400 transition-colors"
             >
-              <FaLinkedin size={24} />
+              <FaLinkedin size={28} />
             </motion.a>
             <motion.a
               href="mailto:pawanhiray1@gmail.com"
               whileHover={{ scale: 1.2, rotate: 5 }}
               className="text-white/70 hover:text-red-400 transition-colors"
             >
-              <FaEnvelope size={24} />
+              <FaEnvelope size={28} />
             </motion.a>
             <motion.a
               href="https://pawanhiray.vercel.app"
@@ -164,7 +161,7 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
               whileHover={{ scale: 1.2, rotate: -5 }}
               className="text-white/70 hover:text-green-400 transition-colors"
             >
-              <FaGlobe size={24} />
+              <FaGlobe size={28} />
             </motion.a>
           </motion.div>
           

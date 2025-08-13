@@ -71,57 +71,57 @@ export default function StoryPage() {
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-purple-600/10 animate-pulse" />
       </div>
 
-      <div className="relative z-10 w-full space-y-4">
+      <div className="relative z-10 w-full px-8 py-16">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-6"
+          className="text-center mb-16"
         >
-          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2 font-space-grotesk">
+          <h1 className="text-5xl md:text-6xl font-bold text-white mb-8">
             My Journey (2018–2025)
           </h1>
-          <p className="text-sm md:text-base text-gray-300 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
             From 16-year-old beginner to full-stack innovator
           </p>
         </motion.div>
 
         {/* Timeline */}
-        <div className="w-full max-w-none mx-auto">
-          <div className="grid grid-cols-1 gap-4 w-full">
+        <div className="w-full max-w-4xl mx-auto mb-16">
+          <div className="space-y-8">
             {milestones.map((milestone, index) => {
               const IconComponent = milestone.icon;
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.6 }}
-                  whileHover={{ scale: 1.02, y: -2 }}
-                  className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-all duration-300 group"
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  className="bg-white/5 rounded-3xl p-8 hover:bg-white/10 transition-all duration-300 group"
                 >
-                  <div className="flex items-start space-x-3">
-                    <div className={`w-10 h-10 rounded-lg bg-gradient-to-r ${milestone.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
-                      <IconComponent className="text-white text-sm" />
+                  <div className="flex items-start space-x-6">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${milestone.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                      <IconComponent className="text-white text-2xl" />
                     </div>
                     <div className="flex-1">
-                      <div className="flex items-center justify-between mb-1">
-                        <span className={`text-xs font-semibold bg-gradient-to-r ${milestone.color} bg-clip-text text-transparent`}>
+                      <div className="mb-4">
+                        <span className={`text-lg font-bold bg-gradient-to-r ${milestone.color} bg-clip-text text-transparent`}>
                           {milestone.year} • Age {milestone.age}
                         </span>
                       </div>
-                      <h3 className="text-sm font-bold text-white mb-1">
+                      <h3 className="text-2xl font-bold text-white mb-4">
                         {milestone.title}
                       </h3>
-                      <p className="text-gray-300 text-xs leading-relaxed">
+                      <p className="text-lg text-gray-300 leading-relaxed">
                         {milestone.description}
                         {milestone.link && (
                           <a 
                             href={milestone.link.href} 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="text-blue-400 hover:text-blue-300 underline ml-1 transition-colors"
+                            className="text-blue-400 hover:text-blue-300 underline ml-2 transition-colors"
                           >
                             {milestone.link.text}
                           </a>
@@ -131,7 +131,8 @@ export default function StoryPage() {
                   </div>
                 </motion.div>
               );
-            })}          </div>
+            })}
+          </div>
         </div>
         
         {/* Scroll Hint */}
