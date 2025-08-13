@@ -126,9 +126,9 @@ export default function PortfolioFlipbook() {
           drawShadow={true}
           flippingTime={1000}
           usePortrait={true}
+          maxShadowOpacity={0.5}
           startZIndex={0}
           autoSize={false}
-          maxShadowOpacity={0.5}
         >
           {pages.map((page, index) => (
             <div key={index} className={styles.page} style={{
