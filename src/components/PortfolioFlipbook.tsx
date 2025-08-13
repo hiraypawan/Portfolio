@@ -107,6 +107,10 @@ export default function PortfolioFlipbook() {
           ref={flipBookRef}
           width={bookSize.width}
           height={bookSize.height}
+          minWidth={bookSize.width}
+          maxWidth={bookSize.width}
+          minHeight={bookSize.height}
+          maxHeight={bookSize.height}
           size="fixed"
           showCover={true}
           mobileScrollSupport={true}
