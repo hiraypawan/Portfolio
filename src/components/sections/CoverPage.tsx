@@ -73,7 +73,7 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="text-6xl md:text-7xl font-bold text-white mb-8 leading-tight"
           >
-            Hi, I'm Pawan Hiray <span className="wave">👋</span>
+            Hi, I&apos;m Pawan Hiray <span className="wave">👋</span>
           </motion.h1>
           
           <motion.div
@@ -91,7 +91,7 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-16 max-w-3xl"
           >
-            I'm a multi-skilled developer passionate about building automation tools,
+            I&apos;m a multi-skilled developer passionate about building automation tools,
             AI agents, crypto systems, and viral growth tools.
             <br className="hidden md:block" />
             <span className="text-blue-400 font-semibold">30,000+ students</span> trust my work.

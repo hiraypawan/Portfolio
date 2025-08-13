@@ -56,7 +56,7 @@ export default function IndexPage() {
             About Me
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-            I'm a multi-skilled developer passionate about building automation tools, 
+            I&apos;m a multi-skilled developer passionate about building automation tools,
             AI agents, crypto systems, and viral growth tools.
           </p>
         </motion.div>
