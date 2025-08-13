@@ -116,7 +116,7 @@ export default function PortfolioFlipbook() {
           mobileScrollSupport={true}
           useMouseEvents={true}
           clickEventForward={true}
-          swipeDistance={30}
+          swipeDistance={50}
           showPageCorners={true}
           disableFlipByClick={false}
           style={{ margin: '0 auto', touchAction: isMobile ? 'pan-y' : 'auto', maxWidth: '100%', maxHeight: '100%' }}
@@ -124,11 +124,13 @@ export default function PortfolioFlipbook() {
           className={styles.flipbook}
           startPage={0}
           drawShadow={true}
-          flippingTime={1000}
+          flippingTime={600}
           usePortrait={true}
-          maxShadowOpacity={0.5}
+          maxShadowOpacity={0.7}
           startZIndex={0}
           autoSize={false}
+          flippingInteractionTime={200}
+          minDragStart={10}
         >
           {pages.map((page, index) => (
             <div key={index} className={styles.page} style={{
