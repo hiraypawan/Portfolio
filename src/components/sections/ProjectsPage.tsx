@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { FaExternalLinkAlt, FaGithub, FaUsers, FaRobot, FaGamepad, FaChartLine } from 'react-icons/fa';
-import Image from 'next/image';
 
 const projects = [
   {
@@ -87,166 +86,94 @@ const projects = [
 ];
 
 export default function ProjectsPage() {
+  // Show only top projects that fit in viewport
+  const topProjects = projects.slice(0, 4);
+
   return (
-    <div className="w-full h-full overflow-y-auto custom-scrollbar">
+    <div className="w-full h-full flex flex-col overflow-hidden">
       {/* Background Animation */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute inset-0 bg-gradient-to-r from-red-600/10 to-pink-600/10 animate-pulse" />
       </div>
 
-      <div className="relative z-10 w-full p-3 sm:p-4">
+      <div className="flex flex-col items-center justify-center w-full text-center z-10 relative px-6 py-8 h-full">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-4"
+          className="mb-8"
         >
-          <h1 className="text-2xl font-bold text-white mb-2 font-space-grotesk">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Featured Projects
           </h1>
-          <p className="text-sm text-gray-300 max-w-xl mx-auto">
+          <p className="text-base md:text-lg text-gray-300 max-w-2xl mx-auto">
             Showcase of innovative projects built with modern technologies
           </p>
         </motion.div>
 
-        {/* Featured Project - MUStudentsUnited */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          className="mb-8 sm:mb-12 w-full"
-        >
-          {projects.filter(p => p.featured).map((project) => {
-            const IconComponent = project.icon;
-            return (
-              <div key={project.id} className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl p-6 sm:p-8 hover:bg-white/15 transition-all duration-500 w-full">
-                <div className="space-y-6">
-                  <div>
-                    <div className={`inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r ${project.color} text-white text-sm font-semibold mb-4`}>
-                      <IconComponent className="mr-2" />
-                      FEATURED PROJECT
-                    </div>
-                    <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3">{project.title}</h3>
-                    <p className="text-lg sm:text-xl text-gray-300 mb-4">{project.subtitle}</p>
-                    <p className="text-base sm:text-lg text-gray-300 leading-relaxed mb-6">{project.description}</p>
-                    
-                    <div className="flex flex-wrap gap-2 mb-4 sm:mb-6">
-                      {project.technologies.map((tech, index) => (
-                        <span key={index} className="px-2 py-1 sm:px-3 sm:py-1 bg-white/10 rounded-full text-xs sm:text-sm text-gray-200">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                    
-                    <div className="flex items-center space-x-4">
-                      <div className={`text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r ${project.color} bg-clip-text text-transparent`}>
-                        {project.stats}
-                      </div>
-                      <div className="flex space-x-3">
-                        <motion.a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          whileHover={{ scale: 1.1 }}
-                          className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
-                        >
-                          <FaExternalLinkAlt className="text-white text-sm sm:text-base" />
-                        </motion.a>
-                        <motion.a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          whileHover={{ scale: 1.1 }}
-                          className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors"
-                        >
-                          <FaGithub className="text-white text-sm sm:text-base" />
-                        </motion.a>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="relative mt-4 lg:mt-0">
-                    <div className={`absolute inset-0 bg-gradient-to-r ${project.color} rounded-xl sm:rounded-2xl blur-xl opacity-30`}></div>
-                    <div className="relative bg-white/10 backdrop-blur-sm rounded-xl sm:rounded-2xl p-2 sm:p-4">
-                      <Image 
-                        src={project.image} 
-                        alt={project.title}
-                        width={400}
-                        height={192}
-                        className="w-full h-auto object-cover rounded-lg sm:rounded-xl"
-                        placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQADAAAAAAAAAAABAgMABAUGIWEREiMxQf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HcDjqefFVSmjhKC55eo/8Anqf0fHY50w"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = '/images/placeholder.png';
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </motion.div>
-
-        {/* Other Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
-          {projects.filter(p => !p.featured).map((project, index) => {
+        {/* Projects Grid - Top 4 Only */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full">
+          {topProjects.map((project, index) => {
             const IconComponent = project.icon;
             return (
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 + (index * 0.1), duration: 0.6 }}
-                whileHover={{ scale: 1.02, y: -5 }}
-                className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:bg-white/15 transition-all duration-300 group"
+                transition={{ delay: index * 0.1, duration: 0.6 }}
+                whileHover={{ scale: 1.02, y: -2 }}
+                className="bg-white/5 rounded-2xl p-4 hover:bg-white/10 transition-all duration-300 group"
               >
-                <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-r ${project.color} flex items-center justify-center mb-3 sm:mb-4 group-hover:scale-110 transition-transform`}>
-                  <IconComponent className="text-white text-base sm:text-xl" />
-                </div>
-                
-                <h4 className="text-lg sm:text-xl font-bold text-white mb-1 sm:mb-2">{project.title}</h4>
-                <p className="text-gray-400 text-xs sm:text-sm mb-2 sm:mb-3">{project.subtitle}</p>
-                <p className="text-gray-300 text-xs sm:text-sm leading-relaxed mb-3 sm:mb-4 line-clamp-3">{project.description}</p>
-                
-                <div className="flex flex-wrap gap-1 mb-3 sm:mb-4">
-                  {project.technologies.slice(0, 3).map((tech, techIndex) => (
-                    <span key={techIndex} className="px-2 py-1 bg-white/10 rounded text-xs text-gray-200">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className={`text-xs sm:text-sm font-semibold bg-gradient-to-r ${project.color} bg-clip-text text-transparent`}>
-                    {project.stats}
+                <div className="flex items-start space-x-4">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${project.color} flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform`}>
+                    <IconComponent className="text-white text-lg" />
                   </div>
-                  <div className="flex space-x-2">
-                    <motion.a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.2 }}
-                      className="text-white/70 hover:text-white transition-colors"
-                    >
-                      <FaExternalLinkAlt size={12} />
-                    </motion.a>
-                    <motion.a
-                      href={project.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.2 }}
-                      className="text-white/70 hover:text-white transition-colors"
-                    >
-                      <FaGithub size={12} />
-                    </motion.a>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="text-lg font-bold text-white">
+                        {project.title}
+                      </h3>
+                      {project.featured && (
+                        <span className="text-xs bg-gradient-to-r from-blue-500 to-purple-500 text-white px-2 py-1 rounded-full">
+                          FEATURED
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-gray-400 mb-2">{project.subtitle}</p>
+                    <p className="text-sm text-gray-300 leading-relaxed mb-3 line-clamp-2">
+                      {project.description.substring(0, 100)}...
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div className={`text-sm font-semibold bg-gradient-to-r ${project.color} bg-clip-text text-transparent`}>
+                        {project.stats}
+                      </div>
+                      <div className="flex space-x-2">
+                        <motion.a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.2 }}
+                          className="text-white/70 hover:text-white transition-colors"
+                        >
+                          <FaExternalLinkAlt size={14} />
+                        </motion.a>
+                        <motion.a
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ scale: 1.2 }}
+                          className="text-white/70 hover:text-white transition-colors"
+                        >
+                          <FaGithub size={14} />
+                        </motion.a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
             );
-          })}
+            })}
         </div>
       </div>
     </div>

@@ -64,98 +64,90 @@ const milestones = [
 ];
 
 export default function StoryPage() {
+  // Show only key milestones that fit in viewport
+  const keyMilestones = milestones.filter((_, index) => [0, 2, 4, 6].includes(index));
+
   return (
-    <div className="auto-fit-content w-full h-full">
+    <div className="w-full h-full flex flex-col overflow-hidden">
       {/* Background Animation */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-purple-600/10 animate-pulse" />
       </div>
 
-      <div className="relative z-10 w-full px-8 py-16">
+      <div className="flex flex-col items-center justify-center w-full text-center z-10 relative px-6 py-8 h-full">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="mb-8"
         >
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-8">
-            My Journey (2018–2025)
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            My Journey
           </h1>
-          <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
-            From 16-year-old beginner to full-stack innovator
+          <p className="text-base md:text-lg text-gray-300 max-w-2xl mx-auto">
+            Key milestones from 16-year-old beginner to full-stack innovator
           </p>
         </motion.div>
 
-        {/* Timeline */}
-        <div className="w-full max-w-4xl mx-auto mb-16">
-          <div className="space-y-8">
-            {milestones.map((milestone, index) => {
-              const IconComponent = milestone.icon;
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1, duration: 0.6 }}
-                  whileHover={{ scale: 1.02, y: -4 }}
-                  className="bg-white/5 rounded-3xl p-8 hover:bg-white/10 transition-all duration-300 group"
-                >
-                  <div className="flex items-start space-x-6">
-                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${milestone.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
-                      <IconComponent className="text-white text-2xl" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="mb-4">
-                        <span className={`text-lg font-bold bg-gradient-to-r ${milestone.color} bg-clip-text text-transparent`}>
-                          {milestone.year} • Age {milestone.age}
-                        </span>
-                      </div>
-                      <h3 className="text-2xl font-bold text-white mb-4">
-                        {milestone.title}
-                      </h3>
-                      <p className="text-lg text-gray-300 leading-relaxed">
-                        {milestone.description}
-                        {milestone.link && (
-                          <a 
-                            href={milestone.link.href} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="text-blue-400 hover:text-blue-300 underline ml-2 transition-colors"
-                          >
-                            {milestone.link.text}
-                          </a>
-                        )}
-                      </p>
-                    </div>
+        {/* Timeline - Key Milestones Only */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl w-full mb-6">
+          {keyMilestones.map((milestone, index) => {
+            const IconComponent = milestone.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.6 }}
+                whileHover={{ scale: 1.02, y: -2 }}
+                className="bg-white/5 rounded-2xl p-4 hover:bg-white/10 transition-all duration-300 group"
+              >
+                <div className="flex items-start space-x-4">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${milestone.color} flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform`}>
+                    <IconComponent className="text-white text-lg" />
                   </div>
-                </motion.div>
-              );
-            })}
-          </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="mb-2">
+                      <span className={`text-sm font-bold bg-gradient-to-r ${milestone.color} bg-clip-text text-transparent`}>
+                        {milestone.year} • Age {milestone.age}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-2 line-clamp-1">
+                      {milestone.title.replace('📖 ', '')}
+                    </h3>
+                    <p className="text-sm text-gray-300 leading-relaxed line-clamp-3">
+                      {milestone.description.substring(0, 120)}...
+                      {milestone.link && (
+                        <a 
+                          href={milestone.link.href} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-blue-400 hover:text-blue-300 underline ml-1 transition-colors"
+                        >
+                          {milestone.link.text}
+                        </a>
+                      )}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
-        
-        {/* Scroll Hint */}
-        <div className="scroll-hint">
-          ↓ Scroll for more
-        </div>
-
         {/* Bottom Summary */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
-          className="mt-4 backdrop-blur-lg bg-white/10 border border-white/20 rounded-xl p-4 max-w-2xl mx-auto"
+          transition={{ delay: 0.8, duration: 0.8 }}
+          className="text-center max-w-2xl mx-auto"
         >
-          <div className="text-center">
-            <h3 className="text-lg font-bold text-white mb-2">
-              The Journey Continues...
-            </h3>
-            <p className="text-gray-300 text-sm">
-              From building simple apps to creating comprehensive platforms serving thousands of users. 
-              Every challenge has been a stepping stone to innovation.
-            </p>
-          </div>
+          <h3 className="text-lg font-bold text-white mb-2">
+            The Journey Continues...
+          </h3>
+          <p className="text-sm text-gray-300">
+            From building simple apps to serving 30,000+ users. Every challenge has been a stepping stone to innovation.
+          </p>
         </motion.div>
       </div>
     </div>
