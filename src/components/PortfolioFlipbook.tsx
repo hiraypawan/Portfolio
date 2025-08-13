@@ -129,8 +129,6 @@ export default function PortfolioFlipbook() {
           maxShadowOpacity={0.7}
           startZIndex={0}
           autoSize={false}
-          flippingInteractionTime={200}
-          minDragStart={10}
         >
           {pages.map((page, index) => (
             <div key={index} className={styles.page} style={{
