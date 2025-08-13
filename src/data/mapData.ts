@@ -1,4 +1,4 @@
-import { FaUsers, FaRobot, FaChartLine, FaGamepad, FaCode, FaBrain, FaRocket, FaGraduationCap, FaEnvelope, FaTrophy, FaStar, FaGem } from 'react-icons/fa';
+import { FaUsers, FaRobot, FaChartLine, FaGamepad, FaCode, FaBrain, FaRocket, FaEnvelope, FaTrophy, FaGem } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 
 export interface MapLocation {

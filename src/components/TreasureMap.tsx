@@ -10,6 +10,7 @@ import MapMarker from './MapMarker';
 import ProgressTracker from './ProgressTracker';
 import { ThemeToggle } from './theme-toggle';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface TreasureMapProps {}
 
 export default function TreasureMap({}: TreasureMapProps) {
@@ -359,7 +360,7 @@ export default function TreasureMap({}: TreasureMapProps) {
             >
               <h2 className="text-2xl font-bold text-white mb-4">🗺️ Welcome to the Treasure Hunt!</h2>
               <p className="text-gray-300 mb-6">
-                Explore Pawan's digital world by clicking on glowing locations. Discover projects, skills, and hidden treasures!
+                Explore Pawan&apos;s digital world by clicking on glowing locations. Discover projects, skills, and hidden treasures!
               </p>
               <div className="flex gap-4 text-sm text-gray-400 mb-6">
                 <div className="flex items-center gap-2">

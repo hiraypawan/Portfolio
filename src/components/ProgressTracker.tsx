@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { UserProgress } from '@/data/mapData';
-import { FaTrophy, FaMap, FaGem, FaEye } from 'react-icons/fa';
+import { FaMap, FaGem } from 'react-icons/fa';
 import { useState } from 'react';
 
 interface ProgressTrackerProps {
@@ -153,7 +153,7 @@ export default function ProgressTracker({ progress, totalLocations }: ProgressTr
                       </>
                     ) : (
                       <>
-                        🎉 All locations discovered! You're a Master Explorer!
+                        🎉 All locations discovered! You&apos;re a Master Explorer!
                       </>
                     )}
                   </div>

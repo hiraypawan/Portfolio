@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapLocation, UserProgress } from '@/data/mapData';
-import { FaTimes, FaExternalLinkAlt, FaGithub, FaTrophy, FaGem } from 'react-icons/fa';
+import { FaTimes, FaExternalLinkAlt, FaGithub, FaTrophy } from 'react-icons/fa';
 import { useEffect, useState } from 'react';
 
 interface LocationModalProps {
@@ -226,7 +226,7 @@ export default function LocationModal({
                             A mysterious {location.treasure.type} awaits...
                           </p>
                           <p className="text-sm text-gray-400">
-                            Click to open and discover what's inside!
+                            Click to open and discover what&apos;s inside!
                           </p>
                         </div>
                         <motion.button
