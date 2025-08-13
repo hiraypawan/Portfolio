@@ -17,6 +17,7 @@ export default function PortfolioFlipbook() {
   const [currentPage, setCurrentPage] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const mouseTrailRef = useRef<HTMLDivElement>(null);
+  const [bookSize, setBookSize] = useState<{ width: number; height: number }>({ width: 380, height: 480 });
 
   const pages = [
     { name: 'Cover', component: <CoverPage /> },
@@ -28,14 +29,31 @@ export default function PortfolioFlipbook() {
   ];
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const recompute = () => {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      const padding = vw < 768 ? 16 : 40; // match container padding roughly
+      const maxBookWidth = Math.max(320, vw - padding * 2);
+      const maxBookHeight = Math.max(360, vh - padding * 2);
+
+      // HTMLFlipBook "width" is single page width. When showing two pages, total book width ≈ 2*width.
+      // Keep a pleasant page aspect ratio (w:h ≈ 3:4.2)
+      const desiredAspect = 3 / 4.2;
+
+      // Compute page width so that the whole spread fits horizontally.
+      const pageWidth = Math.floor(Math.min(520, (maxBookWidth - 24) / 2));
+      // Compute height from width by aspect, then clamp to available height.
+      const heightFromWidth = Math.floor(pageWidth / desiredAspect);
+      const pageHeight = Math.min(heightFromWidth, Math.floor(maxBookHeight));
+
+      setIsMobile(vw < 768);
+      setBookSize({ width: pageWidth, height: pageHeight });
     };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
+
+    recompute();
+    window.addEventListener('resize', recompute);
+    return () => window.removeEventListener('resize', recompute);
   }, []);
 
   useEffect(() => {
@@ -87,13 +105,9 @@ export default function PortfolioFlipbook() {
       <div className={styles.flipbookWrapper}>
         <HTMLFlipBook
           ref={flipBookRef}
-          width={isMobile ? Math.min(window.innerWidth - 20, 500) : 400}
-          height={isMobile ? Math.min(window.innerHeight - 40, 800) : 500}
-          size="stretch"
-          minWidth={isMobile ? 350 : 300}
-          maxWidth={isMobile ? 1000 : 800}
-          minHeight={isMobile ? 600 : 400}
-          maxHeight={isMobile ? 1200 : 800}
+          width={bookSize.width}
+          height={bookSize.height}
+          size="fixed"
           showCover={true}
           mobileScrollSupport={true}
           useMouseEvents={true}
@@ -101,7 +115,7 @@ export default function PortfolioFlipbook() {
           swipeDistance={30}
           showPageCorners={true}
           disableFlipByClick={false}
-          style={{ margin: '0 auto', touchAction: isMobile ? 'pan-y' : 'auto' }}
+          style={{ margin: '0 auto', touchAction: isMobile ? 'pan-y' : 'auto', maxWidth: '100%', maxHeight: '100%' }}
           onFlip={handleFlip}
           className={styles.flipbook}
           startPage={0}
@@ -109,7 +123,7 @@ export default function PortfolioFlipbook() {
           flippingTime={1000}
           usePortrait={true}
           startZIndex={0}
-          autoSize={true}
+          autoSize={false}
           maxShadowOpacity={0.5}
         >
           {pages.map((page, index) => (
