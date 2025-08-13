@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { FaCode, FaBrain, FaRocket, FaGithub, FaLinkedin, FaEnvelope, FaGlobe } from 'react-icons/fa';
 import { useEffect } from 'react';
+import FitToPage from '../layout/FitToPage';
 
 interface CoverPageProps {
   onNavigate?: (page: number) => void;
@@ -27,7 +28,7 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
   }, []);
 
   return (
-    <div className="w-full h-full flex items-center justify-center overflow-hidden">
+    <FitToPage designWidth={1280} designHeight={800} className="no-scroll">
       {/* Animated Background */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 animate-pulse" />
@@ -58,13 +59,13 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
         </div>
       </div>
 
-      {/* Main Content - Fixed Height, No Scroll */}
-      <div className="flex flex-col items-center justify-center text-center z-10 relative w-full h-full max-w-4xl mx-auto px-6">
+      {/* Main Content - Perfect Scaling */}
+      <div className="flex flex-col items-center justify-center text-center w-full h-full px-16 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="space-y-8"
+          className="space-y-8 max-w-5xl mx-auto"
         >
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -169,7 +170,7 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-4 text-white/40 text-xs text-center"
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/40 text-sm text-center"
         >
           <motion.div
             animate={{ opacity: [0.4, 1, 0.4] }}
@@ -179,6 +180,6 @@ export default function CoverPage({ onNavigate }: CoverPageProps) {
           </motion.div>
         </motion.div>
       </div>
-    </div>
+    </FitToPage>
   );
 }

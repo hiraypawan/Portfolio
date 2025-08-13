@@ -802,3 +802,62 @@ html {
     grid-template-columns: 1fr;
   }
 }
+
+/* ========================================
+   ENHANCED BOOK EXPERIENCE
+   Advanced viewport control & mobile optimization
+   ======================================== */
+
+/* Viewport lock - prevents browser scrolling */
+html, body {
+  margin: 0;
+  overflow: hidden;              /* no browser scroll */
+  overscroll-behavior: none;     /* stop iOS rubber-band */
+}
+
+/* Book shell - owns the entire viewport */
+.book-shell {
+  width: 100%;
+  height: 100dvh;                /* mobile-safe height */
+  overflow: hidden;              /* DO NOT allow inner scroll */
+  touch-action: pan-x;           /* allow horizontal swipes only */
+  position: relative;
+}
+
+/* Individual book pages */
+.book-page {
+  width: 100%;
+  height: 100%;
+  overflow: clip;                /* clip any overflow (no scrollbars) */
+  contain: layout paint;         /* performance hint */
+}
+
+/* Hide accidental scrollbars in children */
+.no-scroll,
+.no-scroll * {
+  scrollbar-width: none;
+}
+.no-scroll::-webkit-scrollbar,
+.no-scroll *::-webkit-scrollbar { 
+  display: none; 
+}
+
+/* Performance optimizations for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .book-shell * { 
+    animation: none !important; 
+    transition: none !important; 
+  }
+}
+
+/* Mobile-specific enhancements */
+@media screen and (max-width: 768px) {
+  .book-shell {
+    touch-action: pan-x pan-y;
+  }
+  
+  /* Prevent zoom on mobile */
+  input, textarea, select {
+    font-size: 16px;
+  }
+}
