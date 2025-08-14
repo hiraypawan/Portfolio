@@ -816,18 +816,19 @@ html {
    Advanced viewport control & mobile optimization
    ======================================== */
 
-/* Viewport lock - prevents browser scrolling */
+/* Viewport configuration for proper content display */
 html, body {
   margin: 0;
-  overflow: hidden;              /* no browser scroll */
+  padding: 0;
+  overflow: auto;                /* allow scrolling for content */
   overscroll-behavior: none;     /* stop iOS rubber-band */
 }
 
 /* Book shell - owns the entire viewport */
 .book-shell {
   width: 100%;
-  height: 100dvh;                /* mobile-safe height */
-  overflow: hidden;              /* DO NOT allow inner scroll */
+  min-height: 100dvh;            /* mobile-safe height */
+  overflow: visible;             /* allow content to be visible */
   touch-action: pan-x;           /* allow horizontal swipes only */
   position: relative;
 }
@@ -835,8 +836,8 @@ html, body {
 /* Individual book pages */
 .book-page {
   width: 100%;
-  height: 100%;
-  overflow: clip;                /* clip any overflow (no scrollbars) */
+  min-height: 100vh;
+  overflow: visible;             /* allow content to be visible */
   contain: layout paint;         /* performance hint */
 }
 
