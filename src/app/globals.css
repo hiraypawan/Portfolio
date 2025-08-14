@@ -364,14 +364,7 @@ body {
   will-change: scroll-position;
   backface-visibility: hidden;
   perspective: 1000px;
-  /* Optimize for 67% zoom effect while keeping UI readable */
-  zoom: 0.67;
-  -moz-transform: scale(0.67) translateZ(0);
-  -moz-transform-origin: 50% 50%;
-  -webkit-transform: scale(0.67) translateZ(0);
-  -webkit-transform-origin: 50% 50%;
-  transform: scale(0.67) translateZ(0);
-  transform-origin: 50% 50%;
+  transform: translateZ(0);
 }
 
 html {
@@ -438,12 +431,12 @@ html {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Container compensations for 67% zoom scale */
+/* Main container styling */
 .main-container {
-  width: 149%; /* Counteract 0.67 scale (1/0.67) */
-  max-width: 2100px; /* Increased to compensate for scaling */
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  min-height: 149vh;
+  min-height: 100vh;
 }
 
 /* Mobile viewport fixes */
