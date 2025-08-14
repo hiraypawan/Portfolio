@@ -56,7 +56,7 @@ export default function ElevatorPortfolio() {
   const currentFloorData = elevatorFloors[currentFloor];
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
+    <div className="relative w-full min-h-screen overflow-auto bg-black">
       {/* Loading Screen */}
       <AnimatePresence>
         {isLoading && (
@@ -101,7 +101,7 @@ export default function ElevatorPortfolio() {
       </AnimatePresence>
 
       {/* Main Elevator Interface */}
-      <div className="relative w-full h-full">
+      <div className="relative w-full min-h-screen">
         {/* Elevator Shell with Dynamic Background */}
         <motion.div
           className="absolute inset-0"
@@ -131,7 +131,7 @@ export default function ElevatorPortfolio() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="absolute inset-0 z-30"
+              className="relative z-30 w-full"
             >
               <FloorContent floorData={currentFloorData} />
             </motion.div>
