@@ -117,19 +117,21 @@ export default function MapMarker({
 
         {/* Main Icon Container */}
         <motion.div
-          className={`relative w-12 h-12 rounded-full ${markerStyle.bg} border-2 ${markerStyle.border} 
+          className={`relative w-14 h-14 rounded-full ${markerStyle.bg} border-2 ${markerStyle.border} 
             flex items-center justify-center backdrop-blur-sm shadow-lg`}
           animate={{
-            y: location.treasure?.animation === 'bounce' ? [0, -3, 0] : 0,
+            y: location.treasure?.animation === 'bounce' ? [0, -4, 0] : 0,
             boxShadow: isHovered ? 
-              `0 0 20px ${markerStyle.glow}` : 
-              `0 0 10px ${markerStyle.glow}`
+              `0 0 25px ${markerStyle.glow}` : 
+              `0 0 12px ${markerStyle.glow}`,
+            scale: isHovered ? 1.1 : 1
           }}
           transition={{
             y: location.treasure?.animation === 'bounce' ? 
-              { duration: 1.5, repeat: Infinity, ease: 'easeInOut' } : 
+              { duration: 1.8, repeat: Infinity, ease: 'easeInOut' } : 
               undefined,
-            boxShadow: { duration: 0.3 }
+            boxShadow: { duration: 0.3 },
+            scale: { duration: 0.2 }
           }}
         >
           <IconComponent 

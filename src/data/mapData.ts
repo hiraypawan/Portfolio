@@ -370,6 +370,37 @@ export const mapLocations: MapLocation[] = [
         '🤝 Let\'s build something amazing together!'
       ]
     }
+  },
+
+  // Future Quest Marker
+  {
+    id: 'future-quest',
+    name: 'Future Quest Horizon',
+    type: 'story',
+    position: { x: 85, y: 85 },
+    icon: FaRocket,
+    color: 'from-cyan-500 to-blue-600',
+    glowColor: 'rgba(6, 182, 212, 0.8)',
+    isUnlocked: true,
+    zoomLevel: 1.5,
+    content: {
+      title: 'Future Quest Awaits! 🚀',
+      subtitle: 'The Journey Continues...',
+      description: 'The adventure never ends! Here\'s what\'s coming next in this ever-expanding digital world. New quests, technologies, and innovations await!',
+      details: [
+        '🤖 Advanced AI agent development projects',
+        '🌐 Web3 and blockchain innovation labs',
+        '📱 Next-generation mobile experiences',
+        '🎮 Immersive VR/AR applications',
+        '🚀 Space-tech and IoT integrations',
+        '✨ Always building the future, one quest at a time!'
+      ]
+    },
+    treasure: {
+      type: 'scroll',
+      reward: 'Unlock the "Visionary" achievement!',
+      animation: 'glow'
+    }
   }
 ];
 
@@ -382,7 +413,7 @@ export interface UserProgress {
 }
 
 export const defaultProgress: UserProgress = {
-  unlockedLocations: ['intro-hub', 'mustudents-kingdom', 'ai-empire', 'crypto-citadel', 'game-dimension', 'fullstack-island', 'ai-blockchain-peak', 'growth-oasis', 'contact-portal'],
+  unlockedLocations: ['intro-hub', 'mustudents-kingdom', 'ai-empire', 'crypto-citadel', 'game-dimension', 'fullstack-island', 'ai-blockchain-peak', 'growth-oasis', 'contact-portal', 'future-quest'],
   visitedLocations: [],
   achievementsUnlocked: [],
   totalExplorationTime: 0

@@ -1,5 +1,5 @@
-import TreasureMap from '@/components/TreasureMap';
+import WorldQuestMap from '@/components/WorldQuestMap';
 
 export default function Home() {
-  return <TreasureMap />;
+  return <WorldQuestMap />;
 }
