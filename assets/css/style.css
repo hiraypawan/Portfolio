@@ -22,7 +22,9 @@ body, html {
     background: var(--dark-gradient);
     color: var(--text-light);
     min-height: 100vh;
+    height: 100vh;
     overflow-x: hidden;
+    overflow-y: hidden;
     scroll-behavior: smooth;
     position: relative;
 }
@@ -41,14 +43,16 @@ body, html {
 .container {
     max-width: 1400px;
     width: 100%;
-    padding: 20px;
+    height: 100vh;
+    padding: 80px 20px 20px 20px;
     position: relative;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 /* Enhanced Navigation */
@@ -169,6 +173,10 @@ body, html {
     position: relative;
     width: 100%;
     max-width: 1200px;
+    height: calc(100vh - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .floor {
@@ -176,11 +184,15 @@ body, html {
     top: 0;
     left: 0;
     width: 100%;
+    height: 100%;
     opacity: 0;
     visibility: hidden;
     transform: translateY(50px);
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .floor.active {
@@ -195,13 +207,18 @@ body, html {
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(30px);
     border-radius: 30px;
-    padding: 60px;
-    margin: 20px 0;
+    padding: 30px;
+    margin: 0;
     border: 1px solid var(--glass-border);
     position: relative;
-    overflow: hidden;
-    min-height: 600px;
+    overflow: visible;
+    width: 100%;
+    max-width: 1000px;
+    height: calc(100vh - 140px);
+    max-height: 700px;
     box-shadow: var(--shadow-heavy);
+    display: flex;
+    flex-direction: column;
 }
 
 .portfolio-card::before {
@@ -235,12 +252,13 @@ body, html {
 }
 
 .scrollable-content {
-    max-height: 500px;
+    flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
-    padding-right: 10px;
+    padding-right: 15px;
     scrollbar-width: thin;
     scrollbar-color: var(--glow-color) transparent;
+    min-height: 0;
 }
 
 .scrollable-content::-webkit-scrollbar {
@@ -285,10 +303,23 @@ body, html {
 .card-content {
     position: relative;
     z-index: 2;
-    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
+    min-height: 0;
+}
+
+.home-card .card-content {
     justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.about-card .card-content,
+.projects-card .card-content,
+.skills-card .card-content,
+.contact-card .card-content {
+    justify-content: flex-start;
 }
 
 .profile-section {
@@ -354,7 +385,7 @@ body, html {
 }
 
 .name {
-    font-size: 3rem;
+    font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
     margin: 0 0 20px 0;
     line-height: 1.2;
