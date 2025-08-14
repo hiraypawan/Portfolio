@@ -27,13 +27,13 @@ body, html {
     overflow-y: hidden;
     scroll-behavior: smooth;
     position: relative;
-    /* Optimize for 68% zoom effect while keeping UI readable */
-    zoom: 0.68;
-    -moz-transform: scale(0.68);
+    /* Optimize for 67% zoom effect while keeping UI readable */
+    zoom: 0.67;
+    -moz-transform: scale(0.67);
     -moz-transform-origin: 50% 50%;
-    -webkit-transform: scale(0.68);
+    -webkit-transform: scale(0.67);
     -webkit-transform-origin: 50% 50%;
-    transform: scale(0.68);
+    transform: scale(0.67);
     transform-origin: 50% 50%;
 }
 
@@ -49,10 +49,10 @@ body, html {
 }
 
 .container {
-    max-width: 2000px; /* Increased to compensate for scaling */
-    width: 147%; /* Counteract 0.68 scale (1/0.68) */
-    height: 147vh;
-    padding: 120px 30px 30px 30px;
+    max-width: 2100px; /* Increased to compensate for scaling */
+    width: 149%; /* Counteract 0.67 scale (1/0.67) */
+    height: 149vh;
+    padding: 125px 35px 35px 35px;
     position: relative;
     display: flex;
     flex-direction: column;
