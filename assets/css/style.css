@@ -1573,3 +1573,30 @@ body::after {
         opacity: 0; 
     }
 }
+
+/* Floor Change Animation */
+@keyframes floorChange {
+    0% {
+        transform: scale(1);
+        color: #00ff88;
+    }
+    50% {
+        transform: scale(1.2);
+        color: #667eea;
+    }
+    100% {
+        transform: scale(1);
+        color: #00ff88;
+    }
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
