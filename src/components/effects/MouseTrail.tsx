@@ -85,7 +85,7 @@ export default function MouseTrail({
 
       {/* Particle Trail */}
       <AnimatePresence>
-        {particles.map((particle, index) => {
+        {particles.map((particle) => {
           const age = Date.now() - particle.timestamp;
           const progress = age / particleLife;
           const scale = 1 - progress;

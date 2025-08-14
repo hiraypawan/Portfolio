@@ -61,15 +61,24 @@ export default function FloatingParticles({
 
   useEffect(() => {
     const animateParticles = () => {
-      setParticles(prev => prev.map(particle => ({
-        ...particle,
-        x: particle.x + Math.cos(particle.angle) * particle.speed,
-        y: particle.y + Math.sin(particle.angle) * particle.speed,
+      setParticles(prev => prev.map(particle => {
+        // Calculate new position
+        let newX = particle.x + Math.cos(particle.angle) * particle.speed;
+        let newY = particle.y + Math.sin(particle.angle) * particle.speed;
+        
         // Wrap around screen
-        x: particle.x > dimensions.width ? -particle.size : particle.x < -particle.size ? dimensions.width : particle.x,
-        y: particle.y > dimensions.height ? -particle.size : particle.y < -particle.size ? dimensions.height : particle.y,
-        angle: particle.angle + 0.01 * particle.speed
-      })));
+        if (newX > dimensions.width) newX = -particle.size;
+        if (newX < -particle.size) newX = dimensions.width;
+        if (newY > dimensions.height) newY = -particle.size;
+        if (newY < -particle.size) newY = dimensions.height;
+        
+        return {
+          ...particle,
+          x: newX,
+          y: newY,
+          angle: particle.angle + 0.01 * particle.speed
+        };
+      }));
     };
 
     const interval = setInterval(animateParticles, 50);

@@ -16,7 +16,7 @@ const ELEVATOR_SOUNDS = {
 type ElevatorSoundType = keyof typeof ELEVATOR_SOUNDS;
 
 export const useElevatorSounds = () => {
-  const playElevatorSound = useCallback((type: ElevatorSoundType, _volume: number = 0.5) => {
+  const playElevatorSound = useCallback((type: ElevatorSoundType, volume: number = 0.5) => {
     try {
       // For now, use vibration on mobile devices as placeholder
       if ('vibrate' in navigator) {
@@ -45,9 +45,12 @@ export const useElevatorSounds = () => {
       // When you're ready to add actual sound effects, uncomment this:
       /*
       const audio = new Audio(ELEVATOR_SOUNDS[type]);
-      audio.volume = _volume;
+      audio.volume = volume;
       audio.play().catch(console.error);
       */
+      
+      // Suppress unused variable warning temporarily
+      void volume;
     } catch (error) {
       console.error('Elevator sound effect error:', error);
     }
