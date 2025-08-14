@@ -3,71 +3,435 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pawan Hiray - Portfolio</title>
+    <title>Pawan Hiray - Interactive Portfolio</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Particle System Background -->
+    <canvas id="particle-canvas"></canvas>
+    
+    <!-- Sound Effects -->
+    <audio id="hoverSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfCjCZ2v7XeSMFHF7N7+JJYKLu3EVrRwYc" type="audio/wav">
+    </audio>
+    <audio id="clickSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwfCjCZ2v7XeSMFHF7N7+JJYKLu3EVrRwYc" type="audio/wav">
+    </audio>
+    
     <div class="container">
-        <!-- Navigation -->
+        <!-- Enhanced Navigation -->
         <nav class="nav-arrows">
             <button class="nav-arrow left" onclick="navigateArrow('left')">
                 <i class="fas fa-chevron-left"></i>
+                <span class="nav-tooltip">Previous Section</span>
             </button>
-            <span class="nav-text">Navigate with arrows</span>
+            <div class="nav-center">
+                <span class="nav-text">Interactive Portfolio</span>
+                <div class="nav-indicators">
+                    <div class="indicator active" data-section="home"></div>
+                    <div class="indicator" data-section="about"></div>
+                    <div class="indicator" data-section="projects"></div>
+                    <div class="indicator" data-section="skills"></div>
+                    <div class="indicator" data-section="contact"></div>
+                </div>
+            </div>
             <button class="nav-arrow right" onclick="navigateArrow('right')">
                 <i class="fas fa-chevron-right"></i>
+                <span class="nav-tooltip">Next Section</span>
             </button>
         </nav>
 
-        <!-- Main Content Card -->
-        <div class="portfolio-card">
-            <div class="card-content">
-                <div class="profile-section">
-                    <div class="profile-circle">
-                        <i class="fas fa-user"></i>
-                    </div>
+        <!-- Multi-Floor Portfolio Sections -->
+        <div class="portfolio-floors">
+            <!-- Floor 1: Welcome -->
+            <section class="floor active" id="floor-home">
+                <div class="portfolio-card home-card">
+                    <div class="card-content">
+                        <div class="profile-section">
+                            <div class="profile-circle">
+                                <div class="profile-image">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="profile-ring"></div>
+                            </div>
+                            
+                            <div class="typing-container">
+                                <h1 class="name">Hi, I'm <span class="highlight">Pawan Hiray</span> 👋</h1>
+                                <h2 class="title">Multi-skilled developer passionate about</h2>
+                                <div class="rotating-text">
+                                    <span class="rotate-item active">Building AI Agents 🤖</span>
+                                    <span class="rotate-item">Crypto Systems 💎</span>
+                                    <span class="rotate-item">Automation Tools 🛠️</span>
+                                    <span class="rotate-item">Growth Tools 🚀</span>
+                                </div>
+                            </div>
+                            <p class="stats"><span class="counter" data-count="30000">0</span>+ students trust my work</p>
                     
-                    <h1 class="name">I'm a multi-skilled developer passionate about building automation tools,</h1>
-                    <h2 class="title">AI agents, crypto systems, and viral growth tools.</h2>
-                    <p class="stats">30,000+ students trust my work at MuStudentsUnited.</p>
+                            <div class="action-buttons">
+                                <button class="btn-primary glow-effect" onclick="viewWork()">
+                                    <span class="btn-text">View My Work</span>
+                                    <div class="btn-particles"></div>
+                                </button>
+                                <button class="btn-secondary pulse-effect" onclick="contactMe()">
+                                    <span class="btn-text">Contact Me</span>
+                                    <i class="fas fa-arrow-right btn-arrow"></i>
+                                </button>
+                            </div>
                     
-                    <div class="action-buttons">
-                        <button class="btn-primary" onclick="viewWork()">View My Work</button>
-                        <button class="btn-secondary" onclick="contactMe()">Contact Me</button>
-                    </div>
+                            <div class="social-links">
+                                <a href="https://github.com/pawanhiray" class="social-link" title="GitHub" data-social="github">
+                                    <i class="fab fa-github"></i>
+                                    <span class="social-tooltip">GitHub</span>
+                                </a>
+                                <a href="https://linkedin.com/in/pawanhiray" class="social-link" title="LinkedIn" data-social="linkedin">
+                                    <i class="fab fa-linkedin"></i>
+                                    <span class="social-tooltip">LinkedIn</span>
+                                </a>
+                                <a href="mailto:pawanhiray1@gmail.com" class="social-link" title="Email" data-social="email">
+                                    <i class="fas fa-envelope"></i>
+                                    <span class="social-tooltip">Email</span>
+                                </a>
+                                <a href="https://pawanhiray.vercel.app" class="social-link" title="Website" data-social="website">
+                                    <i class="fas fa-globe"></i>
+                                    <span class="social-tooltip">Website</span>
+                                </a>
+                            </div>
                     
-                    <div class="social-links">
-                        <a href="#" class="social-link" title="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="#" class="social-link" title="LinkedIn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="#" class="social-link" title="Email">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                        <a href="#" class="social-link" title="Website">
-                            <i class="fas fa-globe"></i>
-                        </a>
-                    </div>
-                    
-                    <div class="badges">
-                        <span class="badge">
-                            <i class="fas fa-code"></i>
-                            Developer
-                        </span>
-                        <span class="badge">
-                            <i class="fas fa-brain"></i>
-                            AI Expert
-                        </span>
-                        <span class="badge">
-                            <i class="fas fa-rocket"></i>
-                            Innovator
-                        </span>
+                            <div class="badges">
+                                <span class="badge" data-skill="developer">
+                                    <i class="fas fa-code"></i>
+                                    <span class="badge-text">Full-Stack Developer</span>
+                                    <div class="badge-glow"></div>
+                                </span>
+                                <span class="badge" data-skill="ai">
+                                    <i class="fas fa-brain"></i>
+                                    <span class="badge-text">AI Specialist</span>
+                                    <div class="badge-glow"></div>
+                                </span>
+                                <span class="badge" data-skill="innovation">
+                                    <i class="fas fa-rocket"></i>
+                                    <span class="badge-text">Growth Hacker</span>
+                                    <div class="badge-glow"></div>
+                                </span>
+                                <span class="badge" data-skill="crypto">
+                                    <i class="fab fa-bitcoin"></i>
+                                    <span class="badge-text">Crypto Expert</span>
+                                    <div class="badge-glow"></div>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
+            
+            <!-- Floor 2: About Me -->
+            <section class="floor" id="floor-about">
+                <div class="portfolio-card about-card">
+                    <div class="card-content scrollable-content">
+                        <div class="section-header">
+                            <h2 class="section-title">About Me</h2>
+                            <p class="section-subtitle">Passionate developer with a mission to innovate</p>
+                        </div>
+                        
+                        <div class="content-grid">
+                            <div class="story-section">
+                                <h3>My Journey</h3>
+                                <p>Started as a curious student and evolved into a multi-skilled developer passionate about cutting-edge technology. My journey spans across full-stack development, AI/ML, blockchain technology, and growth hacking.</p>
+                                
+                                <div class="timeline">
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-content">
+                                            <h4>2021 - Started Coding</h4>
+                                            <p>Began my programming journey with Python and Web Development</p>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-content">
+                                            <h4>2022 - Built MuStudentsUnited</h4>
+                                            <p>Created a platform serving 30,000+ students</p>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-content">
+                                            <h4>2023 - AI & Web3 Focus</h4>
+                                            <p>Specialized in AI agents, blockchain, and automation tools</p>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item">
+                                        <div class="timeline-dot"></div>
+                                        <div class="timeline-content">
+                                            <h4>2024 - Present</h4>
+                                            <p>Building innovative solutions and growing my expertise</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Floor 3: Projects -->
+            <section class="floor" id="floor-projects">
+                <div class="portfolio-card projects-card">
+                    <div class="card-content scrollable-content">
+                        <div class="section-header">
+                            <h2 class="section-title">Featured Projects</h2>
+                            <p class="section-subtitle">Innovative solutions that make a difference</p>
+                        </div>
+                        
+                        <div class="projects-grid">
+                            <div class="project-card" data-project="mustudentsunited">
+                                <div class="project-image">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="project-info">
+                                    <h3>MuStudentsUnited</h3>
+                                    <p>Educational platform serving 30,000+ students with resources and tools</p>
+                                    <div class="project-tags">
+                                        <span class="tag">React</span>
+                                        <span class="tag">Node.js</span>
+                                        <span class="tag">MongoDB</span>
+                                    </div>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card" data-project="ai-agent">
+                                <div class="project-image">
+                                    <i class="fas fa-robot"></i>
+                                </div>
+                                <div class="project-info">
+                                    <h3>AI Assistant Bot</h3>
+                                    <p>Intelligent chatbot with natural language processing and automation</p>
+                                    <div class="project-tags">
+                                        <span class="tag">Python</span>
+                                        <span class="tag">TensorFlow</span>
+                                        <span class="tag">OpenAI</span>
+                                    </div>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card" data-project="crypto-tool">
+                                <div class="project-image">
+                                    <i class="fab fa-bitcoin"></i>
+                                </div>
+                                <div class="project-info">
+                                    <h3>Crypto Analytics</h3>
+                                    <p>Real-time cryptocurrency analysis and trading automation tool</p>
+                                    <div class="project-tags">
+                                        <span class="tag">JavaScript</span>
+                                        <span class="tag">Web3.js</span>
+                                        <span class="tag">APIs</span>
+                                    </div>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                            
+                            <div class="project-card" data-project="growth-tool">
+                                <div class="project-image">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div class="project-info">
+                                    <h3>Growth Automation</h3>
+                                    <p>Viral marketing and growth hacking automation system</p>
+                                    <div class="project-tags">
+                                        <span class="tag">Laravel</span>
+                                        <span class="tag">APIs</span>
+                                        <span class="tag">Analytics</span>
+                                    </div>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
+                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Floor 4: Skills -->
+            <section class="floor" id="floor-skills">
+                <div class="portfolio-card skills-card">
+                    <div class="card-content scrollable-content">
+                        <div class="section-header">
+                            <h2 class="section-title">Technical Skills</h2>
+                            <p class="section-subtitle">Technologies I work with</p>
+                        </div>
+                        
+                        <div class="skills-container">
+                            <div class="skill-category">
+                                <h3>Frontend Development</h3>
+                                <div class="skills-list">
+                                    <div class="skill-item" data-skill="react">
+                                        <i class="fab fa-react"></i>
+                                        <span>React.js</span>
+                                        <div class="skill-level" data-level="90"></div>
+                                    </div>
+                                    <div class="skill-item" data-skill="javascript">
+                                        <i class="fab fa-js-square"></i>
+                                        <span>JavaScript</span>
+                                        <div class="skill-level" data-level="95"></div>
+                                    </div>
+                                    <div class="skill-item" data-skill="css">
+                                        <i class="fab fa-css3-alt"></i>
+                                        <span>CSS3</span>
+                                        <div class="skill-level" data-level="88"></div>
+                                    </div>
+                                    <div class="skill-item" data-skill="html">
+                                        <i class="fab fa-html5"></i>
+                                        <span>HTML5</span>
+                                        <div class="skill-level" data-level="92"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-category">
+                                <h3>Backend Development</h3>
+                                <div class="skills-list">
+                                    <div class="skill-item" data-skill="python">
+                                        <i class="fab fa-python"></i>
+                                        <span>Python</span>
+                                        <div class="skill-level" data-level="85"></div>
+                                    </div>
+                                    <div class="skill-item" data-skill="nodejs">
+                                        <i class="fab fa-node-js"></i>
+                                        <span>Node.js</span>
+                                        <div class="skill-level" data-level="80"></div>
+                                    </div>
+                                    <div class="skill-item" data-skill="php">
+                                        <i class="fab fa-php"></i>
+                                        <span>PHP</span>
+                                        <div class="skill-level" data-level="82"></div>
+                                    </div>
+                                    <div class="skill-item" data-skill="mongodb">
+                                        <i class="fas fa-database"></i>
+                                        <span>MongoDB</span>
+                                        <div class="skill-level" data-level="78"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-category">
+                                <h3>AI & Blockchain</h3>
+                                <div class="skills-list">
+                                    <div class="skill-item" data-skill="ai">
+                                        <i class="fas fa-brain"></i>
+                                        <span>Machine Learning</span>
+                                        <div class="skill-level" data-level="85"></div>
+                                    </div>
+                                    <div class="skill-item" data-skill="blockchain">
+                                        <i class="fab fa-bitcoin"></i>
+                                        <span>Blockchain</span>
+                                        <div class="skill-level" data-level="75"></div>
+                                    </div>
+                                    <div class="skill-item" data-skill="openai">
+                                        <i class="fas fa-robot"></i>
+                                        <span>OpenAI APIs</span>
+                                        <div class="skill-level" data-level="88"></div>
+                                    </div>
+                                    <div class="skill-item" data-skill="automation">
+                                        <i class="fas fa-cogs"></i>
+                                        <span>Automation</span>
+                                        <div class="skill-level" data-level="90"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Floor 5: Contact -->
+            <section class="floor" id="floor-contact">
+                <div class="portfolio-card contact-card">
+                    <div class="card-content">
+                        <div class="section-header">
+                            <h2 class="section-title">Get In Touch</h2>
+                            <p class="section-subtitle">Let's build something amazing together</p>
+                        </div>
+                        
+                        <div class="contact-content">
+                            <div class="contact-form">
+                                <form id="contactForm" class="contact-form-wrapper">
+                                    <div class="form-group">
+                                        <input type="text" id="name" name="name" required>
+                                        <label for="name">Your Name</label>
+                                        <div class="form-line"></div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <input type="email" id="email" name="email" required>
+                                        <label for="email">Your Email</label>
+                                        <div class="form-line"></div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <textarea id="message" name="message" rows="5" required></textarea>
+                                        <label for="message">Your Message</label>
+                                        <div class="form-line"></div>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn-primary glow-effect">
+                                        <span class="btn-text">Send Message</span>
+                                        <i class="fas fa-paper-plane btn-arrow"></i>
+                                    </button>
+                                </form>
+                            </div>
+                            
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <div>
+                                        <h4>Email</h4>
+                                        <p>pawanhiray1@gmail.com</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-item">
+                                    <i class="fab fa-linkedin"></i>
+                                    <div>
+                                        <h4>LinkedIn</h4>
+                                        <p>linkedin.com/in/pawanhiray</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-item">
+                                    <i class="fab fa-github"></i>
+                                    <div>
+                                        <h4>GitHub</h4>
+                                        <p>github.com/pawanhiray</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-item">
+                                    <i class="fas fa-globe"></i>
+                                    <div>
+                                        <h4>Website</h4>
+                                        <p>pawanhiray.vercel.app</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
     
