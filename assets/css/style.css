@@ -70,7 +70,67 @@ body, html {
     overflow: hidden;
 }
 
-/* Enhanced Navigation */
+/* ELEVATOR THEME - Building Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(90deg, 
+            rgba(0,0,0,0.8) 0%, 
+            transparent 10%, 
+            transparent 90%, 
+            rgba(0,0,0,0.8) 100%),
+        repeating-linear-gradient(0deg, 
+            rgba(255,255,255,0.03) 0px, 
+            rgba(255,255,255,0.03) 1px, 
+            transparent 1px, 
+            transparent 20px);
+    z-index: -2;
+    pointer-events: none;
+}
+
+/* ELEVATOR SHAFT SIDES */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 50px;
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        rgba(103, 126, 234, 0.3) 0%, 
+        rgba(240, 147, 251, 0.3) 50%, 
+        rgba(103, 126, 234, 0.3) 100%);
+    box-shadow: 
+        0 0 20px rgba(103, 126, 234, 0.5),
+        inset 0 0 10px rgba(255, 255, 255, 0.1);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.container::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 50px;
+    width: 8px;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        rgba(103, 126, 234, 0.3) 0%, 
+        rgba(240, 147, 251, 0.3) 50%, 
+        rgba(103, 126, 234, 0.3) 100%);
+    box-shadow: 
+        0 0 20px rgba(103, 126, 234, 0.5),
+        inset 0 0 10px rgba(255, 255, 255, 0.1);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ELEVATOR CONTROL PANEL - Enhanced Navigation */
 .nav-arrows {
     position: fixed;
     top: 20px;
@@ -79,12 +139,32 @@ body, html {
     align-items: center;
     gap: 20px;
     z-index: 1000;
-    background: rgba(0, 0, 0, 0.3);
+    background: 
+        linear-gradient(145deg, rgba(20, 20, 40, 0.95), rgba(40, 40, 80, 0.95));
     backdrop-filter: blur(20px);
-    border: 1px solid var(--glass-border);
-    border-radius: 50px;
-    padding: 12px 20px;
-    box-shadow: var(--shadow-light);
+    border: 2px solid rgba(103, 126, 234, 0.3);
+    border-radius: 15px;
+    padding: 15px 25px;
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        0 0 20px rgba(103, 126, 234, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.nav-arrows::before {
+    content: 'ELEVATOR';
+    position: absolute;
+    top: -8px;
+    left: 15px;
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(103, 126, 234, 0.8);
+    background: rgba(20, 20, 40, 0.9);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: var(--font-primary);
+    letter-spacing: 1px;
 }
 
 .nav-center {
@@ -94,24 +174,96 @@ body, html {
     gap: 8px;
 }
 
+/* ELEVATOR FLOOR DISPLAY */
+.floor-display {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(20, 20, 40, 0.8));
+    border: 1px solid rgba(103, 126, 234, 0.4);
+    border-radius: 8px;
+    padding: 8px 12px;
+    margin: 8px 0;
+    text-align: center;
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 2px 10px rgba(103, 126, 234, 0.2);
+}
+
+.current-floor {
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 700;
+    color: #00ff88;
+    text-shadow: 0 0 8px #00ff88;
+    margin-bottom: 2px;
+}
+
+.floor-label {
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 1px;
+    font-family: var(--font-primary);
+}
+
+/* ELEVATOR BUTTON INDICATORS */
 .nav-indicators {
     display: flex;
-    gap: 8px;
+    gap: 6px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .indicator {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(40, 40, 60, 0.8), rgba(60, 60, 90, 0.8));
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.6);
+    font-family: var(--font-primary);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.indicator::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.indicator:hover::before {
+    left: 100%;
+}
+
+.indicator:hover {
+    transform: translateY(-2px) scale(1.1);
+    background: linear-gradient(135deg, rgba(103, 126, 234, 0.4), rgba(118, 75, 162, 0.4));
+    border-color: rgba(103, 126, 234, 0.6);
+    color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 5px 15px rgba(103, 126, 234, 0.3);
 }
 
 .indicator.active {
-    background: var(--glow-color);
-    box-shadow: 0 0 10px var(--glow-color);
-    transform: scale(1.2);
+    background: linear-gradient(135deg, var(--glow-color), #4facfe);
+    color: white;
+    border-color: var(--glow-color);
+    transform: translateY(-3px) scale(1.2);
+    box-shadow: 
+        0 0 15px rgba(103, 126, 234, 0.6),
+        0 5px 20px rgba(103, 126, 234, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .nav-arrow {

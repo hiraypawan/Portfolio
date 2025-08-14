@@ -265,7 +265,7 @@ class EnhancedPortfolio {
             position: fixed;
             left: ${x}px;
             top: ${y}px;
-            font-size: ${Math.random() * 20 + 25}px; /* MUCH BIGGER - 25-45px */
+            font-size: ${Math.random() * 6 + 7.5}px; /* REDUCED 70% - 7.5-13.5px */
             pointer-events: none;
             z-index: 1000;
             animation: ${Math.random() > 0.5 ? 'sparkle' : 'trail'} 1.6s ease-out forwards;
@@ -396,9 +396,25 @@ class EnhancedPortfolio {
     
     updateNavigationIndicators(activeIndex) {
         const indicators = document.querySelectorAll('.indicator');
+        const floorNames = ['HOME', 'ABOUT', 'PROJECTS', 'SKILLS', 'CONTACT'];
+        
         indicators.forEach((indicator, index) => {
             indicator.classList.toggle('active', index === activeIndex);
         });
+        
+        // Update elevator floor display
+        const currentFloorDisplay = document.querySelector('.current-floor');
+        const floorLabel = document.querySelector('.floor-label');
+        
+        if (currentFloorDisplay && floorLabel) {
+            currentFloorDisplay.textContent = `F${activeIndex + 1}`;
+            floorLabel.textContent = floorNames[activeIndex];
+            
+            // Add floor change animation
+            currentFloorDisplay.style.animation = 'none';
+            currentFloorDisplay.offsetHeight; // Trigger reflow
+            currentFloorDisplay.style.animation = 'floorChange 0.6s ease-out';
+        }
     }
 
     // Animation Systems
@@ -751,6 +767,34 @@ style.textContent = `
             opacity: 0;
             transform: translate(-50%, -50%) translateY(-55px) scale(0.2);
             filter: blur(4px) drop-shadow(0 0 3px currentColor);
+        }
+    }
+    
+    /* ELEVATOR FLOOR CHANGE ANIMATION */
+    @keyframes floorChange {
+        0% {
+            transform: scale(1);
+            color: #00ff88;
+        }
+        25% {
+            transform: scale(1.2);
+            color: #ffff00;
+            text-shadow: 0 0 15px currentColor;
+        }
+        50% {
+            transform: scale(1.3);
+            color: #ff6b6b;
+            text-shadow: 0 0 20px currentColor;
+        }
+        75% {
+            transform: scale(1.1);
+            color: #00bcd4;
+            text-shadow: 0 0 12px currentColor;
+        }
+        100% {
+            transform: scale(1);
+            color: #00ff88;
+            text-shadow: 0 0 8px #00ff88;
         }
     }
 `;

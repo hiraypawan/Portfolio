@@ -31,13 +31,17 @@
                 <span class="nav-tooltip">Previous Section</span>
             </button>
             <div class="nav-center">
-                <span class="nav-text">Interactive Portfolio</span>
+                <span class="nav-text">FLOOR CONTROL</span>
+                <div class="floor-display">
+                    <div class="current-floor">F1</div>
+                    <div class="floor-label">HOME</div>
+                </div>
                 <div class="nav-indicators">
-                    <div class="indicator active" data-section="home"></div>
-                    <div class="indicator" data-section="about"></div>
-                    <div class="indicator" data-section="projects"></div>
-                    <div class="indicator" data-section="skills"></div>
-                    <div class="indicator" data-section="contact"></div>
+                    <div class="indicator active" data-section="home" data-floor="1">1</div>
+                    <div class="indicator" data-section="about" data-floor="2">2</div>
+                    <div class="indicator" data-section="projects" data-floor="3">3</div>
+                    <div class="indicator" data-section="skills" data-floor="4">4</div>
+                    <div class="indicator" data-section="contact" data-floor="5">5</div>
                 </div>
             </div>
             <button class="nav-arrow right" onclick="navigateArrow('right')">
