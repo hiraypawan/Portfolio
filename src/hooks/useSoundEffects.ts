@@ -3,6 +3,7 @@
 import { useCallback } from 'react';
 
 // Sound effects paths - you can replace these with actual audio files later
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const SOUND_EFFECTS = {
   click: '/sounds/click.mp3',
   unlock: '/sounds/unlock.mp3',
@@ -15,7 +16,7 @@ const SOUND_EFFECTS = {
 type SoundType = keyof typeof SOUND_EFFECTS;
 
 export const useSoundEffects = () => {
-  const playSound = useCallback((type: SoundType, volume: number = 0.5) => {
+  const playSound = useCallback((type: SoundType, _volume: number = 0.5) => {
     try {
       // For now, use vibration on mobile devices as placeholder
       if ('vibrate' in navigator) {

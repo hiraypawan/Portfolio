@@ -473,7 +473,7 @@ export default function WorldQuestMap({}: WorldQuestMapProps) {
                 🗺️ Welcome to World Quest Portfolio!
               </motion.h2>
               <p className="text-gray-300 mb-6 leading-relaxed">
-                Embark on an epic journey through Pawan's digital world! Each glowing location is a quest waiting to be discovered. Click, explore, and unlock the treasures of code, creativity, and innovation!
+                Embark on an epic journey through Pawan&apos;s digital world! Each glowing location is a quest waiting to be discovered. Click, explore, and unlock the treasures of code, creativity, and innovation!
               </p>
               <div className="flex justify-center gap-6 text-sm text-gray-400 mb-8">
                 <div className="flex items-center gap-2">
