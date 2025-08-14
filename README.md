@@ -32,7 +32,41 @@ Built using [Next.js](https://nextjs.org), [Tailwind CSS](https://tailwindcss.co
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/hiraypawan/Portfolio.git
-   cd Portfolio
+# 🚀 Enhanced Interactive Portfolio
+
+A modern, interactive portfolio website featuring advanced animations, particle effects, and responsive design.
+
+## ✨ Recent Updates
+
+### 🎨 Visual Enhancements
+- **Removed zoom scaling** for better readability and performance
+- **Enhanced color palette** with 6 different gradient themes
+- **Improved mouse trail** with coding/money-themed emojis (💰, {}, $, etc.)
+- **Section-specific colors** for better visual hierarchy
+- **Larger text sizes** for improved accessibility
+
+### 🚀 Performance Optimizations
+- **Optimized particle system** (capped at 60 particles)
+- **Efficient animations** using transform and opacity
+- **Debounced mouse events** for smoother performance
+- **Hardware acceleration** with will-change properties
+
+### 📱 Mobile Improvements
+- **Better responsive design** with improved touch interactions
+- **Optimized font scaling** for all device sizes
+- **Enhanced button sizes** for mobile usability
+
+## 🎯 Key Features
+
+- **Interactive particle background** with dynamic connections
+- **Multi-section navigation** with smooth floor-based transitions
+- **Sound effects** for enhanced user experience
+- **Glass morphism design** with blur effects
+- **Animated skill bars** and timeline
+- **Contact form** with real-time validation
+- **Custom mouse trail** with developer-themed symbols
+
+## Portfolio
    ```
 
 2. **Install dependencies**:

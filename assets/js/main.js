@@ -73,17 +73,20 @@ class EnhancedPortfolio {
     
     createParticles() {
         this.particles = [];
-        const numParticles = Math.floor(window.innerWidth / 20);
+        // Optimize particle count based on device capabilities
+        const baseCount = Math.floor(window.innerWidth / 25);
+        const numParticles = Math.min(baseCount, 60); // Cap at 60 for performance
         
         for (let i = 0; i < numParticles; i++) {
             this.particles.push({
                 x: Math.random() * this.canvas.width,
                 y: Math.random() * this.canvas.height,
-                size: Math.random() * 2 + 1,
-                speedX: (Math.random() - 0.5) * 0.5,
-                speedY: (Math.random() - 0.5) * 0.5,
-                opacity: Math.random() * 0.5 + 0.2,
-                hue: Math.random() * 60 + 200 // Blue to purple range
+                size: Math.random() * 2 + 0.5,
+                speedX: (Math.random() - 0.5) * 0.3,
+                speedY: (Math.random() - 0.5) * 0.3,
+                opacity: Math.random() * 0.4 + 0.1,
+                hue: Math.random() * 120 + 200, // Wider color range
+                life: Math.random() * 200 + 100 // Add particle lifecycle
             });
         }
     }
@@ -223,21 +226,24 @@ class EnhancedPortfolio {
     
     createMouseTrail(x, y) {
         const trail = document.createElement('div');
-        const symbols = ['✨', '💫', '⭐', '🌟', '💎', '🚀', '⚡', '💥'];
-        const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+        // Coding and money-themed emojis for portfolio theme
+        const codingSymbols = ['💰', '💵', '💎', '🚀', '{', '}', '(', ')', '[', ']', ':', ';', '<', '>', '/', '\\', '=', '+', '-', '*', '%', '&', '|', '!', '?', '~', '^', '@', '#', '$', '€', '¥', '£', '₹', '₿', '🔥', '⚡', '💻', '🖥️', '📱', '🌟', '✨', '💫', '⭐'];
+        const randomSymbol = codingSymbols[Math.floor(Math.random() * codingSymbols.length)];
         
         trail.textContent = randomSymbol;
         trail.style.cssText = `
             position: fixed;
             left: ${x}px;
             top: ${y}px;
-            font-size: ${Math.random() * 8 + 12}px;
+            font-size: ${Math.random() * 10 + 16}px;
             pointer-events: none;
             z-index: 1000;
-            animation: sparkle 1.2s ease-out forwards;
+            animation: ${Math.random() > 0.5 ? 'sparkle' : 'trail'} 1.4s ease-out forwards;
             transform: translate(-50%, -50%);
             user-select: none;
-            color: hsl(${Math.random() * 60 + 200}, 70%, 70%);
+            font-weight: bold;
+            color: ${this.getRandomTrailColor()};
+            text-shadow: 0 0 10px currentColor;
         `;
         
         document.body.appendChild(trail);
@@ -246,7 +252,17 @@ class EnhancedPortfolio {
             if (trail.parentNode) {
                 trail.remove();
             }
-        }, 1200);
+        }, 1400);
+    }
+    
+    getRandomTrailColor() {
+        const colors = [
+            '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', 
+            '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3', '#ff9f43',
+            '#ffd700', '#ff1744', '#00e676', '#2196f3', '#ff5722',
+            '#9c27b0', '#00bcd4', '#4caf50', '#ffeb3b', '#e91e63'
+        ];
+        return colors[Math.floor(Math.random() * colors.length)];
     }
     
     createRippleEffect(event, element) {
