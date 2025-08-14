@@ -227,9 +227,35 @@ class EnhancedPortfolio {
     createMouseTrail(x, y) {
         const trail = document.createElement('div');
         // ENHANCED Money bags and coding symbols - MORE DRAMATIC!
-        const moneySymbols = ['💰', '💵', '💴', '💶', '💷', '💸', '💳', '🏦', '🤑', '💲', '💱', '💹', '$$$', '€€€', '¥¥¥'];
+        const moneySymbols = [
+            String.fromCodePoint(0x1F4B0), // 💰
+            String.fromCodePoint(0x1F4B5), // 💵
+            String.fromCodePoint(0x1F4B4), // 💴
+            String.fromCodePoint(0x1F4B6), // 💶
+            String.fromCodePoint(0x1F4B7), // 💷
+            String.fromCodePoint(0x1F4B8), // 💸
+            String.fromCodePoint(0x1F4B3), // 💳
+            String.fromCodePoint(0x1F3E6), // 🏦
+            String.fromCodePoint(0x1F911), // 🤑
+            String.fromCodePoint(0x1F4B2), // 💲
+            '$$$', '€€€', '¥¥¥'
+        ];
         const codingSymbols = ['{', '}', '(', ')', '[', ']', '<', '>', ':', ';', '/', '\\', '=', '+', '-', '*', '%', '&', '|', '!', '?', '~', '^', '@', '#', '$', '€', '¥', '£', '₹', '₿'];
-        const techSymbols = ['🔥', '⚡', '💻', '🖥️', '📱', '⌨️', '🖱️', '💽', '💿', '📡', '🌐', '🔧', '⚙️', '🛠️', '🚀', '💎', '🌟', '✨', '💫', '⭐', '🎯', '🎮', '🕹️'];
+        const techSymbols = [
+            String.fromCodePoint(0x1F525), // 🔥
+            String.fromCodePoint(0x26A1),  // ⚡
+            String.fromCodePoint(0x1F4BB), // 💻
+            String.fromCodePoint(0x1F5A5), // 🖥️
+            String.fromCodePoint(0x1F4F1), // 📱
+            String.fromCodePoint(0x1F680), // 🚀
+            String.fromCodePoint(0x1F48E), // 💎
+            String.fromCodePoint(0x1F31F), // 🌟
+            String.fromCodePoint(0x2728),  // ✨
+            String.fromCodePoint(0x1F4AB), // 💫
+            String.fromCodePoint(0x2B50),  // ⭐
+            String.fromCodePoint(0x1F3AF), // 🎯
+            String.fromCodePoint(0x1F3AE)  // 🎮
+        ];
         
         const allSymbols = [...moneySymbols, ...codingSymbols, ...techSymbols];
         const randomSymbol = allSymbols[Math.floor(Math.random() * allSymbols.length)];
