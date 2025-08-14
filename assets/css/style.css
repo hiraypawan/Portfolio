@@ -36,7 +36,7 @@ body, html {
     overflow-y: hidden;
     scroll-behavior: smooth;
     position: relative;
-    font-size: 18px;
+    font-size: 24px; /* DRAMATICALLY INCREASED from 18px */
     /* Performance optimizations */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -299,19 +299,20 @@ body, html {
 
 .section-title {
     font-family: var(--font-primary);
-    font-size: 3.5rem; /* Larger for better visibility after scaling */
+    font-size: 5rem; /* MASSIVE increase from 3.5rem */
     font-weight: 700;
     background: var(--primary-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 20px;
-    letter-spacing: 2px;
-    line-height: 1.2;
+    margin-bottom: 30px;
+    letter-spacing: 3px;
+    line-height: 1.1;
+    text-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
 .section-subtitle {
-    font-size: 1.6rem; /* Larger for better readability */
+    font-size: 2.2rem; /* HUGE increase from 1.6rem */
     color: var(--text-muted);
     font-weight: 400;
     margin: 0;

@@ -226,24 +226,29 @@ class EnhancedPortfolio {
     
     createMouseTrail(x, y) {
         const trail = document.createElement('div');
-        // Coding and money-themed emojis for portfolio theme
-        const codingSymbols = ['💰', '💵', '💎', '🚀', '{', '}', '(', ')', '[', ']', ':', ';', '<', '>', '/', '\\', '=', '+', '-', '*', '%', '&', '|', '!', '?', '~', '^', '@', '#', '$', '€', '¥', '£', '₹', '₿', '🔥', '⚡', '💻', '🖥️', '📱', '🌟', '✨', '💫', '⭐'];
-        const randomSymbol = codingSymbols[Math.floor(Math.random() * codingSymbols.length)];
+        // ENHANCED Money bags and coding symbols - MORE DRAMATIC!
+        const moneySymbols = ['💰', '💵', '💴', '💶', '💷', '💸', '💳', '🏦', '🤑', '💲', '💱', '💹', '$$$', '€€€', '¥¥¥'];
+        const codingSymbols = ['{', '}', '(', ')', '[', ']', '<', '>', ':', ';', '/', '\\', '=', '+', '-', '*', '%', '&', '|', '!', '?', '~', '^', '@', '#', '$', '€', '¥', '£', '₹', '₿'];
+        const techSymbols = ['🔥', '⚡', '💻', '🖥️', '📱', '⌨️', '🖱️', '💽', '💿', '📡', '🌐', '🔧', '⚙️', '🛠️', '🚀', '💎', '🌟', '✨', '💫', '⭐', '🎯', '🎮', '🕹️'];
+        
+        const allSymbols = [...moneySymbols, ...codingSymbols, ...techSymbols];
+        const randomSymbol = allSymbols[Math.floor(Math.random() * allSymbols.length)];
         
         trail.textContent = randomSymbol;
         trail.style.cssText = `
             position: fixed;
             left: ${x}px;
             top: ${y}px;
-            font-size: ${Math.random() * 10 + 16}px;
+            font-size: ${Math.random() * 20 + 25}px; /* MUCH BIGGER - 25-45px */
             pointer-events: none;
             z-index: 1000;
-            animation: ${Math.random() > 0.5 ? 'sparkle' : 'trail'} 1.4s ease-out forwards;
+            animation: ${Math.random() > 0.5 ? 'sparkle' : 'trail'} 1.6s ease-out forwards;
             transform: translate(-50%, -50%);
             user-select: none;
-            font-weight: bold;
+            font-weight: 900; /* Extra bold */
             color: ${this.getRandomTrailColor()};
-            text-shadow: 0 0 10px currentColor;
+            text-shadow: 0 0 15px currentColor, 0 0 25px currentColor;
+            filter: drop-shadow(0 0 8px currentColor);
         `;
         
         document.body.appendChild(trail);
@@ -252,7 +257,7 @@ class EnhancedPortfolio {
             if (trail.parentNode) {
                 trail.remove();
             }
-        }, 1400);
+        }, 1600);
     }
     
     getRandomTrailColor() {
@@ -659,6 +664,68 @@ style.textContent = `
         pointer-events: none;
         border-radius: 50%;
         z-index: 1000;
+    }
+    
+    /* ENHANCED Mouse Trail Animations for Bigger Symbols */
+    @keyframes sparkle {
+        0% {
+            opacity: 1;
+            transform: translate(-50%, -50%) rotate(0deg) scale(0.8);
+            filter: blur(0px) drop-shadow(0 0 8px currentColor);
+        }
+        25% {
+            opacity: 0.9;
+            transform: translate(-50%, -50%) rotate(90deg) scale(1.3);
+            filter: blur(0px) drop-shadow(0 0 15px currentColor);
+        }
+        50% {
+            opacity: 0.8;
+            transform: translate(-50%, -50%) rotate(180deg) scale(1.5);
+            filter: blur(1px) drop-shadow(0 0 20px currentColor);
+        }
+        75% {
+            opacity: 0.5;
+            transform: translate(-50%, -50%) rotate(270deg) scale(1.2);
+            filter: blur(2px) drop-shadow(0 0 12px currentColor);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) rotate(360deg) scale(0.3);
+            filter: blur(3px) drop-shadow(0 0 5px currentColor);
+        }
+    }
+    
+    @keyframes trail {
+        0% {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(0.9);
+            filter: blur(0px) drop-shadow(0 0 8px currentColor);
+        }
+        20% {
+            opacity: 0.95;
+            transform: translate(-50%, -50%) translateY(-15px) scale(1.4);
+            filter: blur(0px) drop-shadow(0 0 18px currentColor);
+        }
+        40% {
+            opacity: 0.8;
+            transform: translate(-50%, -50%) translateY(-25px) scale(1.6);
+            filter: blur(1px) drop-shadow(0 0 22px currentColor);
+        }
+        60% {
+            opacity: 0.6;
+            transform: translate(-50%, -50%) translateY(-35px) scale(1.3);
+            filter: blur(2px) drop-shadow(0 0 15px currentColor);
+        }
+        80% {
+            opacity: 0.3;
+            transform: translate(-50%, -50%) translateY(-45px) scale(0.8);
+            filter: blur(3px) drop-shadow(0 0 8px currentColor);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(-50%, -50%) translateY(-55px) scale(0.2);
+            filter: blur(4px) drop-shadow(0 0 3px currentColor);
+        }
     }
 `;
 document.head.appendChild(style);
