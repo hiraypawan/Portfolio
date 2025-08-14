@@ -7,6 +7,8 @@ import ElevatorShell from './elevator/ElevatorShell';
 import ControlPanel from './elevator/ControlPanel';
 import FloorContent from './elevator/FloorContent';
 import DoorAnimation from './elevator/DoorAnimation';
+import MouseTrail from './effects/MouseTrail';
+import FloatingParticles from './effects/FloatingParticles';
 import { useElevatorSounds } from '@/hooks/useSoundEffects';
 
 export default function ElevatorPortfolio() {
@@ -116,6 +118,13 @@ export default function ElevatorPortfolio() {
           <ElevatorShell currentFloor={currentFloor} />
         </motion.div>
 
+        {/* Floating Particles Background */}
+        <FloatingParticles 
+          color={currentFloorData.theme.accent + '40'}
+          count={30}
+          speed={0.5}
+        />
+
         {/* Door Animation Overlay */}
         <DoorAnimation 
           isOpen={doorsOpen} 
@@ -194,6 +203,13 @@ export default function ElevatorPortfolio() {
           )}
         </AnimatePresence>
       </div>
+
+      {/* Mouse Trail Effect */}
+      <MouseTrail 
+        color={currentFloorData.theme.accent}
+        particleCount={20}
+        particleLife={1200}
+      />
     </div>
   );
 }

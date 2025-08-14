@@ -20,13 +20,28 @@ export default function ControlPanel({ floors, currentFloor, onFloorSelect, isMo
                  md:max-w-xs w-full"
     >
       {/* Panel Header */}
-      <div className="mb-4 text-center">
-        <h3 className="text-white font-bold text-sm mb-1">FLOOR SELECTION</h3>
-        <div className="h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent" />
-      </div>
+      <motion.div 
+        className="mb-6 text-center"
+        animate={{
+          textShadow: [
+            `0 0 10px ${floors[currentFloor].theme.accent}30`,
+            `0 0 20px ${floors[currentFloor].theme.accent}60`,
+            `0 0 10px ${floors[currentFloor].theme.accent}30`
+          ]
+        }}
+        transition={{ duration: 2, repeat: Infinity }}
+      >
+        <h3 className="text-white font-bold text-xl mb-3">PORTFOLIO SECTIONS</h3>
+        <motion.div 
+          className="h-1 bg-gradient-to-r from-transparent via-gray-400 to-transparent rounded-full"
+          animate={{
+            background: `linear-gradient(90deg, transparent, ${floors[currentFloor].theme.accent}, transparent)`
+          }}
+        />
+      </motion.div>
 
       {/* Floor Buttons Grid */}
-      <div className="grid grid-cols-4 md:grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 md:grid-cols-1 gap-4">
         {floors.map((floor, index) => {
           const isActive = index === currentFloor;
           const isDisabled = isMoving;
@@ -37,33 +52,52 @@ export default function ControlPanel({ floors, currentFloor, onFloorSelect, isMo
               onClick={() => !isDisabled && onFloorSelect(index)}
               disabled={isDisabled}
               className={`
-                relative h-12 rounded-lg border-2 font-bold text-sm transition-all duration-300
+                relative h-20 rounded-xl border-3 font-bold text-lg transition-all duration-500 overflow-hidden
                 ${isActive 
-                  ? 'bg-gradient-to-br shadow-lg transform scale-105' 
-                  : 'bg-gray-800/50 hover:bg-gray-700/70'
+                  ? 'bg-gradient-to-br shadow-2xl transform scale-105' 
+                  : 'bg-gray-800/60 hover:bg-gray-700/80 hover:scale-102'
                 }
-                ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+                ${isDisabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:shadow-xl'}
               `}
               style={{
-                borderColor: isActive ? floor.theme.accent : '#4b5563',
+                borderColor: isActive ? floor.theme.accent : '#6b7280',
                 background: isActive 
                   ? `linear-gradient(135deg, ${floor.theme.primary})` 
                   : undefined,
                 boxShadow: isActive 
-                  ? `0 0 20px ${floor.theme.accent}50, inset 0 2px 10px rgba(255,255,255,0.1)` 
-                  : 'inset 0 2px 10px rgba(0,0,0,0.3)'
+                  ? `0 0 30px ${floor.theme.accent}60, inset 0 3px 15px rgba(255,255,255,0.1)` 
+                  : 'inset 0 3px 15px rgba(0,0,0,0.4)'
               }}
-              whileHover={!isDisabled ? { scale: 1.05 } : {}}
-              whileTap={!isDisabled ? { scale: 0.95 } : {}}
+              whileHover={!isDisabled ? { 
+                scale: 1.08, 
+                rotateY: 5,
+                boxShadow: `0 10px 30px ${floor.theme.accent}40`
+              } : {}}
+              whileTap={!isDisabled ? { scale: 0.98 } : {}}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1, type: "spring", stiffness: 100 }}
             >
+              {/* Background Animation */}
+              <motion.div
+                className="absolute inset-0 opacity-30"
+                style={{
+                  background: `linear-gradient(45deg, ${floor.theme.primary})`
+                }}
+                animate={{
+                  opacity: isActive ? [0.2, 0.4, 0.2] : 0.1
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              
               {/* Button glow effect when active */}
               {isActive && (
                 <motion.div
-                  className="absolute inset-0 rounded-lg"
+                  className="absolute inset-0 rounded-xl"
                   animate={{
                     boxShadow: [
                       `0 0 20px ${floor.theme.accent}50`,
-                      `0 0 30px ${floor.theme.accent}80`,
+                      `0 0 40px ${floor.theme.accent}90`,
                       `0 0 20px ${floor.theme.accent}50`
                     ]
                   }}
@@ -72,27 +106,50 @@ export default function ControlPanel({ floors, currentFloor, onFloorSelect, isMo
               )}
               
               {/* Button Content */}
-              <div className="relative z-10 flex flex-col items-center justify-center h-full">
-                <div className={`text-lg font-bold ${isActive ? 'text-white' : 'text-gray-300'}`}>
-                  {floor.year}
-                </div>
-                <div className={`text-xs ${isActive ? 'text-gray-200' : 'text-gray-500'}`}>
-                  AGE {floor.age}
+              <div className="relative z-10 flex flex-col items-center justify-center h-full px-2">
+                <motion.div 
+                  className={`text-2xl font-bold mb-1 ${isActive ? 'text-white' : 'text-gray-200'}`}
+                  animate={isActive ? {
+                    textShadow: [
+                      `0 0 5px ${floor.theme.accent}`,
+                      `0 0 15px ${floor.theme.accent}`,
+                      `0 0 5px ${floor.theme.accent}`
+                    ]
+                  } : {}}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  {floor.title}
+                </motion.div>
+                <div className={`text-sm text-center leading-tight ${isActive ? 'text-gray-100' : 'text-gray-400'}`}>
+                  {floor.subtitle}
                 </div>
               </div>
 
-              {/* Active indicator dot */}
+              {/* Active indicator */}
               {isActive && (
                 <motion.div
-                  className="absolute top-1 right-1 w-2 h-2 rounded-full"
+                  className="absolute top-2 right-2 w-4 h-4 rounded-full"
                   style={{ backgroundColor: floor.theme.accent }}
                   animate={{
                     opacity: [0.5, 1, 0.5],
-                    scale: [0.8, 1.2, 0.8]
+                    scale: [0.8, 1.3, 0.8],
+                    boxShadow: [
+                      `0 0 5px ${floor.theme.accent}`,
+                      `0 0 20px ${floor.theme.accent}`,
+                      `0 0 5px ${floor.theme.accent}`
+                    ]
                   }}
                   transition={{ duration: 1.5, repeat: Infinity }}
                 />
               )}
+              
+              {/* Hover particles effect */}
+              <motion.div
+                className="absolute inset-0 pointer-events-none"
+                whileHover={{
+                  background: `radial-gradient(circle at center, ${floor.theme.accent}20, transparent)`
+                }}
+              />
             </motion.button>
           );
         })}

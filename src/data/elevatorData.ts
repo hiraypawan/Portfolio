@@ -40,8 +40,8 @@ export const elevatorFloors: FloorData[] = [
   {
     year: 2018,
     age: 16,
-    title: "The Beginning",
-    subtitle: "First Steps into Programming",
+    title: "About Me",
+    subtitle: "Introduction & Background",
     description: "Started my coding journey with no-code tools and Java. Built my first Android app and discovered the magic of bringing ideas to life through code.",
     keyAchievements: [
       "Built first mobile app using Kodular (no-code)",
@@ -70,8 +70,8 @@ export const elevatorFloors: FloorData[] = [
   {
     year: 2019,
     age: 17,
-    title: "Expanding Horizons", 
-    subtitle: "Full-Stack & Creative Skills",
+    title: "Skills & Expertise", 
+    subtitle: "Technical Competencies",
     description: "Broadened my skillset beyond mobile development. Learned full-stack web development, UI/UX design, and even explored cybersecurity basics.",
     keyAchievements: [
       "Mastered full-stack web development (MERN stack)",
@@ -100,8 +100,8 @@ export const elevatorFloors: FloorData[] = [
   {
     year: 2020,
     age: 18,
-    title: "Multi-Domain Mastery",
-    subtitle: "Marketing, Gaming & Blockchain Pioneer", 
+    title: "Projects",
+    subtitle: "Featured Work & Portfolio", 
     description: "Diversified into digital marketing, game development, and blockchain - before crypto went mainstream. This year marked my entry into multiple high-potential domains.",
     keyAchievements: [
       "Launched successful digital marketing campaigns",
@@ -130,8 +130,8 @@ export const elevatorFloors: FloorData[] = [
   {
     year: 2021,
     age: 19,
-    title: "Professional Breakthrough",
-    subtitle: "Real Clients & AI Early Adoption",
+    title: "Experience",
+    subtitle: "Professional Work History",
     description: "Started working with real US clients and began learning AI/ML - way before ChatGPT made it mainstream. This was the year I turned from hobbyist to professional.",
     keyAchievements: [
       "Secured first US client projects with impressive deliverables",
@@ -160,8 +160,8 @@ export const elevatorFloors: FloorData[] = [
   {
     year: 2022,
     age: 20,
-    title: "Community Impact",
-    subtitle: "MuStudentsUnited & AI Automation", 
+    title: "Achievements",
+    subtitle: "Recognition & Impact", 
     description: "Built MuStudentsUnited platform serving 30,000+ students. Dove deep into AI automation and advanced blockchain projects, making real impact in education.",
     keyAchievements: [
       "Launched MuStudentsUnited - helped 30,000+ Mumbai University students",
@@ -190,8 +190,8 @@ export const elevatorFloors: FloorData[] = [
   {
     year: 2023,
     age: 21, 
-    title: "Growth & Trading",
-    subtitle: "Social Media Growth & Meme Coins",
+    title: "Services",
+    subtitle: "What I Offer",
     description: "Focused on social media growth, advanced SEO, and strategic meme coin trading. Mastered growth hacking techniques and viral content creation.",
     keyAchievements: [
       "Grew social media channels to significant followings",
@@ -220,8 +220,8 @@ export const elevatorFloors: FloorData[] = [
   {
     year: 2024,
     age: 22,
-    title: "Expert Level",
-    subtitle: "Crypto Trading & AI+Web3 Mastery",
+    title: "Certifications",
+    subtitle: "Professional Credentials",
     description: "Reached expert level in crypto trading and AI+Web3 integration. Built multiple projects solving real-world problems with cutting-edge technology.",
     keyAchievements: [
       "Advanced crypto trading strategies with consistent profits",
@@ -250,8 +250,8 @@ export const elevatorFloors: FloorData[] = [
   {
     year: 2025,
     age: 23,
-    title: "Future Builder", 
-    subtitle: "AI/ML & Blockchain Innovation",
+    title: "Contact", 
+    subtitle: "Get In Touch",
     description: "Currently advancing in AI/ML and blockchain development. Building the future with cutting-edge technology and innovative solutions that push boundaries.",
     keyAchievements: [
       "Ongoing advanced AI/ML research and implementation",
