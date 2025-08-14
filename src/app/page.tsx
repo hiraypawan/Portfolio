@@ -1,5 +1,5 @@
-import WorldQuestMap from '@/components/WorldQuestMap';
+import ElevatorPortfolio from '@/components/ElevatorPortfolio';
 
 export default function Home() {
-  return <WorldQuestMap />;
+  return <ElevatorPortfolio />;
 }
