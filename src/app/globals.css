@@ -1,1111 +1,139 @@
-.demo-book {
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.1);
-  background: linear-gradient(145deg, #1e1b4b, #312e81);
-  margin: auto;
-  display: block;
-  border-radius: 12px;
-  position: relative;
-  border: 2px solid rgba(139, 69, 19, 0.5);
-  /* Book spine effect */
-  background-image: 
-    linear-gradient(90deg, rgba(0,0,0,0.3) 49%, transparent 50%, transparent 50%, rgba(255,255,255,0.1) 51%);
-  background-size: 2px 100%;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-/* Custom open book spread styling */
-.open-book-spread {
-  position: relative;
-}
-
-/* Book spine for custom two-page layout */
-.open-book-spread::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 100%;
-  background: linear-gradient(to right, 
-    rgba(0,0,0,0.4) 0%, 
-    rgba(0,0,0,0.6) 50%, 
-    rgba(0,0,0,0.4) 100%);
-  border-radius: 3px;
-  z-index: 10;
-  pointer-events: none;
-  box-shadow: 
-    0 0 10px rgba(0,0,0,0.8) inset,
-    2px 0 6px rgba(0,0,0,0.3),
-    -2px 0 6px rgba(0,0,0,0.3);
-}
-
-/* Page texture effects for custom layout */
-.page-left::before,
-.page-right::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    radial-gradient(circle at 25px 25px, rgba(255,255,255,0.02) 2%, transparent 50%),
-    radial-gradient(circle at 75px 75px, rgba(255,255,255,0.01) 2%, transparent 50%);
-  background-size: 100px 100px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Enhanced page content positioning for custom layout */
-.page-left > div,
-.page-right > div {
-  position: relative;
-  z-index: 1;
-}
-
-/* Smooth page flip animation for custom layout */
-.page-flip-animation {
-  transform-style: preserve-3d;
-  perspective: 1000px;
-}
-
-.page-flip-animation .page-left {
-  animation: pageFlipLeft 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  transform-origin: right center;
-}
-
-.page-flip-animation .page-right {
-  animation: pageFlipRight 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  transform-origin: left center;
-}
-
-@keyframes pageFlipLeft {
-  0% {
-    transform: rotateY(0deg);
-    box-shadow: 2px 0 8px rgba(0,0,0,0.3);
-  }
-  50% {
-    transform: rotateY(-90deg);
-    box-shadow: 5px 0 15px rgba(0,0,0,0.5);
-  }
-  100% {
-    transform: rotateY(0deg);
-    box-shadow: 2px 0 8px rgba(0,0,0,0.3);
-  }
-}
-
-@keyframes pageFlipRight {
-  0% {
-    transform: rotateY(0deg);
-    box-shadow: -2px 0 8px rgba(0,0,0,0.3);
-  }
-  50% {
-    transform: rotateY(90deg);
-    box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-  }
-  100% {
-    transform: rotateY(0deg);
-    box-shadow: -2px 0 8px rgba(0,0,0,0.3);
-  }
-}
-
-/* Enhanced page transition effects */
-.open-book-spread {
-  transition: transform 0.3s ease-in-out;
-}
-
-.page-left,
-.page-right {
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), 
-              box-shadow 0.7s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s ease-in-out;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-
-/* Desktop flipbook enhancements */
-.desktop-flipbook {
-  cursor: grab;
-}
-
-.desktop-flipbook:active {
-  cursor: grabbing;
-}
-
-/* Enhanced page turning for desktop */
-.desktop-flipbook .stf__item {
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.desktop-flipbook .stf__item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-}
-
-.demo-book::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(145deg, rgba(139, 69, 19, 0.3), rgba(160, 82, 45, 0.3));
-  border-radius: 14px;
-  z-index: -1;
-}
-
-/* Book binding shadow effect */
-.demo-book::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 6px;
-  height: 100%;
-  background: linear-gradient(to right, 
-    rgba(0,0,0,0.4) 0%, 
-    rgba(0,0,0,0.6) 50%, 
-    rgba(0,0,0,0.4) 100%);
-  border-radius: 3px;
-  z-index: 1;
-  pointer-events: none;
-  box-shadow: 
-    0 0 10px rgba(0,0,0,0.8) inset,
-    2px 0 6px rgba(0,0,0,0.3),
-    -2px 0 6px rgba(0,0,0,0.3);
-}
-
-.demo-book .page {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  position: relative;
-  overflow: hidden;
-  border-radius: 8px;
-  /* Page separation styling */
-  margin: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 
-    0 4px 8px rgba(0,0,0,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.1);
-}
-
-/* Left page specific styling */
-.demo-book .page:nth-child(odd) {
-  border-right: 2px solid rgba(139, 69, 19, 0.3);
-  margin-right: 2px;
-  box-shadow: 
-    2px 0 8px rgba(0,0,0,0.2),
-    0 4px 8px rgba(0,0,0,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.1);
-}
-
-/* Right page specific styling */
-.demo-book .page:nth-child(even) {
-  border-left: 2px solid rgba(139, 69, 19, 0.3);
-  margin-left: 2px;
-  box-shadow: 
-    -2px 0 8px rgba(0,0,0,0.2),
-    0 4px 8px rgba(0,0,0,0.3),
-    inset 0 1px 0 rgba(255,255,255,0.1);
-}
-
-.demo-book .page > div {
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-/* Auto-fit content utility */
-.auto-fit-content {
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 1rem;
-  box-sizing: border-box;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-/* Auto grid for skills */
-.auto-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0.5rem 0;
-}
-
-/* Custom scrollbar for pages */
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-/* Scroll hint animation */
-.scroll-hint {
-  position: sticky;
-  bottom: 10px;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.75rem;
-  animation: bounce 2s infinite;
-  pointer-events: none;
-  margin-top: 1rem;
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
-    transform: translateY(0);
-  }
-  40% {
-    transform: translateY(-5px);
-  }
-  60% {
-    transform: translateY(-3px);
-  }
-}
-
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  
-  /* Cosmic color palette */
-  --color-cosmic-900: #0F0B1A;
-  --color-cosmic-800: #1A1329;
-  --color-cosmic-700: #2A1F3D;
-  --color-cosmic-600: #3B2F5B;
-  --color-cosmic-500: #5D4E75;
-  --color-cosmic-400: #8B7FB8;
-  --color-cosmic-300: #B8AED6;
-  --color-cosmic-200: #D4C9E8;
-  --color-cosmic-100: #F0EBFF;
-  
-  /* Neon accents */
-  --color-neon-blue: #00D9FF;
-  --color-neon-purple: #A855F7;
-  --color-neon-pink: #EC4899;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
 }
 
-.dark {
-  --background: #0F0B1A;
-  --foreground: #F0EBFF;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-@keyframes glow {
-  0% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
-  100% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.8); }
-}
-
-/* Custom 3D perspective styles */
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-
-/* Book page styles */
-.book-page {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  height: auto;
-  min-height: 100dvh;
-  overflow-x: hidden;
-  overflow-y: auto;
-  margin: 0;
-  padding: 0;
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+/* Book Flip Animations */
+.stf__wrapper {
+  touch-action: pan-y;
+}
+
+.stf__block {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.stf__item {
+  transition: transform 0.3s ease;
+}
+
+.stf__shadow {
+  opacity: 0.5;
+}
+
+/* Page styles for book */
+.page {
   position: relative;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  /* Enhanced smoothness */
-  will-change: scroll-position;
-  backface-visibility: hidden;
-  perspective: 1000px;
-  transform: translateZ(0);
+  background: linear-gradient(to bottom, #fefefe 0%, #f8f8f8 100%);
+  overflow: hidden;
 }
 
-html {
-  height: auto;
-  min-height: 100dvh;
-  overflow-x: hidden;
-  overflow-y: auto;
-  margin: 0;
-  padding: 0;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  /* Enhanced smoothness */
-  will-change: scroll-position;
-  transform: translateZ(0);
+.page::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%);
+  pointer-events: none;
 }
 
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 8px;
+.page-cover {
+  background: linear-gradient(135deg, #8b4513 0%, #654321 100%);
+  position: relative;
+  overflow: hidden;
 }
 
-::-webkit-scrollbar-track {
-  background: var(--color-cosmic-800);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-cosmic-600);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-cosmic-500);
-}
-
-/* Tailwind scrollbar utilities */
-.scrollbar-thin {
-  scrollbar-width: thin;
-}
-
-.scrollbar-none {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.scrollbar-none::-webkit-scrollbar {
-  display: none;
-}
-
-.scrollbar-thumb-white\/20::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.scrollbar-track-transparent::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-/* Mobile touch improvements */
-.touch-manipulation {
-  touch-action: manipulation;
-}
-
-/* Natural scrolling for mobile */
-* {
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Main container styling */
-.main-container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  min-height: 100vh;
-}
-
-/* Mobile viewport fixes */
-@media screen and (max-width: 768px) {
-  body {
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: auto;
-    min-height: 100vh;
-    min-height: 100dvh;
-    touch-action: pan-y pan-x;
-  }
-  
-  /* Enable natural scrolling on all elements */
-  .mobile-scroll {
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-    height: auto;
-    min-height: 100vh;
-    min-height: 100dvh;
-    touch-action: pan-y;
-  }
-  
-  /* Force scrollable containers */
-  .scrollable-content {
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-    height: auto;
-    min-height: 100vh;
-    min-height: 100dvh;
-    max-height: none;
-    touch-action: pan-y;
-  }
-  
-  /* iOS specific fixes */
-  .ios-scroll-fix {
-    -webkit-overflow-scrolling: touch;
-    transform: translateZ(0);
-    touch-action: pan-y;
-  }
-  
-  /* Touch scroll improvements */
-  .touch-scroll {
-    touch-action: pan-y !important;
-    -webkit-overflow-scrolling: touch;
-    will-change: scroll-position;
-  }
-  
-  /* Page container improvements */
-  .page {
-    touch-action: pan-y !important;
-    -webkit-overflow-scrolling: touch;
-    overflow-y: auto;
-    height: 100%;
-    min-height: 100%;
-  }
-  
-  /* Flipbook specific mobile fixes */
-  .demo-book {
-    touch-action: auto !important;
-  }
-  
-  .demo-book .page {
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-    -webkit-overflow-scrolling: touch;
-    touch-action: auto !important;
-    height: 100%;
-    max-height: none;
-  }
-}
-
-/* Smooth scroll container */
-.smooth-scroll {
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  will-change: scroll-position;
-  transform: translateZ(0);
-}
-
-/* Enhanced animations */
-.smooth-transform {
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* Highlight effects */
-.highlight-glow {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.highlight-glow:hover {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-  transform: translateY(-2px);
-}
-
-/* Mobile optimized containers */
-@media (max-width: 768px) {
-  .mobile-container {
-    max-width: 100vw;
-    padding: 1rem;
-    margin: 0;
-  }
-  
-  .mobile-text {
-    font-size: clamp(0.875rem, 2.5vw, 1.25rem);
-    line-height: 1.5;
-  }
-  
-  .mobile-heading {
-    font-size: clamp(1.5rem, 6vw, 3rem);
-    line-height: 1.2;
-  }
-  
-  /* Mobile book optimizations */
-  .mobile-optimized {
-    touch-action: pan-x pan-y;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .mobile-optimized .page {
-    touch-action: pan-y;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  /* Adjust book spine for mobile */
-  .demo-book::after {
-    width: 4px;
-  }
-  
-  .demo-book .page {
-    margin: 2px;
-  }
-  
-  .demo-book .page:nth-child(odd) {
-    margin-right: 1px;
-  }
-  
-  .demo-book .page:nth-child(even) {
-    margin-left: 1px;
-  }
-}
-
-/* Paper texture effect for pages */
-.demo-book .page::before {
+.page-cover::after {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: 
-    radial-gradient(circle at 25px 25px, rgba(255,255,255,0.02) 2%, transparent 50%),
-    radial-gradient(circle at 75px 75px, rgba(255,255,255,0.01) 2%, transparent 50%);
-  background-size: 100px 100px;
+  background: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.03) 2px,
+      rgba(255,255,255,0.03) 4px
+    );
   pointer-events: none;
-  z-index: 0;
 }
 
-/* Enhanced page content positioning */
-.demo-book .page > div {
-  position: relative;
-  z-index: 1;
-}
-
-/* Book cover effect */
-.demo-book {
+/* Book texture */
+.book-texture {
   background-image: 
-    linear-gradient(90deg, rgba(0,0,0,0.3) 49%, transparent 50%, transparent 50%, rgba(255,255,255,0.1) 51%),
-    radial-gradient(ellipse at center, rgba(139, 69, 19, 0.1) 0%, rgba(160, 82, 45, 0.2) 100%);
-  background-size: 2px 100%, 100% 100%;
-  background-position: center, center;
-  background-repeat: no-repeat, no-repeat;
+    repeating-linear-gradient(
+      0deg,
+      rgba(0,0,0,0.02) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(0,0,0,0.02) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0,0,0,0.02) 0px,
+      transparent 1px,
+      transparent 2px,
+      rgba(0,0,0,0.02) 3px
+    );
 }
 
-/* Subtle page curl effect on hover */
-.demo-book .page {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.demo-book .page:hover {
-  transform: translateY(-1px);
-  box-shadow: 
-    0 8px 16px rgba(0,0,0,0.4),
-    inset 0 1px 0 rgba(255,255,255,0.15);
-}
-
-/* Wave animation for emoji */
-.wave {
-  animation: wave 2.5s ease-in-out infinite;
-  transform-origin: 70% 70%;
-  display: inline-block;
-}
-
-@keyframes wave {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  10%, 30% {
-    transform: rotate(14deg);
-  }
-  20% {
-    transform: rotate(-8deg);
-  }
-  40% {
-    transform: rotate(-4deg);
-  }
-  50% {
-    transform: rotate(10deg);
-  }
-  60% {
-    transform: rotate(0deg);
+/* Smooth animations */
+@layer utilities {
+  .animation-smooth {
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 
-/* Smooth page transitions */
-.page-transition {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, opacity;
+/* Dark mode adjustments for book */
+.dark .page {
+  background: linear-gradient(to bottom, #1f2937 0%, #111827 100%);
 }
 
-/* Custom scrollbar improvements */
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+.dark .page::before {
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 100%);
 }
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+/* Prose adjustments */
+.prose {
+  max-width: none;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
+.prose p {
+  margin-bottom: 1rem;
+  line-height: 1.75;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
-  transition: background 0.3s ease;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-/* Book Page Auto-Fit Styles */
-.book-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow-y: auto;
-  padding: 2rem;
-  box-sizing: border-box;
-}
-
-/* Card Auto-Grow Styles */
-.card {
-  width: 100%;
-  max-width: 700px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
-  overflow-wrap: break-word;
-  word-break: break-word;
-  flex-shrink: 0;
-  min-height: fit-content;
-}
-
-/* Responsive Typography */
-.card h1 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  line-height: 1.2;
-  margin-bottom: 1.2rem;
-}
-
-.card h2 {
-  font-size: clamp(1.75rem, 4vw, 3rem);
-  line-height: 1.3;
+.prose h2 {
+  margin-top: 2rem;
   margin-bottom: 1rem;
 }
 
-.card h3 {
-  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
-  line-height: 1.4;
+.prose h3 {
+  margin-top: 1.5rem;
   margin-bottom: 0.75rem;
-}
-
-.card p {
-  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-  line-height: 1.6;
-  margin-bottom: 1.2rem;
-}
-
-.card .text-sm {
-  font-size: clamp(1rem, 2vw, 1.25rem);
-}
-
-.card .text-xs {
-  font-size: clamp(0.875rem, 1.75vw, 1.125rem);
-}
-
-/* Slider Wrapper Fix */
-.slider-wrapper {
-  height: auto;
-  min-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding-bottom: 4rem;
-}
-
-/* Scroll Hint Animation */
-.scroll-hint {
-  text-align: center;
-  font-size: 0.9rem;
-  opacity: 0.5;
-  margin-top: 1rem;
-  animation: bounce 2s infinite;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(5px); }
-}
-
-/* Mobile Optimizations */
-@media (max-width: 768px) {
-  .book-page {
-    padding: 1rem;
-  }
-  
-  .card {
-    padding: 1.5rem;
-    border-radius: 15px;
-  }
-  
-  .card h1 {
-    font-size: clamp(1.25rem, 5vw, 2rem);
-  }
-  
-  .card p {
-    font-size: clamp(0.875rem, 2.5vw, 1.125rem);
-  }
-}
-
-/* Content Auto-Sizing */
-.auto-fit-content {
-  height: auto;
-  min-height: fit-content;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-/* Grid Auto-Fit */
-.auto-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  width: 100%;
-}
-
-@media (max-width: 640px) {
-  .auto-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ========================================
-   ENHANCED BOOK EXPERIENCE
-   Advanced viewport control & mobile optimization
-   ======================================== */
-
-/* Viewport configuration for proper content display */
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow: auto;                /* allow scrolling for content */
-  overscroll-behavior: none;     /* stop iOS rubber-band */
-}
-
-/* Book shell - owns the entire viewport */
-.book-shell {
-  width: 100%;
-  min-height: 100dvh;            /* mobile-safe height */
-  overflow: visible;             /* allow content to be visible */
-  touch-action: pan-x;           /* allow horizontal swipes only */
-  position: relative;
-}
-
-/* Individual book pages */
-.book-page {
-  width: 100%;
-  min-height: 100vh;
-  overflow: visible;             /* allow content to be visible */
-  contain: layout paint;         /* performance hint */
-}
-
-/* Hide accidental scrollbars in children */
-.no-scroll,
-.no-scroll * {
-  scrollbar-width: none;
-}
-.no-scroll::-webkit-scrollbar,
-.no-scroll *::-webkit-scrollbar { 
-  display: none; 
-}
-
-/* Performance optimizations for reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .book-shell * { 
-    animation: none !important; 
-    transition: none !important; 
-  }
-}
-
-/* Mobile-specific enhancements */
-@media screen and (max-width: 768px) {
-  .book-shell {
-    touch-action: pan-x pan-y;
-  }
-  
-  /* Prevent zoom on mobile */
-  input, textarea, select {
-    font-size: 16px;
-  }
-}
-
-/* ========================================
-   TREASURE MAP STYLES
-   Interactive map-based portfolio styles
-   ======================================== */
-
-/* Custom scrollbar styles for treasure map */
-.treasure-map .custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(147, 197, 253, 0.5) rgba(0, 0, 0, 0.1);
-}
-
-.treasure-map .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-.treasure-map .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
-}
-
-.treasure-map .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(147, 197, 253, 0.5);
-  border-radius: 3px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.treasure-map .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgba(147, 197, 253, 0.7);
-}
-
-/* Treasure map specific animations */
-@keyframes mapGlow {
-  0%, 100% { box-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
-  50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
-}
-
-@keyframes treasureFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
-}
-
-@keyframes compassSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes treasurePulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.7;
-    transform: scale(1.1);
-  }
-}
-
-@keyframes mapReveal {
-  0% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.treasure-glow {
-  animation: mapGlow 2s ease-in-out infinite;
-}
-
-.treasure-float {
-  animation: treasureFloat 3s ease-in-out infinite;
-}
-
-.compass-spin {
-  animation: compassSpin 8s linear infinite;
-}
-
-.treasure-pulse {
-  animation: treasurePulse 2s ease-in-out infinite;
-}
-
-.map-reveal {
-  animation: mapReveal 0.8s ease-out forwards;
-}
-
-/* Disable text selection on map elements */
-.map-container {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-/* Touch optimization for mobile */
-.touch-optimized {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* Glassmorphism effect for modals */
-.glass-modal {
-  backdrop-filter: blur(20px);
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Map texture pattern */
-.map-texture {
-  background-image: 
-    radial-gradient(circle at 1px 1px, rgba(139, 69, 19, 0.15) 1px, transparent 0);
-  background-size: 20px 20px;
-}
-
-/* Particle effects */
-@keyframes particleFloat {
-  0%, 100% {
-    transform: translateY(0px) translateX(0px);
-    opacity: 0.3;
-  }
-  50% {
-    transform: translateY(-20px) translateX(10px);
-    opacity: 0.8;
-  }
-}
-
-.particle {
-  animation: particleFloat 6s ease-in-out infinite;
-}
-
-/* Map marker hover effects */
-.map-marker {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-origin: center;
-}
-
-.map-marker:hover {
-  transform: scale(1.1) translateY(-2px);
-  z-index: 100;
-}
-
-/* Progress tracker styles */
-.progress-tracker {
-  backdrop-filter: blur(12px);
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* Treasure chest animation */
-@keyframes chestOpen {
-  0% {
-    transform: rotateY(0deg) scale(1);
-  }
-  50% {
-    transform: rotateY(180deg) scale(1.1);
-  }
-  100% {
-    transform: rotateY(360deg) scale(1);
-  }
-}
-
-.chest-open {
-  animation: chestOpen 1s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Location tooltip styles */
-.location-tooltip {
-  backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-}
-
-/* Map zoom controls */
-.zoom-control {
-  backdrop-filter: blur(8px);
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.2s ease;
-}
-
-.zoom-control:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.05);
-}
-
-/* Mobile gesture hints */
-@keyframes gestureHint {
-  0%, 100% {
-    transform: translateX(0);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translateX(10px);
-    opacity: 1;
-  }
-}
-
-.gesture-hint {
-  animation: gestureHint 2s ease-in-out infinite;
-}
-
-/* Path drawing animation */
-@keyframes drawPath {
-  0% {
-    stroke-dasharray: 0 100;
-  }
-  100% {
-    stroke-dasharray: 100 0;
-  }
-}
-
-.path-draw {
-  animation: drawPath 2s ease-in-out forwards;
-}
-
-/* Achievement celebration */
-@keyframes celebration {
-  0% {
-    transform: scale(0) rotate(0deg);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.2) rotate(180deg);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1) rotate(360deg);
-    opacity: 1;
-  }
-}
-
-.achievement-celebrate {
-  animation: celebration 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }

@@ -1,5 +1,5 @@
-import ElevatorPortfolio from '@/components/ElevatorPortfolio';
+import BookPortfolio from '@/components/book-portfolio';
 
 export default function Home() {
-  return <ElevatorPortfolio />;
+  return <BookPortfolio />;
 }

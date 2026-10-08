@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Fira_Code } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from '@/components/theme-provider';
@@ -21,12 +21,6 @@ export const metadata: Metadata = {
   keywords: "Interactive Portfolio, Treasure Hunt, Full-Stack Developer, AI, Web3, React, Next.js, MUStudentsUnited, Pawan Hiray, Game Portfolio",
   authors: [{ name: "Pawan Hiray" }],
   creator: "Pawan Hiray",
-  viewport: {
-    width: 'device-width',
-    initialScale: 1.0,
-    maximumScale: 5.0,
-    userScalable: true,
-  },
   openGraph: {
     title: "Pawan Hiray - Interactive Treasure Hunt Portfolio",
     description: "Embark on a digital treasure hunt through Pawan's interactive world! Discover projects, skills, and hidden achievements.",
@@ -43,6 +37,13 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1.0,
+  maximumScale: 5.0,
+  userScalable: true,
 };
 
 export default function RootLayout({
