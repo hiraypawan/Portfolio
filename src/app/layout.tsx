@@ -16,22 +16,22 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Pawan Hiray - Interactive Treasure Hunt Portfolio",
-  description: "Embark on a digital treasure hunt through Pawan's world! Discover projects, skills, and hidden achievements in this interactive map-based portfolio. Featured: MUStudentsUnited with 30K+ students.",
-  keywords: "Interactive Portfolio, Treasure Hunt, Full-Stack Developer, AI, Web3, React, Next.js, MUStudentsUnited, Pawan Hiray, Game Portfolio",
+  title: "Pawan Hiray — PawanOS | AI, Web3 & Full-Stack Builder",
+  description: "PawanOS: explore Pawan Hiray's work like an operating system — MUStudentsUnited (30K+ students), AI agents, Web3 tools, growth systems, journey, and contact.",
+  keywords: "Pawan Hiray, PawanOS, Full-Stack Developer, AI Agents, Web3, MUStudentsUnited, Portfolio OS, Mumbai Developer",
   authors: [{ name: "Pawan Hiray" }],
   creator: "Pawan Hiray",
   openGraph: {
-    title: "Pawan Hiray - Interactive Treasure Hunt Portfolio",
-    description: "Embark on a digital treasure hunt through Pawan's interactive world! Discover projects, skills, and hidden achievements.",
+    title: "Pawan Hiray — PawanOS",
+    description: "Explore Pawan's work through apps, case files, proof, journey, and contact — inside one personal OS.",
     url: "https://pawanhiray.vercel.app",
-    siteName: "Pawan Hiray - Treasure Hunt Portfolio",
+    siteName: "PawanOS",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pawan Hiray - Interactive Treasure Hunt Portfolio",
-    description: "Embark on a digital treasure hunt through Pawan's interactive world! Discover projects, skills, and hidden achievements.",
+    title: "Pawan Hiray — PawanOS",
+    description: "Portfolio OS: projects, results, journey, contact, whiteboard.",
   },
   robots: {
     index: true,

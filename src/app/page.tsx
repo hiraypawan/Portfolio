@@ -1,5 +1,5 @@
-import BookPortfolio from '@/components/book-portfolio';
+import PersonalOS from '@/components/os/PersonalOS';
 
 export default function Home() {
-  return <BookPortfolio />;
+  return <PersonalOS />;
 }

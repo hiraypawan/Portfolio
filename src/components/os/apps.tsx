@@ -1,0 +1,426 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { ownerProfile } from '@/data/ownerProfile';
+
+function Disclosure({ status }: { status: string }) {
+  if (status === 'verified') return <span className="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[12px] text-emerald-300">Verified</span>;
+  if (status === 'illustrative')
+    return <span className="rounded-full bg-amber-500/20 px-2 py-0.5 text-[12px] text-amber-300">Illustrative — placeholder, do not quote</span>;
+  return <span className="rounded-full bg-sky-500/20 px-2 py-0.5 text-[12px] text-sky-300">{status}</span>;
+}
+
+function Ext({ href, children }: { href: string; children: React.ReactNode }) {
+  if (!href || href === '#')
+    return <span className="cursor-not-allowed text-[13px] text-white/30">Archived / on request</span>;
+  return (
+    <a href={href} target="_blank" rel="noreferrer noopener" className="text-[14px] text-cyan-300 underline underline-offset-4 hover:text-cyan-200">
+      {children}
+    </a>
+  );
+}
+
+export function ProjectsApp({ onOpenCase }: { onOpenCase: (id: string) => void }) {
+  const sorted = [...ownerProfile.projects].sort((a, b) => Number(b.featured) - Number(a.featured));
+  return (
+    <div className="space-y-4">
+      <p className="text-[15px] text-white/70">
+        Main drive — selected case files first. {ownerProfile.legal.metricDisclaimer}
+      </p>
+      {sorted.map((p) => (
+        <article key={p.id} className="rounded-xl border border-white/10 bg-white/5 p-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="text-[18px] font-bold text-white">{p.name}</h3>
+            {p.featured && <span className="rounded-full bg-violet-500/25 px-2 py-0.5 text-[12px] text-violet-200">MAIN DRIVE</span>}
+            <Disclosure status={p.outcomeStatus} />
+          </div>
+          <p className="mt-1 text-[13px] text-white/50">{p.category} · {p.dates} · {p.role}</p>
+          <p className="mt-2 text-[15px] text-white/85"><span className="text-white/50">Problem:</span> {p.problem}</p>
+          <p className="mt-1 text-[15px] text-white/85"><span className="text-white/50">Build:</span> {p.intervention}</p>
+          <p className="mt-1 text-[15px] text-white/85"><span className="text-white/50">Outcome:</span> {p.outcome}</p>
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {p.stack.map((s) => (
+              <span key={s} className="rounded-full bg-white/10 px-2.5 py-1 text-[13px] text-white/75">{s}</span>
+            ))}
+          </div>
+          <div className="mt-3 flex gap-4">
+            <Ext href={p.url}>Live link ↗</Ext>
+            <button onClick={() => onOpenCase(p.id)} className="text-[14px] text-violet-300 underline underline-offset-4 hover:text-violet-200">
+              Open case file →
+            </button>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+export function CaseDetailApp({ id }: { id: string }) {
+  const p = ownerProfile.projects.find((x) => x.id === id) ?? ownerProfile.projects[0];
+  return (
+    <div className="space-y-3">
+      <h3 className="text-[20px] font-bold text-white">{p.name}.case</h3>
+      <dl className="space-y-2 text-[15px] text-white/85">
+        <div><dt className="text-white/50">Client</dt><dd>{p.client}</dd></div>
+        <div><dt className="text-white/50">Dates / Role</dt><dd>{p.dates} — {p.role}</dd></div>
+        <div><dt className="text-white/50">Problem</dt><dd>{p.problem}</dd></div>
+        <div><dt className="text-white/50">Intervention</dt><dd>{p.intervention}</dd></div>
+        <div><dt className="text-white/50">Outcome</dt><dd className="flex items-center gap-2">{p.outcome} <Disclosure status={p.outcomeStatus} /></dd></div>
+        <div><dt className="text-white/50">Stack</dt><dd>{p.stack.join(' · ')}</dd></div>
+      </dl>
+      <p className="text-[13px] text-white/45">Claim ledger: outcome status = {p.outcomeStatus}. Illustrative entries must not be quoted as results.</p>
+      <Ext href={p.url}>Open live URL ↗</Ext>
+    </div>
+  );
+}
+
+export function ResultsApp() {
+  return (
+    <div className="space-y-4">
+      {ownerProfile.clientCases.map((c) => (
+        <article key={c.client} className="rounded-xl border border-white/10 bg-white/5 p-4">
+          <h3 className="text-[18px] font-bold text-white">{c.client}</h3>
+          <p className="mt-1 text-[17px] text-emerald-300">{c.metric}</p>
+          <p className="text-[13px] text-white/50">{c.disclosure}</p>
+          <p className="mt-2 text-[15px] text-white/85"><span className="text-white/50">Challenge:</span> {c.challenge}</p>
+          <p className="mt-1 text-[15px] text-white/85"><span className="text-white/50">System:</span> {c.system}</p>
+          <p className="mt-1 text-[15px] text-white/70">{c.narrative}</p>
+          <div className="mt-2"><Ext href={c.url}>Proof link ↗</Ext></div>
+        </article>
+      ))}
+      <div className="rounded-xl border border-white/10 bg-white/5 p-4">
+        <h3 className="text-[16px] font-bold text-white">More metrics</h3>
+        <ul className="mt-2 space-y-1.5">
+          {ownerProfile.metrics.map((m) => (
+            <li key={m.label} className="flex flex-wrap items-center gap-2 text-[15px] text-white/85">
+              <strong className="text-white">{m.value}</strong> {m.label} <Disclosure status={m.status} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export function SystemsApp() {
+  const loop = [
+    { s: 'Find the leverage', o: 'Map where one build removes ten manual steps.', c: 'Give access + honest constraints.', a: 'Leverage map', g: 'A falsifiable bottleneck is named.' },
+    { s: 'Lock the system', o: 'Freeze scope to one sharp outcome.', c: 'Approve the single outcome.', a: 'One-page spec', g: 'No second outcome sneaks in.' },
+    { s: 'Build the sharp edge', o: 'Ship the smallest working system.', c: 'Test weekly builds.', a: 'Working v1', g: 'It runs on real data.' },
+    { s: 'Integrate the workflow', o: 'Wire it into daily tools (Telegram, sheets, site).', c: 'Assign one operator.', a: 'Runbook', g: 'Someone besides me can run it.' },
+    { s: 'Prove and hand off', o: 'Measure + document + train.', c: 'Confirm the metric label.', a: 'Handoff doc', g: 'Outcome has a disclosure label.' },
+  ];
+  return (
+    <div className="space-y-4">
+      {ownerProfile.services.map((s) => (
+        <div key={s.name} className="rounded-xl border border-white/10 bg-white/5 p-4">
+          <h3 className="text-[17px] font-bold text-white">{s.name}</h3>
+          <p className="mt-1 text-[15px] text-white/75">{s.detail}</p>
+          <p className="mt-1 text-[13px] text-white/50">{s.stack.join(' · ')}</p>
+        </div>
+      ))}
+      <h3 className="pt-2 text-[16px] font-bold text-white">Operating loop</h3>
+      <ol className="space-y-2">
+        {loop.map((l, i) => (
+          <li key={l.s} className="rounded-xl border border-white/10 bg-white/5 p-3 text-[15px] text-white/85">
+            <strong className="text-white">{i + 1}. {l.s}.</strong> {l.o}
+            <span className="block text-[14px] text-white/60">Client: {l.c} Artifact: {l.a} Gate: {l.g}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+export function ProofApp() {
+  return (
+    <div className="space-y-3">
+      <p className="text-[15px] text-white/70">
+        Proof vault. No testimonials have been approved for embedding yet — nothing is invented here.
+      </p>
+      <div className="rounded-xl border border-dashed border-white/20 p-5 text-center text-[15px] text-white/60">
+        Testimonial videos / quotes ship here only after written owner + client approval.
+      </div>
+      <p className="text-[13px] text-white/45">To approve one, send: name, role, exact quote or video URL, permission note.</p>
+    </div>
+  );
+}
+
+export function JourneyApp() {
+  return (
+    <ol className="relative space-y-4 border-l border-white/15 pl-5">
+      {ownerProfile.journey.map((j) => (
+        <li key={j.year} className="relative">
+          <span className="absolute -left-[27px] top-1 h-3 w-3 rounded-full bg-violet-400" aria-hidden />
+          <p className="text-[13px] font-bold text-violet-300">{j.year}</p>
+          <h3 className="text-[17px] font-bold text-white">{j.title}</h3>
+          <p className="mt-0.5 text-[15px] text-white/80">{j.story}</p>
+          <p className="mt-0.5 text-[13px] text-white/50">OS upgrade: {j.upgrade}</p>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+export function AchievementsApp() {
+  return (
+    <div className="grid gap-3 sm:grid-cols-2">
+      {ownerProfile.achievements.map((a) => (
+        <div key={a.title} className="rounded-xl border border-white/10 bg-white/5 p-4">
+          <p className="text-[12px] uppercase tracking-widest text-amber-300">{a.category}</p>
+          <h3 className="mt-1 text-[16px] font-bold text-white">{a.title}</h3>
+          <p className="mt-1 text-[15px] text-white/75">{a.detail}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function SocialsApp() {
+  return (
+    <ul className="space-y-3">
+      {ownerProfile.socials.map((s) => (
+        <li key={s.network} className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 p-3.5">
+          <div>
+            <p className="text-[16px] font-bold text-white">{s.network}</p>
+            <p className="text-[14px] text-white/60">{s.handle} · {s.purpose}</p>
+          </div>
+          <a href={s.url} target={s.url.startsWith('mailto') ? undefined : '_blank'} rel="noreferrer noopener" className="min-h-[44px] rounded-lg bg-white/10 px-4 py-2 text-[14px] text-white hover:bg-white/20">
+            Open
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function FounderTxtApp() {
+  return (
+    <pre className="whitespace-pre-wrap rounded-xl border border-white/10 bg-black/40 p-4 font-mono text-[14.5px] leading-relaxed text-white/85">{`who i am
+  Pawan Hiray — tech builder from Mumbai. I like systems that do the boring work.
+
+what i build
+  Full-stack apps, AI agents + automations, crypto/Web3 tools, growth machines.
+
+why i care
+  MUStudentsUnited showed me software can help 30,000+ real students. I want more of that.
+
+how i work
+  1) find the leverage 2) lock scope 3) ship v1 4) integrate 5) prove + hand off.
+
+exploring now
+  AI x Web3 applied to real gaps. AI/ML in progress. [PLACEHOLDER — update quarterly]
+
+who i want to work with
+  Founders, student communities, creators who want leverage — not hype.
+
+i refuse to compromise
+  Honest metrics. No fake revenue screenshots. No invented testimonials.
+
+contact
+  ${ownerProfile.conversion.email} — subject: what you want built + timeline.`}</pre>
+  );
+}
+
+const WB_KEY = 'personal-os-whiteboard-v1';
+interface Sticky { id: number; text: string; color: string; }
+
+export function WhiteboardApp() {
+  const [notes, setNotes] = useState<Sticky[]>([]);
+  const [draft, setDraft] = useState('');
+  const [color, setColor] = useState('#fef08a');
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(WB_KEY);
+      if (raw) setNotes(JSON.parse(raw));
+    } catch { /* malformed data resets quietly */ }
+  }, []);
+  useEffect(() => {
+    try { localStorage.setItem(WB_KEY, JSON.stringify(notes)); } catch { /* storage full/blocked */ }
+  }, [notes]);
+  return (
+    <div>
+      <p className="text-[13px] text-white/50">Stored only in this browser ({WB_KEY}). The owner never sees these — use Contact for messages.</p>
+      <form
+        className="mt-2 flex gap-2"
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (!draft.trim()) return;
+          setNotes((n) => [...n.slice(-11), { id: Date.now(), text: draft.trim().slice(0, 280), color }]);
+          setDraft('');
+        }}
+      >
+        <label htmlFor="sticky-input" className="sr-only">New sticky note</label>
+        <input
+          id="sticky-input"
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          maxLength={280}
+          placeholder="Type a note, Enter to stick it…"
+          className="min-h-[44px] flex-1 rounded-lg border border-white/15 bg-black/40 px-3 text-[15px] text-white"
+        />
+        <button className="min-h-[44px] rounded-lg bg-violet-500 px-4 text-[15px] font-semibold text-white hover:bg-violet-400">Add Sticky</button>
+      </form>
+      <div className="mt-2 flex gap-2" role="group" aria-label="Note color">
+        {['#fef08a', '#bbf7d0', '#bae6fd', '#fecdd3', '#e9d5ff'].map((c) => (
+          <button
+            key={c}
+            onClick={() => setColor(c)}
+            aria-label={`Note color ${c}`}
+            className={`h-9 w-9 rounded-full border-2 ${color === c ? 'border-white' : 'border-transparent'}`}
+            style={{ background: c }}
+          />
+        ))}
+        <button onClick={() => setNotes([])} className="ml-auto text-[14px] text-white/60 underline">Reset board</button>
+      </div>
+      <div className="mt-3 grid gap-2 sm:grid-cols-2">
+        {notes.map((n) => (
+          <div key={n.id} className="rounded-lg p-3 text-[#1a1a1a]" style={{ background: n.color }}>
+            <p className="whitespace-pre-wrap text-[15px]">{n.text}</p>
+            <div className="mt-2 flex justify-end gap-2">
+              <button
+                className="text-[13px] underline"
+                onClick={() => {
+                  const t = prompt('Edit note:', n.text);
+                  if (t !== null) setNotes((ns) => ns.map((x) => (x.id === n.id ? { ...x, text: t.slice(0, 280) } : x)));
+                }}
+              >Edit</button>
+              <button className="text-[13px] underline" onClick={() => setNotes((ns) => ns.filter((x) => x.id !== n.id))}>Delete</button>
+            </div>
+          </div>
+        ))}
+        {notes.length === 0 && <p className="text-[15px] text-white/50">No stickies yet. Add one above.</p>}
+      </div>
+    </div>
+  );
+}
+
+export function BrowserApp() {
+  const bookmarks = [
+    { name: 'MUStudentsUnited', url: 'https://mumbaistudentsunited.com' },
+    { name: 'GitHub — hiraypawan', url: 'https://github.com/hiraypawan' },
+    { name: 'This site (canonical)', url: 'https://pawanhiray.vercel.app' },
+  ];
+  return (
+    <div className="space-y-3">
+      <p className="text-[15px] text-white/70">
+        PawanNet — approved bookmarks only. External sites open in a new tab because most modern sites block iframe embedding (X-Frame-Options / CSP).
+      </p>
+      {bookmarks.map((b) => (
+        <div key={b.url} className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 p-3.5">
+          <div className="min-w-0">
+            <p className="truncate text-[15px] font-semibold text-white">{b.name}</p>
+            <p className="truncate text-[13px] text-white/50">{b.url}</p>
+          </div>
+          <a href={b.url} target="_blank" rel="noreferrer noopener" className="min-h-[44px] shrink-0 rounded-lg bg-white/10 px-4 py-2 text-[14px] text-white hover:bg-white/20">Open ↗</a>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function ContactApp() {
+  const [sent, setSent] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', build: '', budget: '', timeline: '', message: '' });
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-wrap gap-2">
+        <a href={ownerProfile.conversion.bookingUrl} className="min-h-[44px] rounded-xl bg-violet-500 px-5 py-2.5 text-[15px] font-semibold text-white hover:bg-violet-400">
+          Book a call
+        </a>
+        <button
+          onClick={() => { void navigator.clipboard?.writeText(ownerProfile.conversion.email); }}
+          className="min-h-[44px] rounded-xl border border-white/20 px-5 py-2.5 text-[15px] text-white hover:bg-white/10"
+        >
+          Copy email
+        </button>
+      </div>
+      <p className="text-[14px] text-white/60">{ownerProfile.conversion.email} · {ownerProfile.identity.timezone} · replies within 48h [PLACEHOLDER SLA]</p>
+      {sent ? (
+        <div className="rounded-xl border border-emerald-400/30 bg-emerald-500/10 p-4 text-[15px] text-emerald-200">
+          Brief ready — your email app should have opened with everything pre-filled. If not, send it manually to {ownerProfile.conversion.email}.
+        </div>
+      ) : (
+        <form
+          className="space-y-2.5"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const f = form;
+            if ((document.getElementById('company-website') as HTMLInputElement)?.value) return;
+            const body = `Name: ${f.name}%0D%0AEmail: ${f.email}%0D%0ADesired build: ${f.build}%0D%0ABudget: ${f.budget}%0D%0ATimeline: ${f.timeline}%0D%0A%0D%0A${encodeURIComponent(f.message)}`;
+            window.location.href = `mailto:${ownerProfile.conversion.email}?subject=${encodeURIComponent('Project brief — ' + f.build)}&body=${body}`;
+            setSent(true);
+          }}
+        >
+          <div className="grid gap-2.5 sm:grid-cols-2">
+            <Field label="Name" value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
+            <Field label="Email" type="email" value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
+          </div>
+          <div className="grid gap-2.5 sm:grid-cols-2">
+            <Field label="Desired build" placeholder="e.g. AI Telegram bot" value={form.build} onChange={(v) => setForm({ ...form, build: v })} />
+            <Field label="Budget / range" placeholder="e.g. ₹X–₹Y" value={form.budget} onChange={(v) => setForm({ ...form, budget: v })} />
+          </div>
+          <Field label="Timeline" placeholder="e.g. 4 weeks" value={form.timeline} onChange={(v) => setForm({ ...form, timeline: v })} />
+          <div>
+            <label className="mb-1 block text-[14px] text-white/70">Success definition + context</label>
+            <textarea required value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} rows={4}
+              className="w-full rounded-lg border border-white/15 bg-black/40 px-3 py-2 text-[15px] text-white" />
+          </div>
+          <input id="company-website" type="text" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden />
+          <button className="min-h-[44px] w-full rounded-xl bg-white px-4 py-2.5 text-[15px] font-semibold text-black hover:bg-white/85">Send brief via email →</button>
+        </form>
+      )}
+    </div>
+  );
+}
+
+function Field({ label, value, onChange, type, placeholder }: { label: string; value: string; onChange: (v: string) => void; type?: string; placeholder?: string }) {
+  return (
+    <div>
+      <label className="mb-1 block text-[14px] text-white/70">{label}</label>
+      <input required type={type ?? 'text'} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)}
+        className="min-h-[44px] w-full rounded-lg border border-white/15 bg-black/40 px-3 text-[15px] text-white" />
+    </div>
+  );
+}
+
+export function CaseFilesApp({ onOpen }: { onOpen: (app: string, state?: string) => void }) {
+  const tree: { folder: string; files: { name: string; app: string; state?: string }[] }[] = [
+    { folder: 'Start Here', files: [{ name: 'Founder.txt', app: 'founder' }, { name: 'Systems.op', app: 'systems' }] },
+    { folder: 'Platforms', files: [{ name: 'MUStudentsUnited.case', app: 'case', state: 'mustudentsunited' }] },
+    { folder: 'AI Agents', files: [{ name: 'SmartBotX.case', app: 'case', state: 'smartbotx' }] },
+    { folder: 'Experiments [PLACEHOLDER]', files: [{ name: 'CryptoTrader Pro.case', app: 'case', state: 'cryptotrader-pro' }, { name: 'GrowthHack Suite.case', app: 'case', state: 'growthhack-suite' }] },
+    { folder: 'Proof', files: [{ name: 'Results.vault', app: 'results' }, { name: 'Achievements.vault', app: 'achievements' }] },
+  ];
+  return (
+    <div className="space-y-3">
+      {tree.map((t) => (
+        <div key={t.folder}>
+          <p className="text-[13px] font-bold uppercase tracking-widest text-white/45">📁 {t.folder}</p>
+          <div className="mt-1.5 space-y-1.5">
+            {t.files.map((f) => (
+              <button key={f.name} onClick={() => onOpen(f.app, f.state)}
+                className="flex w-full items-center justify-between rounded-lg border border-white/10 bg-white/5 px-3.5 py-2.5 text-left text-[15px] text-white/85 hover:bg-white/10">
+                <span>📄 {f.name}</span><span className="text-white/35">→</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function NotesApp() {
+  return (
+    <div className="space-y-3">
+      {ownerProfile.articles.map((a) => (
+        <article key={a.url} className="rounded-xl border border-white/10 bg-white/5 p-4">
+          <h3 className="text-[16px] font-bold text-white">{a.title}</h3>
+          <p className="mt-1 text-[15px] text-white/70">{a.description}</p>
+          <p className="mt-1 text-[13px] text-white/45">{a.date} · crawlable route ships with the article build [DRAFT]</p>
+        </article>
+      ))}
+    </div>
+  );
+}
