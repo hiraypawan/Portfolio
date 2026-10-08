@@ -52,7 +52,7 @@ export const ownerProfile = {
     ],
     headline: "Hi, I'm Pawan Hiray",
     intro:
-      "Developer building automation tools, AI agents, and growth tools. President of the 10,000+ MUStudentsUnited student community.",
+      "Developer building automation tools, AI agents, and growth tools. Former President of the 10,000+ MUStudentsUnited student community (Aug 2024 — Mar 2026).",
     portrait: '/images/MuStudentPreview.png',
     sprite: '',
     availability: 'Open to work — Freelance · Remote · Hybrid · Ready to relocate',
