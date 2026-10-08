@@ -52,7 +52,7 @@ export const ownerProfile = {
     ],
     headline: "Hi, I'm Pawan Hiray",
     intro:
-      "Developer building automation tools, AI agents, and growth tools. Former President of the 10,000+ MUStudentsUnited student community (Aug 2024 — Mar 2026).",
+      "Fresher Full-Stack Developer (Next.js + AI) — I ship AI features into real products. Former President of the 10,000+ MUStudentsUnited student community (Aug 2024 — Mar 2026).",
     portrait: '/images/MuStudentPreview.png',
     sprite: '',
     availability: 'Open to work — Freelance · Remote · Hybrid · Ready to relocate',

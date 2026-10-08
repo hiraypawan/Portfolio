@@ -85,9 +85,11 @@ export default function PersonalOS() {
       if (saved) {
         setTheme(saved);
       } else {
-        // Dynamic default: match the wallpaper to the visitor's local time until they pick one.
+        // Dynamic default: explicit light/dark OS preference wins; otherwise match wallpaper to local time.
+        const prefersLight =
+          typeof window.matchMedia === 'function' && window.matchMedia('(prefers-color-scheme: light)').matches;
         const h = new Date().getHours();
-        setTheme(h >= 6 && h < 17 ? 'day' : h >= 17 && h < 20 ? 'night' : 'dark');
+        setTheme(prefersLight ? 'day' : h >= 6 && h < 17 ? 'day' : h >= 17 && h < 20 ? 'night' : 'dark');
       }
     } catch { /* storage unavailable */ }
     try {
@@ -313,8 +315,7 @@ export default function PersonalOS() {
         </span>
         <span className="text-[14px] font-bold tracking-tight">PawanOS</span>
         <nav className="ml-2 hidden items-center gap-0.5 md:flex" aria-label="Primary">
-          {(['projects', 'results', 'journey'] as const).map((a) => (
-            <button
+          {(['projects', 'results', 'journey'] as const).map((a) => (            <button
               key={a}
               onClick={() => openApp(a)}
               className="min-h-[36px] rounded-md px-2.5 font-medium capitalize text-white/75 hover:bg-white/10 hover:text-white"
@@ -336,6 +337,12 @@ export default function PersonalOS() {
           >
             <Settings size={15} />
           </button>
+          <a
+            href="/resume"
+            className="flex min-h-[36px] items-center rounded-md px-2.5 font-medium text-white/75 hover:bg-white/10 hover:text-white"
+          >
+            Resume
+          </a>
       </nav>
         <div className="ml-auto flex items-center gap-2">
           <span className="hidden items-center gap-1.5 rounded-full bg-emerald-400/15 px-2.5 py-1 text-[12px] font-medium text-emerald-300 sm:flex" title={ownerProfile.identity.availability}>
@@ -418,6 +425,12 @@ export default function PersonalOS() {
                 >
                   Book a call
                 </button>
+                <a
+                  href="/resume"
+                  className="min-h-[44px] flex-1 rounded-xl border border-white/25 px-4 py-2.5 text-center text-[15px] font-semibold leading-[26px] hover:bg-white/10"
+                >
+                  Resume
+                </a>
               </div>
               <p className="mt-3 text-[12.5px] text-white/45">10K+ community · Mumbai, India · Open to Remote / Hybrid / Relocate · {ownerProfile.identity.timezone}</p>
               <p className="mt-1.5 text-[12.5px] text-white/45">

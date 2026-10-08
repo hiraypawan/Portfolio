@@ -17,8 +17,8 @@ const firaCode = Fira_Code({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pawanhiray.vercel.app'),
-  title: "Pawan Hiray — PawanOS | AI, Web3 & Full-Stack Builder",
-  description: "PawanOS: explore Pawan Hiray's work like an operating system — MUStudentsUnited President (10K+ community), OneBrain AI life OS, Smarty AI extension, DigitalWorkForce marketplace, VibeCoder cloud IDE. Open to freelance, remote, hybrid; ready to relocate.",
+  title: "Pawan Hiray — Full-Stack Developer (Next.js + AI) | PawanOS",
+  description: "Fresher Full-Stack Developer shipping AI features into real products. Ex-President, 10K+ MUStudentsUnited community. Live work: OneBrain AI OS, Smarty extension, DigitalWorkForce. Open to Mumbai / Pune / Remote / Hybrid roles and freelance.",
   keywords: "Pawan Hiray, PawanOS, Fresher Computer Engineer, Full-Stack Developer, AI Agents, Web3, MUStudentsUnited, OneBrain, Smarty Extension, Portfolio OS, Mumbai Developer, Hire AI Developer",
   authors: [{ name: "Pawan Hiray" }],
   creator: "Pawan Hiray",
@@ -26,16 +26,16 @@ export const metadata: Metadata = {
     canonical: 'https://pawanhiray.vercel.app',
   },
   openGraph: {
-    title: "Pawan Hiray — PawanOS",
-    description: "Explore Pawan's work through apps, case files, proof, journey, and contact — inside one personal OS.",
+    title: "Pawan Hiray — Full-Stack Developer (Next.js + AI)",
+    description: "Fresher Full-Stack Developer shipping AI features into real products. Ex-President, 10K+ MUStudentsUnited community. Open to Mumbai / Pune / Remote roles.",
     url: "https://pawanhiray.vercel.app",
     siteName: "PawanOS",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pawan Hiray — PawanOS",
-    description: "Portfolio OS: projects, results, journey, contact, whiteboard.",
+    title: "Pawan Hiray — Full-Stack Developer (Next.js + AI)",
+    description: "Portfolio OS: live Next.js + AI projects, honest outcomes, ATS resume, contact.",
   },
   robots: {
     index: true,
