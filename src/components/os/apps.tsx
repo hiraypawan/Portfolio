@@ -203,8 +203,8 @@ export function FounderTxtApp() {
     <pre className="whitespace-pre-wrap rounded-xl border border-white/10 bg-black/40 p-4 font-mono text-[14.5px] leading-relaxed text-white/85">{`who i am
   Pawan Hiray — tech builder from Mumbai. I like systems that do the boring work.
 
-what i build
-  Full-stack apps, AI agents + automations, crypto/Web3 tools, growth machines.
+  what i build
+  AI-built apps, AI agents + automations, Web3 tools, growth machines.
 
 why i care
   MUStudentsUnited showed me software can help 10,000+ real students. I want more of that.
@@ -214,7 +214,7 @@ how i work
 
 exploring now
   AI x Web3 applied to real gaps. AI/ML in progress — currently going deeper on
-  applied voice systems and fresher-ready full-stack depth.
+  applied voice systems and fresher-ready AI product depth.
 
 who i want to work with
   Founders, student communities, creators who want leverage — not hype.

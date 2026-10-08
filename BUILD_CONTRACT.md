@@ -2,7 +2,7 @@
 
 Owner: Pawan Hiray (Mumbai, India, Asia/Kolkata). Domain: pawanhiray.vercel.app.
 Objective: replace the book theme with a premium portfolio OS; portfolio work is the main content.
-Audience: founders, student communities, creators, employers needing AI/Web3/full-stack builds.
+Audience: founders, student communities, creators, employers needing AI-built apps and workflow automation.
 Primary conversion: open Projects → Book a call (`mailto:`) / Contact brief form. Secondary: copy email, open socials.
 
 Approved proof: MUStudentsUnited President Aug 2024 — Mar 2026 (10K+ followers; 200–300+ active users peak, self-reported in owner Final resume PDF); 7 shipped self-initiated builds with live links where live (OneBrain, Smarty, DigitalWorkForce, VibeCoder Pro) + load-unpacked/local (YtStop, Hand Cricket Pro, PeoplePole in dev). No agency clients — stated plainly in Achievements, Results, and Proof vault.

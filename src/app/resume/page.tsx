@@ -41,7 +41,7 @@ export default function ResumePage() {
         <p className="mt-2 text-[16px] leading-relaxed">
           Recent Computer Engineering graduate and former President of MUStudentsUnited, a digital student community
           with 10,000+ followers. Combines community leadership and product thinking with hands-on building across
-          full-stack web, AI agents, browser extensions, and games. Quick learner with modern AI-assisted workflows,
+          web apps, AI agents, browser extensions, and games. Quick learner with modern AI-assisted workflows,
           seeking a fresher development role to build a professional coding foundation.
         </p>
       </section>
@@ -50,7 +50,7 @@ export default function ResumePage() {
         <h2 className="border-b border-slate-200 pb-1 text-sm font-bold uppercase tracking-widest text-slate-500">Skills</h2>
         <ul className="mt-2 space-y-1.5 text-[15.5px] leading-relaxed">
           <li><strong>Web (learning):</strong> HTML5, CSS3, JavaScript fundamentals, MySQL basics, PHP basics</li>
-          <li><strong>Full-stack:</strong> React, Next.js, Node.js, Express, MongoDB, JWT auth</li>
+          <li><strong>App stack (AI-assisted):</strong> React, Next.js, Node.js, Express, MongoDB, JWT auth</li>
           <li><strong>AI & platforms:</strong> OpenAI/Gemini APIs, Cloudflare Workers, Supabase, Leaflet maps</li>
           <li><strong>Tools:</strong> Claude Code, OpenCode, Git, Vercel, Chrome extension packaging (MV3)</li>
           <li><strong>Strengths:</strong> Leadership, product thinking, community management, adaptability</li>

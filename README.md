@@ -1,6 +1,6 @@
 # Pawan Hiray — PawanOS
 
-**Full-Stack Developer (Next.js + AI) who ships AI features into real products.**
+**AI Product Developer (Next.js + AI) who ships real products with AI-assisted workflows.**
 Former President, MUStudentsUnited (10,000+ student community). Open to fresher roles — Mumbai / Pune / Remote / Hybrid — and freelance. Ready to relocate.
 
 🌐 **Live:** https://pawanhiray.vercel.app · 📄 **ATS resume:** https://pawanhiray.vercel.app/resume · 🤖 **AI-readable:** https://pawanhiray.vercel.app/llms.txt
@@ -23,7 +23,7 @@ VibeCoder Pro (cloud IDE), YtStop (MV3 ad neutralizer), Hand Cricket Pro (web ga
 (civic tech, in development). Every metric carries a verification label — no fake clients, no
 invented testimonials. The only collaboration so far is MUStudentsUnited.
 
-## Stack you can interview me on
+## Stack I ship with (AI-assisted)
 
 Next.js (App Router) · React · TypeScript · Node.js · Express · MongoDB · JWT/NextAuth ·
 Tailwind CSS v4 · Framer Motion · Cloudflare Workers/D1 · Supabase · Chrome MV3 · Git · Vercel

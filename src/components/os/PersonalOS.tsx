@@ -45,7 +45,7 @@ const APPS: AppDef[] = [
 
 const APP_MAP: Record<string, AppDef> = Object.fromEntries(APPS.map((a) => [a.id, a]));
 
-const DESCRIPTORS = ['PawanOS', 'AI SYSTEMS OPERATOR', 'WEB + AI BUILDER', 'FOUNDER MODE: ACTIVE'];
+const DESCRIPTORS = ['PawanOS', 'AI PRODUCT DEVELOPER', 'NEXT.JS + AI BUILDER'];
 const TRANSMISSIONS = [
   'Ship the smallest system that removes ten manual steps.',
   'Honest metrics beat big metrics. Label everything.',

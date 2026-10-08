@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og';
 
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
-export const alt = 'Pawan Hiray — Full-Stack Developer (Next.js + AI) | PawanOS';
+export const alt = 'Pawan Hiray — AI Product Developer (Next.js + AI) | PawanOS';
 
 export default function OGImage() {
   return new ImageResponse(
@@ -42,7 +42,7 @@ export default function OGImage() {
           Pawan Hiray
         </div>
         <div style={{ marginTop: 12, fontSize: 34, color: '#a5b4fc' }}>
-          Full-Stack Developer (Next.js + AI)
+          AI Product Developer (Next.js + AI)
         </div>
         <div style={{ marginTop: 16, fontSize: 26, color: 'rgba(255,255,255,0.65)' }}>
           Ex-President, 10K+ MUStudentsUnited community · Open to Mumbai / Pune / Remote

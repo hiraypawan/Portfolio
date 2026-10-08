@@ -17,24 +17,24 @@ const firaCode = Fira_Code({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://pawanhiray.vercel.app'),
-  title: "Pawan Hiray — Full-Stack Developer (Next.js + AI) | PawanOS",
-  description: "Fresher Full-Stack Developer shipping AI features into real products. Ex-President, 10K+ MUStudentsUnited community. Live work: OneBrain AI OS, Smarty extension, DigitalWorkForce. Open to Mumbai / Pune / Remote / Hybrid roles and freelance.",
-  keywords: "Pawan Hiray, PawanOS, Fresher Computer Engineer, Full-Stack Developer, AI Agents, Web3, MUStudentsUnited, OneBrain, Smarty Extension, Portfolio OS, Mumbai Developer, Hire AI Developer",
+  title: "Pawan Hiray — AI Product Developer (Next.js + AI) | PawanOS",
+  description: "Fresher AI Product Developer building real products with AI-assisted workflows. Ex-President, 10K+ MUStudentsUnited community. Live work: OneBrain AI OS, Smarty extension, DigitalWorkForce. Open to Mumbai / Pune / Remote / Hybrid roles and freelance.",
+  keywords: "Pawan Hiray, PawanOS, Fresher Computer Engineer, AI Product Developer, AI Application Developer, Next.js, AI Agents, MUStudentsUnited, OneBrain, Smarty Extension, Portfolio OS, Mumbai Developer, Hire AI Developer",
   authors: [{ name: "Pawan Hiray" }],
   creator: "Pawan Hiray",
   alternates: {
     canonical: 'https://pawanhiray.vercel.app',
   },
   openGraph: {
-    title: "Pawan Hiray — Full-Stack Developer (Next.js + AI)",
-    description: "Fresher Full-Stack Developer shipping AI features into real products. Ex-President, 10K+ MUStudentsUnited community. Open to Mumbai / Pune / Remote roles.",
+    title: "Pawan Hiray — AI Product Developer (Next.js + AI)",
+    description: "Fresher AI Product Developer building real products with AI-assisted workflows. Ex-President, 10K+ MUStudentsUnited community. Open to Mumbai / Pune / Remote roles.",
     url: "https://pawanhiray.vercel.app",
     siteName: "PawanOS",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pawan Hiray — Full-Stack Developer (Next.js + AI)",
+    title: "Pawan Hiray — AI Product Developer (Next.js + AI)",
     description: "Portfolio OS: live Next.js + AI projects, honest outcomes, ATS resume, contact.",
   },
   robots: {
@@ -76,14 +76,14 @@ export default function RootLayout({
               '@type': 'Person',
               name: 'Pawan Hiray',
               url: 'https://pawanhiray.vercel.app',
-              jobTitle: 'Fresher Computer Engineer, Full-Stack Developer, AI Builder',
+              jobTitle: 'Fresher Computer Engineer, AI Product Developer, AI Application Builder',
               address: { '@type': 'PostalAddress', addressLocality: 'Mumbai', addressCountry: 'IN' },
               email: 'mailto:pawanhiray1@gmail.com',
               sameAs: [
                 'https://github.com/hiraypawan',
                 'https://www.linkedin.com/in/pawan-hiray%E2%9C%AA%F0%9F%92%8E-999bb32a6/',
               ],
-              knowsAbout: ['Full-Stack Development', 'AI Agents', 'Web3', 'Chrome Extensions', 'Next.js', 'React', 'Node.js', 'MongoDB', 'Community Leadership'],
+              knowsAbout: ['AI Product Development', 'AI Agents', 'Next.js', 'React', 'Node.js', 'MongoDB', 'Chrome Extensions', 'Community Leadership', 'AI-Assisted Development'],
             }),
           }}
         />

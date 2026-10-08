@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <noscript>
         <div style={{ fontFamily: 'system-ui, sans-serif', padding: 24, maxWidth: 640 }}>
-          <h1>Pawan Hiray — Full-Stack Developer (Next.js + AI)</h1>
+          <h1>Pawan Hiray — AI Product Developer (Next.js + AI)</h1>
           <p>
             Fresher Computer Engineer from Mumbai. I ship AI features into real products.
             Former President of MUStudentsUnited (10,000+ student community, Aug 2024 — Mar 2026).
