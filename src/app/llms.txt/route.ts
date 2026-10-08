@@ -1,41 +1,65 @@
-import { ownerProfile } from '@/data/ownerProfile';
+import {
+  hasPublicUrl,
+  ownerProfile,
+  publicMetrics,
+  PROFILE_UPDATED,
+  siteUrl,
+} from '@/data/ownerProfile';
 
-export async function GET(): Promise<Response> {
+export const dynamic = 'force-static';
+export function GET(): Response {
   const lines = [
-    '# Pawan Hiray — llms.txt (for AI assistants)',
+    `# ${ownerProfile.identity.fullName} — ${ownerProfile.identity.roles[0]}`,
     '',
-    `> ${ownerProfile.identity.headline}: ${ownerProfile.identity.roles.join(', ')} in ${ownerProfile.identity.location}.`,
     `> ${ownerProfile.identity.intro}`,
-    `> ${ownerProfile.identity.availability}.`,
+    `> ${ownerProfile.identity.availability}`,
     '',
     '## Identity',
     `- Name: ${ownerProfile.identity.fullName}`,
+    '- Primary role: AI Product Developer (Next.js + AI)',
     `- Location: ${ownerProfile.identity.location} (${ownerProfile.identity.timezone})`,
-    `- Email: ${ownerProfile.conversion.email}`,
-    `- Phone: ${ownerProfile.conversion.phone}`,
-    '- GitHub: https://github.com/hiraypawan',
-    `- LinkedIn: ${ownerProfile.socials.find((s) => s.network === 'LinkedIn')?.url}`,
-    `- Site: https://${ownerProfile.identity.domain}`,
-    `- Resume (human-readable): https://${ownerProfile.identity.domain}/resume`,
-    `- Resume (PDF): https://${ownerProfile.identity.domain}/Pawan-Hiray-Resume.pdf`,
+    `- [Email](mailto:${ownerProfile.conversion.email}): ${ownerProfile.conversion.email}`,
+    `- [Portfolio home](${siteUrl}): server-rendered introduction and selected work.`,
+    ...ownerProfile.socials
+      .filter((social) => !social.url.startsWith('mailto:'))
+      .map((social) => `- [${social.network}](${social.url})`),
     '',
-    '## Work history (only collaboration: MUStudentsUnited, President Aug 2024 — Mar 2026)',
-    '- No agency clients yet. All other work is self-initiated and labelled founder-reported.',
+    '## Readable pages',
+    `- [Work](${siteUrl}/work): all projects, with status and evidence limits.`,
+    `- [About](${siteUrl}/about): background, leadership, and working approach.`,
+    `- [Resume](${siteUrl}/resume): searchable HTML resume.`,
+    `- [One-page PDF](${siteUrl}/Pawan-Hiray-Resume.pdf): downloadable resume.`,
+    `- [Contact](${siteUrl}/contact): direct email and editable inquiry brief.`,
+    '',
+    '## Leadership',
+    '- President, MUStudentsUnited: August 2024–March 2026.',
+    '- MUStudentsUnited is the only collaboration listed. Other projects are self-initiated, not agency clients.',
     '',
     '## Projects',
     ...ownerProfile.projects.map(
-      (p) =>
-        `- ${p.name} (${p.category}, ${p.dates}, ${p.role}): ${p.intervention} Outcome: ${p.outcome} [${p.outcomeStatus}]. Auth: ${p.auth}. Stack: ${p.stack.join(', ')}. Live: ${p.url}. Repo: ${p.repository}.`,
+      (project) =>
+        `- [${project.name}](${siteUrl}/work/${project.id}): ${project.category}, ${project.dates}; ${project.status}. ${project.intervention} Role: ${project.role}. Outcome: ${project.outcome} [${project.outcomeStatus}]. Stack: ${project.stack.join(', ')}.${hasPublicUrl(project.url) ? ` [Public link](${project.url}).` : ''}${hasPublicUrl(project.repository) ? ` [Source code](${project.repository}).` : ''} Evidence limits: ${project.evidenceNote}`,
     ),
     '',
-    '## Metrics (with verification status)',
-    ...ownerProfile.metrics.map((m) => `- ${m.value} ${m.label} [${m.status}; source: ${m.source}]`),
+    '## Public metrics',
+    ...publicMetrics().map(
+      (metric) =>
+        `- ${metric.value} ${metric.label} [${metric.status}; source: ${metric.source}; reviewed: ${metric.lastReviewed}]`,
+    ),
     '',
-    '## Hiring',
-    `- ${ownerProfile.identity.availability}. Contact via the site Contact app or email with role, timeline, and stack.`,
+    '## Education',
+    ...ownerProfile.resume.education.map(
+      (item) => `- ${item.qualification}, ${item.institution}, ${item.date}.`,
+    ),
     '',
-    `## Legal`,
-    `- Metric disclaimer: ${ownerProfile.legal.metricDisclaimer}`,
+    '## Evidence and privacy',
+    `- ${ownerProfile.legal.metricDisclaimer}`,
+    '- Contact prepares a mailto draft; nothing is submitted to a backend.',
+    '- Browser settings and sticky notes are local-only. No analytics, testimonials, or calendar integration.',
+    `- Content reviewed: ${PROFILE_UPDATED}.`,
+    '',
+    '## Optional',
+    `- [Interactive desktop](${siteUrl}/os): the PawanOS experience; not required to read the portfolio.`,
   ];
   return new Response(lines.join('\n'), {
     headers: { 'Content-Type': 'text/plain; charset=utf-8' },

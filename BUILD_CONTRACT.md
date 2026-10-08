@@ -1,15 +1,40 @@
-# BUILD_CONTRACT — PawanOS v1 (approved-assets-only)
+# BUILD CONTRACT — PawanOS v1.1
 
-Owner: Pawan Hiray (Mumbai, India, Asia/Kolkata). Domain: pawanhiray.vercel.app.
-Objective: replace the book theme with a premium portfolio OS; portfolio work is the main content.
-Audience: founders, student communities, creators, employers needing AI-built apps and workflow automation.
-Primary conversion: open Projects → Book a call (`mailto:`) / Contact brief form. Secondary: copy email, open socials.
+Owner: Pawan Hiray. Canonical domain: pawanhiray.vercel.app. Reviewed 2026-10-08.
 
-Approved proof: MUStudentsUnited President Aug 2024 — Mar 2026 (10K+ followers; 200–300+ active users peak, self-reported in owner Final resume PDF); 7 shipped self-initiated builds with live links where live (OneBrain, Smarty, DigitalWorkForce, VibeCoder Pro) + load-unpacked/local (YtStop, Hand Cricket Pro, PeoplePole in dev). No agency clients — stated plainly in Achievements, Results, and Proof vault.
-Prohibited claims: no revenue-as-pipeline, no invented testimonials/videos/press, no unverified trader/marketer counts as fact (kept as labelled `illustrative` placeholders or removed).
-Required apps: Projects, Results, Systems, Proof, Journey, Achievements, Socials, Contact, Emergency, Founder.txt, Whiteboard, PawanNet browser, Case Files, Field Notes.
-Media: `MuStudentPreview.png` only; no generated avatar (mode: approved-assets-only); one Lucide glyph family on glass tiles — zero emoji. Interface sounds are synthesized on-device via WebAudio (off by default, no audio files). Companion removed per owner 2026-10-08 (no mascot, no booking pings). Visitor customization (accent, wallpaper, sounds, haptics, motion) persists per-browser in localStorage only.
-Integrations: none (mailto booking + contact fallback; no calendar embed, no analytics, no backend).
-Visuals: modern desktop-OS hybrid. Desktop = Windows × macOS (menu bar, left icon columns, floating dock, mac-color window controls with explicit ×/–/▢ symbols + minimize-to-dock). Phones = Android × iOS (status bar with time/signal/wifi/battery, 4-column home grid, bottom sheets with grabber + swipe-down to minimize, home indicator). Wallpapers: aurora mesh per Day/Night/Dark theme with portrait recomposition on phones; default theme auto-picks from visitor local hour. Readable ≥15px bodies, ≥44px targets.
-Deployment: GitHub `main` → Vercel auto-deploy. No secrets committed.
-Unresolved / owner actions: confirm LinkedIn canonical URL; approve/remove 3 illustrative placeholder cases; supply testimonial + video URLs if Proof vault should fill; approve 48h reply SLA text; quarterly refresh of Field Notes drafts.
+## Approved direction
+
+The user approved the portfolio audit and implementation, with particular emphasis on crawlable server-rendered content and **Work · About · Resume · Contact** navigation.
+
+- `/` is the immediate, server-rendered reading view; `/os` retains the optional PawanOS desktop.
+- Work, About, resume, contact, and nine project cases are directly accessible without JavaScript.
+- The OS cannot cover or gate the default portfolio behind a boot animation.
+- Primary conversion: inspect work → contact about a role or project. A call CTA means an email request, not a calendar booking.
+
+## Content and proof
+
+Single content source: `src/data/ownerProfile.ts`; one-page PDF and HTML resume use it together. See `CONTENT_LEDGER.md` for exact evidence limits.
+
+No invented clients, testimonials, revenue, certifications, benchmark results, or stronger employment/degree claims. Community followers and platform users remain separate, labeled self-reported. Unsupported lifetime totals are removed.
+
+## Desktop and assets
+
+Keep Work/Projects, Results, Systems, Proof, About/Journey, Achievements, Socials, Contact, Emergency, Founder.txt, Whiteboard, PawanNet, Case Files, Field Notes, and Settings. Primary apps are separate from secondary utilities.
+
+- One Lucide glyph family; no generated avatar, mascot, or booking ping.
+- Protected screenshot and legacy MP3 remain byte-identical.
+- Day/Night/Dark wallpapers; auto follows visitor local hour. Preferences are consolidated into one validated storage system.
+- Minimize keeps app state. Every open window is recoverable from the dock.
+- Desktop and phone sheets share the 768px breakpoint; usable on short screens, with ≥44px controls and visible keyboard focus.
+- Device reduced-motion preference wins. No ambient animations or repeating live-region announcements.
+- Sounds and haptics are optional and off by default.
+
+## Integrations and privacy
+
+No analytics, calendar embed, contact backend, or secrets. Contact uses correctly encoded email drafts with a copyable fallback. Settings and whiteboard notes stay local; preference reset does not erase notes.
+
+## Quality and deployment
+
+Next.js 16 / React 19 / Tailwind 4. Node 22. Self-hosted existing font families. Lint, TypeScript, unit tests, production build, production dependency audit, PDF validation, and Playwright/axe regressions are required.
+
+Changes ship through pull requests into `main`, with quality checks before merge. GitHub-to-Vercel deployment is an existing integration; verify status before claiming a live deployment.

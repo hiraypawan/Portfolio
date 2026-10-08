@@ -1,89 +1,73 @@
-import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Fira_Code } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from '@/components/theme-provider';
+import type { Metadata, Viewport } from 'next';
+import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/fira-code';
+import './globals.css';
+import { ownerProfile, siteUrl } from '@/data/ownerProfile';
+import { serializeJsonLd } from '@/lib/seo';
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ['300', '400', '500', '600', '700'],
-});
-
-const firaCode = Fira_Code({
-  variable: "--font-fira-code",
-  subsets: ["latin"],
-  weight: ['300', '400', '500', '600', '700'],
-});
+const title = 'Pawan Hiray — AI Product Developer (Next.js + AI) | PawanOS';
+const description =
+  'Pawan Hiray builds web apps, AI integrations, and browser tools with Next.js and TypeScript. Explore projects, source code, resume, and contact.';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://pawanhiray.vercel.app'),
-  title: "Pawan Hiray — AI Product Developer (Next.js + AI) | PawanOS",
-  description: "Fresher AI Product Developer building real products with AI-assisted workflows. Ex-President, 10K+ MUStudentsUnited community. Live work: OneBrain AI OS, Smarty extension, DigitalWorkForce. Open to Mumbai / Pune / Remote / Hybrid roles and freelance.",
-  keywords: "Pawan Hiray, PawanOS, Fresher Computer Engineer, AI Product Developer, AI Application Developer, Next.js, AI Agents, MUStudentsUnited, OneBrain, Smarty Extension, Portfolio OS, Mumbai Developer, Hire AI Developer",
-  authors: [{ name: "Pawan Hiray" }],
-  creator: "Pawan Hiray",
-  alternates: {
-    canonical: 'https://pawanhiray.vercel.app',
-  },
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  authors: [{ name: ownerProfile.identity.fullName }],
+  creator: ownerProfile.identity.fullName,
+  alternates: { canonical: siteUrl },
   openGraph: {
-    title: "Pawan Hiray — AI Product Developer (Next.js + AI)",
-    description: "Fresher AI Product Developer building real products with AI-assisted workflows. Ex-President, 10K+ MUStudentsUnited community. Open to Mumbai / Pune / Remote roles.",
-    url: "https://pawanhiray.vercel.app",
-    siteName: "PawanOS",
-    type: "website",
+    title,
+    description,
+    url: siteUrl,
+    siteName: 'PawanOS',
+    type: 'website',
+    locale: 'en_IN',
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Pawan Hiray — AI Product Developer (Next.js + AI)",
-    description: "Portfolio OS: live Next.js + AI projects, honest outcomes, ATS resume, contact.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  twitter: { card: 'summary_large_image', title, description },
+  robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
   width: 'device-width',
-  initialScale: 1.0,
-  maximumScale: 5.0,
+  initialScale: 1,
+  maximumScale: 5,
   userScalable: true,
+  viewportFit: 'cover',
+  themeColor: '#0b0c12',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${spaceGrotesk.variable} ${firaCode.variable} font-sans antialiased touch-manipulation`}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange={false}
-        >
-          {children}
-        </ThemeProvider>
+    <html lang="en">
+      <body className="font-sans antialiased">
+        {children}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: serializeJsonLd({
               '@context': 'https://schema.org',
               '@type': 'Person',
-              name: 'Pawan Hiray',
-              url: 'https://pawanhiray.vercel.app',
-              jobTitle: 'Fresher Computer Engineer, AI Product Developer, AI Application Builder',
-              address: { '@type': 'PostalAddress', addressLocality: 'Mumbai', addressCountry: 'IN' },
-              email: 'mailto:pawanhiray1@gmail.com',
-              sameAs: [
-                'https://github.com/hiraypawan',
-                'https://www.linkedin.com/in/pawan-hiray%E2%9C%AA%F0%9F%92%8E-999bb32a6/',
+              name: ownerProfile.identity.fullName,
+              url: siteUrl,
+              jobTitle: 'AI Product Developer',
+              address: {
+                '@type': 'PostalAddress',
+                addressLocality: 'Mumbai',
+                addressCountry: 'IN',
+              },
+              email: ownerProfile.conversion.email,
+              sameAs: ownerProfile.socials
+                .filter((social) => !social.url.startsWith('mailto:'))
+                .map((social) => social.url),
+              knowsAbout: [
+                'Next.js',
+                'React',
+                'TypeScript',
+                'AI integration',
+                'Browser extensions',
+                'Community leadership',
               ],
-              knowsAbout: ['AI Product Development', 'AI Agents', 'Next.js', 'React', 'Node.js', 'MongoDB', 'Chrome Extensions', 'Community Leadership', 'AI-Assisted Development'],
             }),
           }}
         />

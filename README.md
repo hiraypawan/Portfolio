@@ -1,54 +1,98 @@
 # Pawan Hiray — PawanOS
 
-**AI Product Developer (Next.js + AI) who ships real products with AI-assisted workflows.**
-Former President, MUStudentsUnited (10,000+ student community). Open to fresher roles — Mumbai / Pune / Remote / Hybrid — and freelance. Ready to relocate.
+**AI Product Developer: Next.js, TypeScript, and AI integrations.**
 
-🌐 **Live:** https://pawanhiray.vercel.app · 📄 **ATS resume:** https://pawanhiray.vercel.app/resume · 🤖 **AI-readable:** https://pawanhiray.vercel.app/llms.txt
+A server-rendered portfolio with an optional interactive desktop. The homepage, project cases, About, resume, and direct contact links work without JavaScript. The OS adds exploration; it never gates access to the work.
 
-PawanOS is a personal operating system, not a landing page. Visitors explore the work through
-applications: Projects, Results, Systems, Journey, Contact, Case Files, a whiteboard, PawanNet
-bookmarks, and Settings they can customize (accent, wallpaper, sounds, haptics, motion — stored
-only in their browser).
+- **Portfolio:** https://pawanhiray.vercel.app
+- **Work:** https://pawanhiray.vercel.app/work
+- **Resume:** https://pawanhiray.vercel.app/resume
+- **Desktop:** https://pawanhiray.vercel.app/os
+- **AI-readable:** https://pawanhiray.vercel.app/llms.txt
 
-## Top 3 projects (Problem → Tech → Link → Result)
+## Selected work
 
-| # | Project | Problem | Tech | Live | Code | Result |
-|---|---------|---------|------|------|------|--------|
-| 1 | **OneBrain** — AI life OS | Thoughts scatter; voice tools upload everything silently | Next.js, TypeScript, Cloudflare Workers, D1, Voice AI (Google OAuth) | [onebrains.pages.dev](https://onebrains.pages.dev) | [GitHub](https://github.com/hiraypawan/OneBrain) | Live in production |
-| 2 | **MUStudentsUnited** — student notes platform | No single place for Mumbai University study material | React, Node.js, MongoDB, Express, JWT | [mumbaistudentsunited.com](https://mumbaistudentsunited.com) | — | 10K+ followers; 200–300+ active users peak (self-reported) |
-| 3 | **Smarty** — AI browser extension | Repetitive browser work eats hours | TypeScript, Chrome MV3, Gemini AI, Supabase, React | [mysmarty.vercel.app](https://mysmarty.vercel.app) | [GitHub](https://github.com/hiraypawan/smarty) | Live v1.0.2 |
+| Project          | Context                                         | Evidence                                                                                                                                         |
+| ---------------- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| OneBrain         | Self-initiated voice-first AI life OS           | [Case](https://pawanhiray.vercel.app/work/onebrain), [deployment](https://onebrains.pages.dev), [source](https://github.com/hiraypawan/OneBrain) |
+| MUStudentsUnited | Student community; President, Aug 2024–Mar 2026 | [Case](https://pawanhiray.vercel.app/work/mustudentsunited), [site](https://mumbaistudentsunited.com), owner-supplied screenshot                 |
+| Smarty           | Self-initiated AI browser extension             | [Case](https://pawanhiray.vercel.app/work/smarty), [product site](https://mysmarty.vercel.app), [source](https://github.com/hiraypawan/smarty)   |
 
-More in the OS and on [/resume](https://pawanhiray.vercel.app/resume): DigitalWorkForce (marketplace),
-VibeCoder Pro (cloud IDE), YtStop (MV3 ad neutralizer), Hand Cricket Pro (web game), PeoplePole
-(civic tech, in development). Every metric carries a verification label — no fake clients, no
-invented testimonials. The only collaboration so far is MUStudentsUnited.
+Public deployments, local builds, archived work, and in-development projects are labeled separately. Project descriptions and community metrics are owner-reported, not independently audited. Instagram followers are not platform users. No agency clients, revenue, testimonials, or security certifications are invented.
 
-## Stack I ship with (AI-assisted)
+## Stack
 
-Next.js (App Router) · React · TypeScript · Node.js · Express · MongoDB · JWT/NextAuth ·
-Tailwind CSS v4 · Framer Motion · Cloudflare Workers/D1 · Supabase · Chrome MV3 · Git · Vercel
+Next.js 16 App Router · React 19 · TypeScript · Tailwind CSS 4 · Lucide · Framer Motion (desktop interactions only). Space Grotesk and Fira Code are self-hosted through Fontsource under the OFL license; builds do not fetch Google Fonts.
 
-## Getting started
+## Run locally
+
+Use Node 22 (see `.nvmrc`).
 
 ```bash
-npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build (tsc + eslint included)
+npm ci
+npm run dev       # 0.0.0.0:3000
+npm run check     # ESLint, TypeScript, unit tests
+npm run build
+npm run start     # production server, 0.0.0.0:3000
 ```
 
-Deploys automatically to Vercel from `main`.
+The preview host `*.e2b.app` is permitted for development. Browser-facing links and assets use relative URLs. No backend or environment secrets are required.
 
-## Project structure
+## Browser regression tests
 
-```
-src/
-  app/            # /, /resume (ATS one-pager), /llms.txt, /sitemap.xml, /robots.txt, opengraph-image
-  components/os/  # PersonalOS shell, Window manager, apps (Projects, Results, Contact, …)
-  data/           # ownerProfile.ts — every number carries a verification status
-  lib/            # utils, feedback (synth sounds + haptics, no audio files)
-public/           # Pawan-Hiray-Resume.pdf, images, sounds
+```bash
+npx playwright install --with-deps chromium
+npm run build
+npm run test:e2e
 ```
 
-## License
+Playwright checks raw server HTML, no-JavaScript navigation, route metadata, sitemap, social image, PDF, accessibility, responsive widths, contact encoding, window restoration, keyboard search, phone sheets, storage failures, and reduced motion. `PLAYWRIGHT_BASE_URL` can point at an already-running local server; `PLAYWRIGHT_CHROMIUM_EXECUTABLE` supports a separately supplied Chromium binary.
+
+GitHub Actions runs the production build, checks, PDF validation, production dependency audit, and browser suite.
+
+## Resume: one source, two formats
+
+Identity, role, education, leadership, and the three selected projects live in `src/data/ownerProfile.ts`. Both `/resume` and the PDF generator consume that data.
+
+```bash
+python3 -m pip install -r scripts/requirements-pdf.txt
+npm run resume:pdf
+npm run check:pdf
+```
+
+The generator refuses to replace the PDF if it spans more than one A4 page. Validation checks searchable text, project names, canonical links, and PDF author metadata. Degree completion remains **Expected 2026**, as in the supplied resume; it is not changed to a confirmed graduation without owner confirmation.
+
+## Desktop behavior and privacy
+
+- All 15 required OS apps remain available; primary work is separate from utilities.
+- Minimized windows stay mounted, preserving unsent Contact drafts and app state.
+- Phone sheets use the same 768px breakpoint as the desktop shell, with focus confinement and swipe-down minimization.
+- Search has unique result identities, arrow-key selection, focus restoration, and Escape isolation.
+- Settings and notes are validated before persistence and migrate from the previous keys.
+- Reset preferences keeps whiteboard notes; clearing notes requires separate confirmation.
+- Sounds and haptics are off by default. Device reduced-motion preferences take priority.
+- Contact prepares a mailto draft, not a server submission. A copyable fallback remains available.
+- No analytics, calendar embed, external contact service, generated likeness, or automatic booking is added.
+
+## Security and content limits
+
+See [QUALITY_REPORT.md](QUALITY_REPORT.md) for validation and [CONTENT_LEDGER.md](CONTENT_LEDGER.md) for evidence limits and owner-confirmation items. The production dependency audit is clean. A dev-only `braces` advisory remains in the upstream Next.js ESLint globbing chain; no patched release is available, and forcing npm's proposed downgrade would mismatch the framework.
+
+`public/images/MuStudentPreview.png` and the legacy `public/sounds/page-flip.mp3` are preserved byte-for-byte. The legacy audio file is not loaded by the new interface.
+
+## Structure
+
+```text
+src/app/                  Server pages, metadata routes, optional /os
+src/components/portfolio/ Shared semantic content, project evidence, contact & print islands
+src/components/os/        Desktop shell, windows, focus hooks, lazy-loaded apps
+src/data/ownerProfile.ts  Approved public content and shared resume data
+src/lib/                  Pure window state, contact encoding, storage validation, SEO
+scripts/                  Deterministic one-page PDF export and validation
+tests/unit/              Pure-state and content invariant tests
+tests/e2e/               Playwright + axe browser regressions
+```
+
+GitHub `main` is the documented Vercel deployment source. A merge triggers that configured integration; a successful merge alone is not proof that deployment has completed.
 
 MIT — see [LICENSE](LICENSE).
