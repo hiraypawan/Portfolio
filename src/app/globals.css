@@ -24,98 +24,80 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-/* Book Flip Animations */
-.stf__wrapper {
-  touch-action: pan-y;
+/* ── PawanOS wallpaper system (modern aurora mesh, per theme) ── */
+.wp-day {
+  background:
+    radial-gradient(1100px 500px at 85% -5%, rgba(255, 214, 150, 0.9), transparent 60%),
+    radial-gradient(900px 600px at 10% 15%, rgba(125, 211, 252, 0.55), transparent 60%),
+    radial-gradient(1000px 700px at 50% 110%, rgba(244, 114, 182, 0.5), transparent 60%),
+    linear-gradient(180deg, #f7c489 0%, #e89a7c 38%, #a86a8b 72%, #4b3f72 100%);
 }
 
-.stf__block {
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+.wp-night {
+  background:
+    radial-gradient(1000px 550px at 80% -10%, rgba(129, 140, 248, 0.5), transparent 60%),
+    radial-gradient(900px 650px at 8% 20%, rgba(34, 211, 238, 0.28), transparent 60%),
+    radial-gradient(1200px 800px at 50% 115%, rgba(168, 85, 247, 0.35), transparent 62%),
+    linear-gradient(180deg, #121331 0%, #1b1440 45%, #0d0a24 100%);
 }
 
-.stf__item {
-  transition: transform 0.3s ease;
+.wp-dark {
+  background:
+    radial-gradient(800px 450px at 12% 0%, rgba(124, 108, 255, 0.22), transparent 60%),
+    radial-gradient(800px 500px at 88% 100%, rgba(34, 211, 238, 0.14), transparent 60%),
+    linear-gradient(180deg, #101018 0%, #0b0b12 60%, #08080d 100%);
 }
 
-.stf__shadow {
-  opacity: 0.5;
-}
+/* Portrait recomposition for phones: glow stacked vertically, horizon low */
+@media (max-width: 639px) {
+  .wp-day {
+    background:
+      radial-gradient(420px 300px at 50% -40px, rgba(255, 226, 170, 0.95), transparent 65%),
+      radial-gradient(380px 340px at 8% 30%, rgba(125, 211, 252, 0.5), transparent 65%),
+      radial-gradient(420px 480px at 50% 108%, rgba(244, 114, 182, 0.55), transparent 65%),
+      linear-gradient(180deg, #f7c489 0%, #e89a7c 42%, #a86a8b 78%, #4b3f72 100%);
+  }
 
-/* Page styles for book */
-.page {
-  position: relative;
-  background: linear-gradient(to bottom, #fefefe 0%, #f8f8f8 100%);
-  overflow: hidden;
-}
+  .wp-night {
+    background:
+      radial-gradient(420px 300px at 50% -40px, rgba(129, 140, 248, 0.55), transparent 65%),
+      radial-gradient(360px 380px at 90% 35%, rgba(34, 211, 238, 0.3), transparent 65%),
+      radial-gradient(460px 520px at 50% 110%, rgba(168, 85, 247, 0.4), transparent 65%),
+      linear-gradient(180deg, #121331 0%, #1b1440 48%, #0d0a24 100%);
+  }
 
-.page::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 20px;
-  background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 100%);
-  pointer-events: none;
-}
-
-.page-cover {
-  background: linear-gradient(135deg, #8b4513 0%, #654321 100%);
-  position: relative;
-  overflow: hidden;
-}
-
-.page-cover::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      rgba(255,255,255,0.03) 2px,
-      rgba(255,255,255,0.03) 4px
-    );
-  pointer-events: none;
-}
-
-/* Book texture */
-.book-texture {
-  background-image: 
-    repeating-linear-gradient(
-      0deg,
-      rgba(0,0,0,0.02) 0px,
-      transparent 1px,
-      transparent 2px,
-      rgba(0,0,0,0.02) 3px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(0,0,0,0.02) 0px,
-      transparent 1px,
-      transparent 2px,
-      rgba(0,0,0,0.02) 3px
-    );
-}
-
-/* Smooth animations */
-@layer utilities {
-  .animation-smooth {
-    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  .wp-dark {
+    background:
+      radial-gradient(380px 260px at 50% -30px, rgba(124, 108, 255, 0.3), transparent 65%),
+      radial-gradient(420px 420px at 50% 112%, rgba(34, 211, 238, 0.16), transparent 65%),
+      linear-gradient(180deg, #101018 0%, #0b0b12 60%, #08080d 100%);
   }
 }
-
-/* Dark mode adjustments for book */
-.dark .page {
-  background: linear-gradient(to bottom, #1f2937 0%, #111827 100%);
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.07;
+  mix-blend-mode: overlay;
 }
 
-.dark .page::before {
-  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 100%);
+/* Visible keyboard focus everywhere */
+:focus-visible {
+  outline: 2px solid #22d3ee;
+  outline-offset: 2px;
+}
+
+/* Slim scrollbars for window bodies */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
 }
 
 /* Prose adjustments */

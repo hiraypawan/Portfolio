@@ -21,5 +21,5 @@ rg -n "pawan@example|hiraypawan|Treasure Hunt|smartbotx.png|index.html" src publ
 rg -n "pawan@example|hiraypawan|Treasure Hunt" .next/server/app/index.html .next/static 2>/dev/null
 ```
 
-Result 2026-10-08: source scan clean — no `pawan@example`, no `Treasure Hunt`, no `smartbotx.png` in `src/`, `public/`, or metadata. The only `hiraypawan` hits are the canonical `github.com/hiraypawan` social/bookmark entries sourced from `ownerProfile`.
+Result 2026-10-08 (rev 2): source scan clean — no `pawan@example`, no `Treasure Hunt`, no `smartbotx.png`, no `Demo ping`, no text-face companion, no emoji app icons in `src/`, `public/`, or metadata. The only `hiraypawan` hits are the canonical `github.com/hiraypawan` social/bookmark entries sourced from `ownerProfile`.
 No automatic domain-greeting copy is rendered; the domain appears only in metadata, socials, and browser bookmarks from `ownerProfile.identity.domain`.

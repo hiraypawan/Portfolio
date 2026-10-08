@@ -16,11 +16,15 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://pawanhiray.vercel.app'),
   title: "Pawan Hiray — PawanOS | AI, Web3 & Full-Stack Builder",
-  description: "PawanOS: explore Pawan Hiray's work like an operating system — MUStudentsUnited (30K+ students), AI agents, Web3 tools, growth systems, journey, and contact.",
-  keywords: "Pawan Hiray, PawanOS, Full-Stack Developer, AI Agents, Web3, MUStudentsUnited, Portfolio OS, Mumbai Developer",
+  description: "PawanOS: explore Pawan Hiray's work like an operating system — MUStudentsUnited President (10K+ community), OneBrain AI life OS, Smarty AI extension, DigitalWorkForce marketplace, VibeCoder cloud IDE. Open to freelance, remote, hybrid; ready to relocate.",
+  keywords: "Pawan Hiray, PawanOS, Fresher Computer Engineer, Full-Stack Developer, AI Agents, Web3, MUStudentsUnited, OneBrain, Smarty Extension, Portfolio OS, Mumbai Developer, Hire AI Developer",
   authors: [{ name: "Pawan Hiray" }],
   creator: "Pawan Hiray",
+  alternates: {
+    canonical: 'https://pawanhiray.vercel.app',
+  },
   openGraph: {
     title: "Pawan Hiray — PawanOS",
     description: "Explore Pawan's work through apps, case files, proof, journey, and contact — inside one personal OS.",
@@ -64,6 +68,25 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: 'Pawan Hiray',
+              url: 'https://pawanhiray.vercel.app',
+              jobTitle: 'Fresher Computer Engineer, Full-Stack Developer, AI Builder',
+              address: { '@type': 'PostalAddress', addressLocality: 'Mumbai', addressCountry: 'IN' },
+              email: 'mailto:pawanhiray1@gmail.com',
+              sameAs: [
+                'https://github.com/hiraypawan',
+                'https://www.linkedin.com/in/pawan-hiray%E2%9C%AA%F0%9F%92%8E-999bb32a6/',
+              ],
+              knowsAbout: ['Full-Stack Development', 'AI Agents', 'Web3', 'Chrome Extensions', 'Next.js', 'React', 'Node.js', 'MongoDB', 'Community Leadership'],
+            }),
+          }}
+        />
       </body>
     </html>
   );

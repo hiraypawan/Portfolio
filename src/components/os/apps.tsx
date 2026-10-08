@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { FileText, FolderClosed } from 'lucide-react';
 import { ownerProfile } from '@/data/ownerProfile';
 
 function Disclosure({ status }: { status: string }) {
@@ -38,6 +39,7 @@ export function ProjectsApp({ onOpenCase }: { onOpenCase: (id: string) => void }
           <p className="mt-2 text-[15px] text-white/85"><span className="text-white/50">Problem:</span> {p.problem}</p>
           <p className="mt-1 text-[15px] text-white/85"><span className="text-white/50">Build:</span> {p.intervention}</p>
           <p className="mt-1 text-[15px] text-white/85"><span className="text-white/50">Outcome:</span> {p.outcome}</p>
+          <p className="mt-1 text-[14px] text-white/70"><span className="text-white/50">Auth:</span> {p.auth}</p>
           <div className="mt-2 flex flex-wrap gap-1.5">
             {p.stack.map((s) => (
               <span key={s} className="rounded-full bg-white/10 px-2.5 py-1 text-[13px] text-white/75">{s}</span>
@@ -66,6 +68,7 @@ export function CaseDetailApp({ id }: { id: string }) {
         <div><dt className="text-white/50">Problem</dt><dd>{p.problem}</dd></div>
         <div><dt className="text-white/50">Intervention</dt><dd>{p.intervention}</dd></div>
         <div><dt className="text-white/50">Outcome</dt><dd className="flex items-center gap-2">{p.outcome} <Disclosure status={p.outcomeStatus} /></dd></div>
+        <div><dt className="text-white/50">Auth</dt><dd>{p.auth}</dd></div>
         <div><dt className="text-white/50">Stack</dt><dd>{p.stack.join(' · ')}</dd></div>
       </dl>
       <p className="text-[13px] text-white/45">Claim ledger: outcome status = {p.outcomeStatus}. Illustrative entries must not be quoted as results.</p>
@@ -203,13 +206,14 @@ what i build
   Full-stack apps, AI agents + automations, crypto/Web3 tools, growth machines.
 
 why i care
-  MUStudentsUnited showed me software can help 30,000+ real students. I want more of that.
+  MUStudentsUnited showed me software can help 10,000+ real students. I want more of that.
 
 how i work
   1) find the leverage 2) lock scope 3) ship v1 4) integrate 5) prove + hand off.
 
 exploring now
-  AI x Web3 applied to real gaps. AI/ML in progress. [PLACEHOLDER — update quarterly]
+  AI x Web3 applied to real gaps. AI/ML in progress — currently going deeper on
+  applied voice systems and fresher-ready full-stack depth.
 
 who i want to work with
   Founders, student communities, creators who want leverage — not hype.
@@ -218,7 +222,8 @@ i refuse to compromise
   Honest metrics. No fake revenue screenshots. No invented testimonials.
 
 contact
-  ${ownerProfile.conversion.email} — subject: what you want built + timeline.`}</pre>
+  ${ownerProfile.conversion.email} · ${ownerProfile.conversion.phone} — subject: what you want built + timeline.
+  ${ownerProfile.identity.availability}.`}</pre>
   );
 }
 
@@ -297,9 +302,12 @@ export function WhiteboardApp() {
 
 export function BrowserApp() {
   const bookmarks = [
+    { name: 'OneBrain — live AI product', url: 'https://onebrains.pages.dev' },
+    { name: 'Smarty — live extension site', url: 'https://mysmarty.vercel.app' },
+    { name: 'DigitalWorkForce — live marketplace', url: 'https://digitalworkforce.vercel.app' },
+    { name: 'VibeCoder Pro — live cloud IDE', url: 'https://vibecoderpro.vercel.app' },
     { name: 'MUStudentsUnited', url: 'https://mumbaistudentsunited.com' },
     { name: 'GitHub — hiraypawan', url: 'https://github.com/hiraypawan' },
-    { name: 'This site (canonical)', url: 'https://pawanhiray.vercel.app' },
   ];
   return (
     <div className="space-y-3">
@@ -335,7 +343,8 @@ export function ContactApp() {
           Copy email
         </button>
       </div>
-      <p className="text-[14px] text-white/60">{ownerProfile.conversion.email} · {ownerProfile.identity.timezone} · replies within 48h [PLACEHOLDER SLA]</p>
+      <p className="text-[14px] text-white/60">{ownerProfile.conversion.email} · {ownerProfile.conversion.phone} · {ownerProfile.identity.timezone}</p>
+      <p className="text-[14px] text-white/60">{ownerProfile.identity.availability} · replies within 48 hours.</p>
       {sent ? (
         <div className="rounded-xl border border-emerald-400/30 bg-emerald-500/10 p-4 text-[15px] text-emerald-200">
           Brief ready — your email app should have opened with everything pre-filled. If not, send it manually to {ownerProfile.conversion.email}.
@@ -384,24 +393,28 @@ function Field({ label, value, onChange, type, placeholder }: { label: string; v
   );
 }
 
-export function CaseFilesApp({ onOpen }: { onOpen: (app: string, state?: string) => void }) {
-  const tree: { folder: string; files: { name: string; app: string; state?: string }[] }[] = [
+export function CaseFilesApp({ onOpen }: { onOpen: (app: string, state?: string) => void }) {  const tree: { folder: string; files: { name: string; app: string; state?: string }[] }[] = [
     { folder: 'Start Here', files: [{ name: 'Founder.txt', app: 'founder' }, { name: 'Systems.op', app: 'systems' }] },
     { folder: 'Platforms', files: [{ name: 'MUStudentsUnited.case', app: 'case', state: 'mustudentsunited' }] },
-    { folder: 'AI Agents', files: [{ name: 'SmartBotX.case', app: 'case', state: 'smartbotx' }] },
-    { folder: 'Experiments [PLACEHOLDER]', files: [{ name: 'CryptoTrader Pro.case', app: 'case', state: 'cryptotrader-pro' }, { name: 'GrowthHack Suite.case', app: 'case', state: 'growthhack-suite' }] },
+    { folder: 'AI Agents', files: [{ name: 'OneBrain.case', app: 'case', state: 'onebrain' }, { name: 'SmartBotX.case', app: 'case', state: 'smartbotx' }] },
+    { folder: 'Extensions', files: [{ name: 'Smarty.case', app: 'case', state: 'smarty' }, { name: 'YtStop.case', app: 'case', state: 'ytstop' }] },
+    { folder: 'Marketplaces & Tools', files: [{ name: 'DigitalWorkForce.case', app: 'case', state: 'digitalworkforce' }, { name: 'VibeCoder Pro.case', app: 'case', state: 'vibecoderpro' }] },
+    { folder: 'Games', files: [{ name: 'Hand Cricket Pro.case', app: 'case', state: 'handcricket' }] },
+    { folder: 'Community Builds', files: [{ name: 'PeoplePole.case', app: 'case', state: 'peoplepole' }] },
     { folder: 'Proof', files: [{ name: 'Results.vault', app: 'results' }, { name: 'Achievements.vault', app: 'achievements' }] },
   ];
   return (
     <div className="space-y-3">
       {tree.map((t) => (
         <div key={t.folder}>
-          <p className="text-[13px] font-bold uppercase tracking-widest text-white/45">📁 {t.folder}</p>
+          <p className="flex items-center gap-1.5 text-[13px] font-bold uppercase tracking-widest text-white/45">
+            <FolderClosed size={15} className="text-amber-300/80" /> {t.folder}
+          </p>
           <div className="mt-1.5 space-y-1.5">
             {t.files.map((f) => (
               <button key={f.name} onClick={() => onOpen(f.app, f.state)}
                 className="flex w-full items-center justify-between rounded-lg border border-white/10 bg-white/5 px-3.5 py-2.5 text-left text-[15px] text-white/85 hover:bg-white/10">
-                <span>📄 {f.name}</span><span className="text-white/35">→</span>
+                <span className="flex items-center gap-2"><FileText size={16} className="shrink-0 text-white/50" /> {f.name}</span><span className="text-white/35" aria-hidden>→</span>
               </button>
             ))}
           </div>
@@ -421,6 +434,37 @@ export function NotesApp() {
           <p className="mt-1 text-[13px] text-white/45">{a.date} · crawlable route ships with the article build [DRAFT]</p>
         </article>
       ))}
+    </div>
+  );
+}
+
+export function EmergencyApp() {
+  return (
+    <div className="space-y-4">
+      <div className="rounded-xl border border-red-400/30 bg-red-500/10 p-4">
+        <h3 className="text-[17px] font-bold text-red-200">Urgent project inquiry only</h3>
+        <p className="mt-1 text-[15px] text-white/80">
+          This is for time-sensitive work — production down, launch blocked, deadline at risk.
+          Not a life-safety service. Anything else goes through Contact.
+        </p>
+      </div>
+      <div className="grid gap-2.5 sm:grid-cols-2">
+        <a
+          href={`mailto:${ownerProfile.conversion.email}?subject=${encodeURIComponent('[URGENT] Project inquiry — PawanOS')}`}
+          className="min-h-[48px] rounded-xl bg-red-500 px-4 py-3 text-center text-[15px] font-bold text-white hover:bg-red-400"
+        >
+          Email now with [URGENT]
+        </a>
+        <a
+          href={`tel:${ownerProfile.conversion.phone.replace(/[^+\d]/g, '')}`}
+          className="min-h-[48px] rounded-xl border border-white/25 px-4 py-3 text-center text-[15px] font-semibold text-white hover:bg-white/10"
+        >
+          Call {ownerProfile.conversion.phone}
+        </a>
+      </div>
+      <p className="text-[13px] text-white/50">
+        {ownerProfile.identity.timezone} · {ownerProfile.identity.availability}
+      </p>
     </div>
   );
 }
