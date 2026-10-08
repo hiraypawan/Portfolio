@@ -1,16 +1,18 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import {
   BarChart3, BatteryMedium, BookOpen, Compass, FileText, FolderKanban, FolderOpen, Globe, Globe2,
-  Mail, Search, Share2, Signal, Siren, StickyNote, Trophy, Wifi, Workflow, type LucideIcon,
+  Mail, Search, Settings, Share2, Signal, Siren, StickyNote, Trophy, Wifi, Workflow, type LucideIcon,
 } from 'lucide-react';
 import WindowFrame, { WinState } from './Window';
 import {
   AchievementsApp, BrowserApp, CaseDetailApp, CaseFilesApp, ContactApp, EmergencyApp, FounderTxtApp,
-  JourneyApp, NotesApp, ProjectsApp, ProofApp, ResultsApp, SocialsApp, SystemsApp, WhiteboardApp,
+  JourneyApp, NotesApp, ProjectsApp, ProofApp, ResultsApp, SettingsApp, SocialsApp, SystemsApp, WhiteboardApp,
+  type SysControls,
 } from './apps';
+import { ACCENTS, DEFAULT_SETTINGS, OSSettings, buzz, loadSettings, playSound, saveSettings, type SoundName } from '@/lib/feedback';
 import { ownerProfile } from '@/data/ownerProfile';
 
 interface AppDef {
@@ -38,6 +40,7 @@ const APPS: AppDef[] = [
   { id: 'cases', name: 'Case Files', desc: 'Explorer for everything', icon: FolderOpen, tint: 'from-orange-300 to-amber-600' },
   { id: 'notes', name: 'Field Notes', desc: 'Articles and drafts', icon: Globe, tint: 'from-fuchsia-400 to-violet-600' },
   { id: 'emergency', name: 'Emergency', desc: 'Urgent builds only', icon: Siren, tint: 'from-red-400 to-rose-600' },
+  { id: 'settings', name: 'Settings', desc: 'Make it yours', icon: Settings, tint: 'from-slate-400 to-slate-600' },
 ];
 
 const APP_MAP: Record<string, AppDef> = Object.fromEntries(APPS.map((a) => [a.id, a]));
@@ -70,9 +73,13 @@ export default function PersonalOS() {
   const [descIdx, setDescIdx] = useState(0);
   const [callDismissed, setCallDismissed] = useState(false);
   const [showTour, setShowTour] = useState(false);
+  const [settings, setSettings] = useState<OSSettings>(DEFAULT_SETTINGS);
+  const accent = ACCENTS.find((a) => a.id === settings.accentId) ?? ACCENTS[0];
+  const calm = settings.motion === 'calm';
   const [transIdx] = useState(() => new Date().getDate() % TRANSMISSIONS.length);
 
   useEffect(() => {
+    setSettings(loadSettings());
     try {
       const saved = localStorage.getItem('personal-os-theme-v1') as 'day' | 'night' | 'dark' | null;
       if (saved) {
@@ -132,7 +139,38 @@ export default function PersonalOS() {
     [windows],
   );
 
+  const sfx = (n: SoundName) => {
+    if (settings.sounds) playSound(n);
+  };
+  const hum = (p: number | number[] = 12) => {
+    if (settings.haptics) buzz(p);
+  };
+  const patch = (p: Partial<OSSettings>) => {
+    setSettings((s) => {
+      const next = { ...s, ...p };
+      saveSettings(next);
+      return next;
+    });
+  };
+  const resetAll = () => {
+    setSettings({ ...DEFAULT_SETTINGS });
+    const h = new Date().getHours();
+    setTheme(h >= 6 && h < 17 ? 'day' : h >= 17 && h < 20 ? 'night' : 'dark');
+  };
+  const sys: SysControls = {
+    theme,
+    setTheme: (t) => {
+      setTheme(t);
+      sfx('toggle');
+    },
+    settings,
+    patch,
+    resetAll,
+  };
+
   const openApp = (app: string, state?: string) => {
+    sfx('open');
+    hum(14);
     if (app === 'case' && state) setCaseId(state);
     const id = app === 'case' ? `case:${state ?? caseId}` : app;
     setWindows((ws) => {
@@ -152,14 +190,29 @@ export default function PersonalOS() {
     setQuery('');
   };
 
-  const closeWin = (id: string) => setWindows((ws) => ws.filter((w) => w.id !== id));
+  const closeWin = (id: string) => {
+    sfx('close');
+    hum(10);
+    setWindows((ws) => ws.filter((w) => w.id !== id));
+  };
   const dismissTour = () => {
     setShowTour(false);
     try { localStorage.setItem('personal-os-tour-v1', '1'); } catch { /* ignore */ }
   };
   const focusWin = (id: string) => setWindows((ws) => ws.map((w) => (w.id === id ? { ...w, z: zTop + 1 } : w)));
-  const minimizeWin = (id: string) => setWindows((ws) => ws.map((w) => (w.id === id ? { ...w, minimized: true } : w)));
-  const toggleMax = (id: string) => setWindows((ws) => ws.map((w) => (w.id === id ? { ...w, maximized: !w.maximized } : w)));
+  const minimizeWin = (id: string) => {
+    sfx('minimize');
+    hum(8);
+    setWindows((ws) => ws.map((w) => (w.id === id ? { ...w, minimized: true } : w)));
+  };
+  const toggleMax = (id: string) => {
+    sfx('toggle');
+    setWindows((ws) => ws.map((w) => (w.id === id ? { ...w, maximized: !w.maximized } : w)));
+  };
+  const openPalette = () => {
+    setPalette(true);
+    sfx('select');
+  };
 
   /** Dock/taskbar behavior: open → focus → minimize → restore */
   const dockActivate = (appId: string) => {
@@ -190,12 +243,12 @@ export default function PersonalOS() {
   if (!booted) {
     return (
       <div className="wp-dark fixed inset-0 z-[9000] flex flex-col items-center justify-center px-6 text-center text-white">
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500 to-cyan-400 text-[28px] font-black shadow-2xl">P</div>
+        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--acc1)] to-[var(--acc2)] text-[28px] font-black shadow-2xl">P</div>
         <p className="mt-5 text-[20px] font-bold tracking-tight">PawanOS</p>
         <p className="mt-1 text-[14px] text-white/60">projects · results · proof · contact</p>
         <div className="mt-5 h-1 w-52 overflow-hidden rounded-full bg-white/15">
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-violet-400 to-cyan-300"
+            className="h-full rounded-full bg-gradient-to-r from-[var(--acc1)] to-[var(--acc2)]"
             initial={{ width: '8%' }}
             animate={{ width: '100%' }}
             transition={{ duration: 1.1, ease: 'easeOut' }}
@@ -209,9 +262,29 @@ export default function PersonalOS() {
   }
 
   return (
-    <div className="fixed inset-0 flex h-[100dvh] flex-col overflow-hidden text-white">
-      {/* Per-theme wallpaper + grain */}
+    <MotionConfig reducedMotion="user">
+    <div
+      className={`fixed inset-0 flex h-[100dvh] flex-col overflow-hidden text-white ${calm ? 'motion-calm' : ''}`}
+      style={{ '--acc1': accent.a, '--acc2': accent.b } as React.CSSProperties}
+    >
+      {/* Per-theme wallpaper + drifting light + grain */}
       <div className={`pointer-events-none absolute inset-0 ${WALLPAPER[theme]}`} aria-hidden />
+      {!calm && (
+        <>
+          <motion.div
+            className="pointer-events-none absolute -left-24 top-1/4 h-96 w-96 rounded-full bg-white/10 blur-3xl"
+            aria-hidden
+            animate={{ y: [0, -36, 0], x: [0, 20, 0] }}
+            transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
+          />
+          <motion.div
+            className="pointer-events-none absolute -right-24 bottom-1/4 h-96 w-96 rounded-full bg-white/[0.07] blur-3xl"
+            aria-hidden
+            animate={{ y: [0, 30, 0], x: [0, -24, 0] }}
+            transition={{ duration: 32, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </>
+      )}
       <div className="grain pointer-events-none absolute inset-0" aria-hidden />
 
       {/* ── PHONE STATUS BAR (Android × iOS hybrid) ── */}
@@ -235,7 +308,7 @@ export default function PersonalOS() {
 
       {/* ── DESKTOP MENU BAR (Windows × macOS hybrid) ── */}
       <header className="relative z-[200] hidden h-12 shrink-0 items-center gap-1.5 border-b border-white/10 bg-black/45 px-3 text-[13px] backdrop-blur-2xl md:flex">
-        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-violet-500 to-cyan-400 text-[15px] font-black text-white shadow" aria-hidden>
+        <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-[var(--acc1)] to-[var(--acc2)] text-[15px] font-black text-white shadow" aria-hidden>
           P
         </span>
         <span className="text-[14px] font-bold tracking-tight">PawanOS</span>
@@ -250,10 +323,18 @@ export default function PersonalOS() {
             </button>
           ))}
           <button
-            onClick={() => setPalette(true)}
+            onClick={openPalette}
             className="flex min-h-[36px] items-center gap-1.5 rounded-md px-2.5 text-white/75 hover:bg-white/10 hover:text-white"
           >
             <Search size={14} /> Search
+          </button>
+          <button
+            onClick={() => openApp('settings')}
+            aria-label="Open Settings"
+            title="Settings"
+            className="flex min-h-[36px] min-w-[36px] items-center justify-center rounded-md px-2 text-white/75 hover:bg-white/10 hover:text-white"
+          >
+            <Settings size={15} />
           </button>
       </nav>
         <div className="ml-auto flex items-center gap-2">
@@ -308,7 +389,7 @@ export default function PersonalOS() {
           <div className="order-1 space-y-4 lg:order-2">
             <section aria-label="Owner identity" className="rounded-2xl border border-white/12 bg-black/45 p-5 shadow-xl backdrop-blur-2xl">
               <div className="flex items-center gap-3">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-cyan-400 text-[22px] font-black shadow-lg" aria-hidden>
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[var(--acc1)] to-[var(--acc2)] text-[22px] font-black shadow-lg" aria-hidden>
                   P
                 </span>
                 <div className="min-w-0">
@@ -320,7 +401,7 @@ export default function PersonalOS() {
                   </h1>
                 </div>
               </div>
-              <p aria-live="polite" className="mt-2.5 h-5 text-[13px] font-bold tracking-wide text-cyan-300">
+              <p aria-live="polite" className="mt-2.5 h-5 text-[13px] font-bold tracking-wide text-[var(--acc1)]">
                 {DESCRIPTORS[descIdx]}
               </p>
               <p className="mt-1.5 max-w-[60ch] text-[15px] leading-relaxed text-white/75">{ownerProfile.identity.intro}</p>
@@ -341,7 +422,7 @@ export default function PersonalOS() {
               <p className="mt-3 text-[12.5px] text-white/45">10K+ community · Mumbai, India · Open to Remote / Hybrid / Relocate · {ownerProfile.identity.timezone}</p>
               <p className="mt-1.5 text-[12.5px] text-white/45">
                 HR in a hurry?{' '}
-                <a href="/resume" className="font-semibold text-cyan-300 underline underline-offset-2 hover:text-cyan-200">
+                <a href="/resume" className="font-semibold text-[var(--acc1)] underline underline-offset-2 hover:brightness-125">
                   Read the plain one-page resume →
                 </a>
               </p>
@@ -394,7 +475,8 @@ export default function PersonalOS() {
 
       {/* ── DOCK ─────────────────────────────────── */}
       <nav aria-label="Dock" className="pointer-events-none fixed inset-x-0 bottom-3 z-[550] flex justify-center px-3">
-        <div className="pointer-events-auto flex max-w-full items-end gap-0.5 overflow-x-auto rounded-2xl border border-white/15 bg-black/55 px-2 py-1.5 shadow-2xl backdrop-blur-2xl">
+        <div className="pointer-events-auto relative flex max-w-full items-end gap-0.5 overflow-x-auto rounded-2xl border border-white/15 bg-black/55 px-2 py-1.5 shadow-2xl backdrop-blur-2xl">
+          <span className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" aria-hidden />
           {APPS.slice(0, 8).map((a) => {
             const Icon = a.icon;
             const open = openIds.has(a.id);
@@ -420,7 +502,7 @@ export default function PersonalOS() {
           })}
           <span className="mx-1 mb-2 h-10 w-px shrink-0 bg-white/12" aria-hidden />
           <button
-            onClick={() => setPalette(true)}
+            onClick={openPalette}
             aria-label="Open search"
             title="Search"
             className="group flex min-h-[56px] w-[60px] shrink-0 flex-col items-center justify-center gap-0.5 rounded-xl px-1 hover:bg-white/10"
@@ -440,9 +522,9 @@ export default function PersonalOS() {
           <div className="w-full max-w-md rounded-2xl border border-white/15 bg-[#14141d]/95 p-4 shadow-2xl backdrop-blur-2xl">
             <p className="text-[15px] font-bold">New here? It works like a computer.</p>
             <ol className="mt-2 space-y-1.5 text-[14px] text-white/75">
-              <li><strong className="text-white">1.</strong> Open <button onClick={() => { openApp('projects'); dismissTour(); }} className="font-semibold text-cyan-300 underline">Projects</button> to see the work.</li>
-              <li><strong className="text-white">2.</strong> Open <button onClick={() => { openApp('results'); dismissTour(); }} className="font-semibold text-cyan-300 underline">Results</button> for honest outcomes.</li>
-              <li><strong className="text-white">3.</strong> Open <button onClick={() => { openApp('contact'); dismissTour(); }} className="font-semibold text-cyan-300 underline">Contact</button> to book Pawan.</li>
+              <li><strong className="text-white">1.</strong> Open <button onClick={() => { openApp('projects'); dismissTour(); }} className="font-semibold text-[var(--acc1)] underline">Projects</button> to see the work.</li>
+              <li><strong className="text-white">2.</strong> Open <button onClick={() => { openApp('results'); dismissTour(); }} className="font-semibold text-[var(--acc1)] underline">Results</button> for honest outcomes.</li>
+              <li><strong className="text-white">3.</strong> Open <button onClick={() => { openApp('contact'); dismissTour(); }} className="font-semibold text-[var(--acc1)] underline">Contact</button> to book Pawan.</li>
             </ol>
             <button onClick={dismissTour} className="mt-3 min-h-[40px] w-full rounded-lg bg-white/10 text-[14px] font-semibold hover:bg-white/20">
               Got it — explore freely
@@ -452,19 +534,22 @@ export default function PersonalOS() {
       )}
 
       {/* ── WINDOWS ──────────────────────────────── */}
+      <AnimatePresence>
       {visible.map((w) => (
         <WindowFrame
           key={w.id}
           win={w}
           focused={w.z === zTop}
+          springs={!calm}
           onFocus={() => focusWin(w.id)}
           onClose={() => closeWin(w.id)}
           onMinimize={() => minimizeWin(w.id)}
           onToggleMax={() => toggleMax(w.id)}
         >
-          <AppBody id={w.id} onOpenCase={(id) => openApp('case', id)} onOpen={openApp} />
+          <AppBody id={w.id} onOpenCase={(id) => openApp('case', id)} onOpen={openApp} sys={sys} />
         </WindowFrame>
       ))}
+      </AnimatePresence>
 
       {/* ── COMMAND PALETTE ────────────────────── */}
       <AnimatePresence>
@@ -516,6 +601,7 @@ export default function PersonalOS() {
         )}
       </AnimatePresence>
     </div>
+    </MotionConfig>
   );
 }
 
@@ -533,10 +619,11 @@ function AppTile({ app, onOpen }: { app: AppDef; onOpen: () => void }) {
         </span>
       )}
       <span
-        className={`flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br shadow-lg ring-1 ring-white/25 transition duration-150 group-hover:scale-105 group-active:scale-95 sm:h-14 sm:w-14 ${app.tint}`}
+        className={`relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br shadow-lg ring-1 ring-white/25 transition duration-150 group-hover:scale-105 group-active:scale-95 sm:h-14 sm:w-14 ${app.tint}`}
       >
-        <Icon size={24} strokeWidth={2} className="text-white drop-shadow sm:hidden" />
-        <Icon size={26} strokeWidth={2} className="hidden text-white drop-shadow sm:block" />
+        <span className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-b from-white/30 via-transparent to-black/10" aria-hidden />
+        <Icon size={24} strokeWidth={2} className="relative text-white drop-shadow sm:hidden" />
+        <Icon size={26} strokeWidth={2} className="relative hidden text-white drop-shadow sm:block" />
       </span>
       <span className="text-[12px] font-bold leading-tight text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.9)] sm:text-[13px]">
         {app.name}
@@ -548,7 +635,7 @@ function AppTile({ app, onOpen }: { app: AppDef; onOpen: () => void }) {
   );
 }
 
-function AppBody({ id, onOpenCase, onOpen }: { id: string; onOpenCase: (id: string) => void; onOpen: (app: string, state?: string) => void }) {
+function AppBody({ id, onOpenCase, onOpen, sys }: { id: string; onOpenCase: (id: string) => void; onOpen: (app: string, state?: string) => void; sys: SysControls }) {
   const [app, state] = id.startsWith('case:') ? ['case', id.slice(5)] : [id, undefined];
   switch (app) {
     case 'projects': return <ProjectsApp onOpenCase={onOpenCase} />;
@@ -566,6 +653,7 @@ function AppBody({ id, onOpenCase, onOpen }: { id: string; onOpenCase: (id: stri
     case 'cases': return <CaseFilesApp onOpen={onOpen} />;
     case 'notes': return <NotesApp />;
     case 'emergency': return <EmergencyApp />;
+    case 'settings': return <SettingsApp sys={sys} />;
     default: return <p className="text-white/70">Unknown app.</p>;
   }
 }

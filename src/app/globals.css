@@ -85,6 +85,21 @@ body {
   outline-offset: 2px;
 }
 
+/* Calm mode: kill ambient motion, keep fades instant */
+.motion-calm *,
+.motion-calm *::before,
+.motion-calm *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift-off {
+    display: none;
+  }
+}
+
 /* Slim scrollbars for window bodies */
 ::-webkit-scrollbar {
   width: 10px;

@@ -16,6 +16,7 @@ export interface WinState {
 interface WindowFrameProps {
   win: WinState;
   focused: boolean;
+  springs: boolean;
   onFocus: () => void;
   onClose: () => void;
   onMinimize: () => void;
@@ -36,7 +37,7 @@ function useCoarsePhone(): boolean {
   return coarse;
 }
 
-export default function WindowFrame({ win, focused, onFocus, onClose, onMinimize, onToggleMax, children }: WindowFrameProps) {
+export default function WindowFrame({ win, focused, springs, onFocus, onClose, onMinimize, onToggleMax, children }: WindowFrameProps) {
   const ref = useRef<HTMLDivElement>(null);
   const phone = useCoarsePhone();
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -108,6 +109,8 @@ export default function WindowFrame({ win, focused, onFocus, onClose, onMinimize
       <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.96, y: 14 }}
+        transition={springs ? { type: 'spring', damping: 30, stiffness: 380 } : { duration: 0.12 }}
         role="dialog"
         aria-label={win.title}
         onPointerDown={phone ? swipeBeginFromBar : onFocus}
@@ -136,7 +139,8 @@ export default function WindowFrame({ win, focused, onFocus, onClose, onMinimize
       <motion.div
         initial={{ opacity: 0, y: 80 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+        exit={{ opacity: 0, y: 90 }}
+        transition={springs ? { type: 'spring', damping: 30, stiffness: 300 } : { duration: 0.12 }}
         role="dialog"
         aria-label={win.title}
         onPointerDown={onFocus}
@@ -169,9 +173,10 @@ export default function WindowFrame({ win, focused, onFocus, onClose, onMinimize
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, scale: 0.96, y: 12 }}
+      initial={{ opacity: 0, scale: 0.94, y: 16 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
-      transition={{ type: 'spring', damping: 28, stiffness: 320 }}
+      exit={{ opacity: 0, scale: 0.93, y: 18 }}
+      transition={springs ? { type: 'spring', damping: 26, stiffness: 330 } : { duration: 0.12 }}
       role="dialog"
       aria-label={win.title}
       onPointerDown={onFocus}

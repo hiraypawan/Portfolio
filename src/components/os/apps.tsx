@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { FileText, FolderClosed } from 'lucide-react';
+import { ACCENTS, OSSettings, playSound, resetOSView } from '@/lib/feedback';
 import { ownerProfile } from '@/data/ownerProfile';
 
 function Disclosure({ status }: { status: string }) {
@@ -15,7 +16,7 @@ function Ext({ href, children }: { href: string; children: React.ReactNode }) {
   if (!href || href === '#')
     return <span className="cursor-not-allowed text-[13px] text-white/30">Archived / on request</span>;
   return (
-    <a href={href} target="_blank" rel="noreferrer noopener" className="text-[14px] text-cyan-300 underline underline-offset-4 hover:text-cyan-200">
+    <a href={href} target="_blank" rel="noreferrer noopener" className="text-[14px] text-[var(--acc1)] underline underline-offset-4 hover:brightness-125">
       {children}
     </a>
   );
@@ -389,6 +390,140 @@ function Field({ label, value, onChange, type, placeholder }: { label: string; v
       <label className="mb-1 block text-[14px] text-white/70">{label}</label>
       <input required type={type ?? 'text'} value={value} placeholder={placeholder} onChange={(e) => onChange(e.target.value)}
         className="min-h-[44px] w-full rounded-lg border border-white/15 bg-black/40 px-3 text-[15px] text-white" />
+    </div>
+  );
+}
+
+export interface SysControls {
+  theme: 'day' | 'night' | 'dark';
+  setTheme: (t: 'day' | 'night' | 'dark') => void;
+  settings: OSSettings;
+  patch: (p: Partial<OSSettings>) => void;
+  resetAll: () => void;
+}
+
+function Switch({ on, onFlip, label }: { on: boolean; onFlip: () => void; label: string }) {
+  return (
+    <button
+      role="switch"
+      aria-checked={on}
+      aria-label={label}
+      onClick={onFlip}
+      className={`relative h-8 w-[52px] shrink-0 rounded-full transition ${on ? 'bg-emerald-500' : 'bg-white/15'}`}
+    >
+      <span
+        className={`absolute top-1 h-6 w-6 rounded-full bg-white shadow transition-all ${on ? 'left-[24px]' : 'left-1'}`}
+        aria-hidden
+      />
+    </button>
+  );
+}
+
+export function SettingsApp({ sys }: { sys: SysControls }) {
+  const [resetMsg, setResetMsg] = useState(false);
+  return (
+    <div className="space-y-5">
+      <p className="text-[13px] text-white/50">
+        Yours only — every choice below lives in this browser, on this device. Nothing is sent anywhere.
+      </p>
+
+      <section aria-label="Accent color">
+        <h3 className="mb-2 text-[15px] font-bold text-white">Accent</h3>
+        <div className="flex flex-wrap gap-3">
+          {ACCENTS.map((a) => (
+            <button
+              key={a.id}
+              onClick={() => sys.patch({ accentId: a.id })}
+              aria-pressed={sys.settings.accentId === a.id}
+              aria-label={`Accent ${a.name}`}
+              title={a.name}
+              className={`flex flex-col items-center gap-1 rounded-xl p-1.5 ${sys.settings.accentId === a.id ? 'bg-white/10 ring-2 ring-white/60' : 'hover:bg-white/5'}`}
+            >
+              <span
+                className="h-10 w-10 rounded-full shadow-lg ring-1 ring-white/30"
+                style={{ background: `linear-gradient(135deg, ${a.a}, ${a.b})` }}
+                aria-hidden
+              />
+              <span className="text-[11px] text-white/65">{a.name}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      <section aria-label="Wallpaper">
+        <h3 className="mb-2 text-[15px] font-bold text-white">Wallpaper</h3>
+        <div className="flex overflow-hidden rounded-xl border border-white/15" role="group" aria-label="Wallpaper">
+          {(['day', 'night', 'dark'] as const).map((t) => (
+            <button
+              key={t}
+              onClick={() => sys.setTheme(t)}
+              aria-pressed={sys.theme === t}
+              className={`min-h-[44px] flex-1 capitalize ${sys.theme === t ? 'bg-white/20 font-semibold text-white' : 'text-white/60 hover:text-white'}`}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
+        <p className="mt-1.5 text-[13px] text-white/45">First visit follows your local time of day until you pick one.</p>
+      </section>
+
+      <section aria-label="Sound and feel" className="space-y-2.5">
+        <h3 className="text-[15px] font-bold text-white">Sound & feel</h3>
+        <div className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 p-3.5">
+          <div>
+            <p className="text-[15px] font-semibold text-white">Interface sounds</p>
+            <p className="text-[13px] text-white/55">Soft swishes, generated on-device. Off by default.</p>
+          </div>
+          <Switch
+            on={sys.settings.sounds}
+            label="Interface sounds"
+            onFlip={() => {
+              const next = !sys.settings.sounds;
+              sys.patch({ sounds: next });
+              if (next) playSound('select');
+            }}
+          />
+        </div>
+        <div className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 p-3.5">
+          <div>
+            <p className="text-[15px] font-semibold text-white">Haptics</p>
+            <p className="text-[13px] text-white/55">Gentle vibration on touch devices.</p>
+          </div>
+          <Switch on={sys.settings.haptics} label="Haptics" onFlip={() => sys.patch({ haptics: !sys.settings.haptics })} />
+        </div>
+        <div className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 p-3.5">
+          <div>
+            <p className="text-[15px] font-semibold text-white">Motion</p>
+            <p className="text-[13px] text-white/55">Full springs, or calm fades.</p>
+          </div>
+          <div className="flex overflow-hidden rounded-lg border border-white/15" role="group" aria-label="Motion">
+            {(['full', 'calm'] as const).map((m) => (
+              <button
+                key={m}
+                onClick={() => sys.patch({ motion: m })}
+                aria-pressed={sys.settings.motion === m}
+                className={`min-h-[40px] px-4 capitalize ${sys.settings.motion === m ? 'bg-white/20 font-semibold text-white' : 'text-white/60 hover:text-white'}`}
+              >
+                {m}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section aria-label="Reset">
+        <button
+          onClick={() => {
+            resetOSView();
+            sys.resetAll();
+            setResetMsg(true);
+          }}
+          className="min-h-[44px] w-full rounded-xl border border-red-400/40 text-[15px] font-semibold text-red-200 hover:bg-red-500/10"
+        >
+          Reset my view of this OS
+        </button>
+        {resetMsg && <p className="mt-2 text-[14px] text-emerald-300">Cleared — theme, tour, stickies, and these settings are back to defaults.</p>}
+      </section>
     </div>
   );
 }
