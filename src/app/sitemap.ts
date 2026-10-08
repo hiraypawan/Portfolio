@@ -1,18 +1,19 @@
 import type { MetadataRoute } from 'next';
+import { ownerProfile, PROFILE_UPDATED, siteUrl } from '@/data/ownerProfile';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
-    {
-      url: 'https://pawanhiray.vercel.app',
-      lastModified: new Date('2026-10-08'),
-      changeFrequency: 'weekly',
-      priority: 1,
-    },
-    {
-      url: 'https://pawanhiray.vercel.app/resume',
-      lastModified: new Date('2026-10-08'),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
+    ...['', '/work', '/about', '/resume', '/contact', '/os'].map((path) => ({
+      url: `${siteUrl}${path}`,
+      lastModified: new Date(PROFILE_UPDATED),
+      changeFrequency: 'monthly' as const,
+      priority: path === '' ? 1 : path === '/os' ? 0.5 : 0.8,
+    })),
+    ...ownerProfile.projects.map((project) => ({
+      url: `${siteUrl}/work/${project.id}`,
+      lastModified: new Date(PROFILE_UPDATED),
+      changeFrequency: 'monthly' as const,
+      priority: project.featured ? 0.8 : 0.6,
+    })),
   ];
 }

@@ -2,21 +2,24 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Minus, Square, X } from 'lucide-react';
+import { Crosshair, Minus, Square, X } from 'lucide-react';
+import {
+  clampPosition,
+  initialPosition,
+  windowWidth,
+  type Viewport,
+  type WinState,
+} from '@/lib/os-state';
+import { useDialogFocus } from './hooks';
+export type { WinState } from '@/lib/os-state';
 
-export interface WinState {
-  id: string;
-  title: string;
-  stateText?: string;
-  maximized?: boolean;
-  minimized?: boolean;
-  z: number;
-}
-
-interface WindowFrameProps {
+interface Props {
   win: WinState;
   focused: boolean;
   springs: boolean;
+  viewport: Viewport;
+  layer: number;
+  blocked: boolean;
   onFocus: () => void;
   onClose: () => void;
   onMinimize: () => void;
@@ -24,223 +27,203 @@ interface WindowFrameProps {
   children: React.ReactNode;
 }
 
-/** Phones (<640px) render windows as bottom sheets with swipe-down to minimize. */
-function useCoarsePhone(): boolean {
-  const [coarse, setCoarse] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 639px)');
-    const upd = () => setCoarse(mq.matches);
-    upd();
-    mq.addEventListener('change', upd);
-    return () => mq.removeEventListener('change', upd);
-  }, []);
-  return coarse;
-}
-
-export default function WindowFrame({ win, focused, springs, onFocus, onClose, onMinimize, onToggleMax, children }: WindowFrameProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const phone = useCoarsePhone();
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [placed, setPlaced] = useState(false);
-  const drag = useRef<{ dx: number; dy: number; on: boolean }>({ dx: 0, dy: 0, on: false });
-  // Swipe-down-to-minimize (phone sheets + maximized windows)
-  const swipe = useRef<{ y: number; on: boolean }>({ y: 0, on: false });
-  const [dy, setDy] = useState(0);
-
-  useEffect(() => {
-    if (placed || win.maximized || phone) return;
-    const w = window.innerWidth;
-    const off = (win.z % 5) * 28;
-    setPos({ x: Math.max(12, w / 2 - 330 + off), y: 120 + off });
-    setPlaced(true);
-  }, [placed, win.maximized, win.z, phone]);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && focused) onClose();
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [focused, onClose]);
-
-  const onPointerDown = (e: React.PointerEvent) => {
-    if (win.maximized || phone) return;
-    onFocus();
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    drag.current = { dx: e.clientX - r.left, dy: e.clientY - r.top, on: true };
-    (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
-  };
-  const onPointerMove = (e: React.PointerEvent) => {
-    if (!drag.current.on || win.maximized || phone) return;
-    setPos({
-      x: Math.min(Math.max(0, e.clientX - drag.current.dx), window.innerWidth - 120),
-      y: Math.min(Math.max(64, e.clientY - drag.current.dy), window.innerHeight - 80),
-    });
-  };
-  const endDrag = () => {
-    drag.current.on = false;
-  };
-
-  // Phone swipe gesture: start only from the titlebar/grabber, drag down, release past 110px to minimize.
-  const swipeBegin = (e: React.PointerEvent) => {
-    if (!phone) return;
-    onFocus();
-    swipe.current = { y: e.clientY, on: true };
-  };
-  const swipeBeginFromBar = (e: React.PointerEvent) => {
-    if (!phone) return;
-    if (!(e.target as HTMLElement).closest('[data-titlebar]')) return;
-    swipeBegin(e);
-  };
-  const swipeMove = (e: React.PointerEvent) => {
-    if (!swipe.current.on) return;
-    setDy(Math.max(0, e.clientY - swipe.current.y));
-  };
-  const swipeEnd = () => {
-    if (swipe.current.on && dy > 110) onMinimize();
-    swipe.current.on = false;
-    setDy(0);
-  };
-
-  if (win.maximized) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.96, y: 14 }}
-        transition={springs ? { type: 'spring', damping: 30, stiffness: 380 } : { duration: 0.12 }}
-        role="dialog"
-        aria-label={win.title}
-        onPointerDown={phone ? swipeBeginFromBar : onFocus}
-        onPointerMove={phone ? swipeMove : undefined}
-        onPointerUp={phone ? swipeEnd : undefined}
-        onPointerCancel={phone ? swipeEnd : undefined}
-        className="fixed inset-x-1 top-[60px] bottom-2 z-[1000] sm:inset-x-2"
-        style={{ zIndex: 1000 + win.z }}
-      >
-        <div
-          className={`flex h-full flex-col overflow-hidden rounded-xl border bg-[#14141d]/95 shadow-2xl backdrop-blur-2xl ${
-            focused ? 'border-white/25' : 'border-white/10'
-          }`}
-          style={dy > 0 ? { transform: `translateY(${dy}px)` } : undefined}
-        >
-          <TitleBar win={win} onClose={onClose} onMinimize={onMinimize} onToggleMax={onToggleMax} onDragStart={onPointerDown} />
-          <div className="min-h-0 flex-1 overflow-y-auto p-5 text-[16px] leading-relaxed sm:p-6">{children}</div>
-        </div>
-      </motion.div>
-    );
-  }
-
-  // Phone bottom sheet
-  if (phone) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, y: 80 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 90 }}
-        transition={springs ? { type: 'spring', damping: 30, stiffness: 300 } : { duration: 0.12 }}
-        role="dialog"
-        aria-label={win.title}
-        onPointerDown={onFocus}
-        className="fixed inset-x-2 bottom-2 z-[1000]"
-        style={{ zIndex: 1000 + win.z }}
-      >
-        <div
-          className="flex max-h-[88dvh] flex-col overflow-hidden rounded-t-3xl rounded-b-2xl border border-white/20 bg-[#14141d]/97 shadow-2xl backdrop-blur-2xl"
-          style={dy > 0 ? { transform: `translateY(${dy}px)` } : undefined}
-        >
-          {/* iOS-style grabber — drag down to minimize */}
-          <div
-            className="flex touch-none justify-center pb-1 pt-2.5"
-            onPointerDown={swipeBegin}
-            onPointerMove={swipeMove}
-            onPointerUp={swipeEnd}
-            onPointerCancel={swipeEnd}
-          >
-            <span className="h-1.5 w-12 rounded-full bg-white/30" aria-hidden />
-            <span className="sr-only">Drag down to minimize {win.title}</span>
-          </div>
-          <TitleBar win={win} onClose={onClose} onMinimize={onMinimize} onToggleMax={onToggleMax} onDragStart={() => {}} />
-          <div className="min-h-0 flex-1 overflow-y-auto p-5 text-[17px] leading-relaxed">{children}</div>
-        </div>
-      </motion.div>
-    );
-  }
-
-  // Desktop floating window
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, scale: 0.94, y: 16 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.93, y: 18 }}
-      transition={springs ? { type: 'spring', damping: 26, stiffness: 330 } : { duration: 0.12 }}
-      role="dialog"
-      aria-label={win.title}
-      onPointerDown={onFocus}
-      className="fixed z-[1000] w-[min(680px,calc(100vw-16px))]"
-      style={{ left: pos.x, top: pos.y, zIndex: 1000 + win.z }}
-    >
-      <div
-        className={`flex max-h-[calc(100dvh-140px)] flex-col overflow-hidden rounded-xl border bg-[#14141d]/95 shadow-2xl backdrop-blur-2xl ${
-          focused ? 'border-white/25' : 'border-white/10'
-        }`}
-      >
-        <TitleBar win={win} onClose={onClose} onMinimize={onMinimize} onToggleMax={onToggleMax} onDragStart={onPointerDown} onDragMove={onPointerMove} onDragEnd={endDrag} />
-        <div className="min-h-0 flex-1 overflow-y-auto p-5 text-[16px] leading-relaxed sm:p-6">{children}</div>
-      </div>
-    </motion.div>
-  );
-}
-
-function TitleBar({
+export default function WindowFrame({
   win,
+  focused,
+  springs,
+  viewport,
+  layer,
+  blocked,
+  onFocus,
   onClose,
   onMinimize,
   onToggleMax,
-  onDragStart,
-  onDragMove,
-  onDragEnd,
-}: {
-  win: WinState;
-  onClose: () => void;
-  onMinimize: () => void;
-  onToggleMax: () => void;
-  onDragStart: (e: React.PointerEvent) => void;
-  onDragMove?: (e: React.PointerEvent) => void;
-  onDragEnd?: () => void;
-}) {
-  const btn =
-    'flex h-8 w-8 items-center justify-center rounded-full transition hover:brightness-110 active:scale-95';
+  children,
+}: Props) {
+  const phone = viewport.width < 768;
+  const shown = !win.minimized && (!phone || focused);
+  const ref = useRef<HTMLElement>(null);
+  const [position, setPosition] = useState(() => initialPosition(viewport, win.z));
+  const [swipeY, setSwipeY] = useState(0);
+  const pointer = useRef<{
+    id: number;
+    x: number;
+    y: number;
+    originX: number;
+    originY: number;
+  } | null>(null);
+  useDialogFocus(ref, focused && shown && !blocked, phone);
+  useEffect(() => {
+    setPosition((current) => clampPosition(current, viewport));
+  }, [viewport]);
+  const startPointer = (event: React.PointerEvent<HTMLDivElement>) => {
+    if ((event.target as HTMLElement).closest('button')) return;
+    if (!phone && win.maximized) return;
+    onFocus();
+    pointer.current = {
+      id: event.pointerId,
+      x: event.clientX,
+      y: event.clientY,
+      originX: position.x,
+      originY: position.y,
+    };
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+  const movePointer = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (!pointer.current || pointer.current.id !== event.pointerId) return;
+    if (phone) setSwipeY(Math.max(0, event.clientY - pointer.current.y));
+    else
+      setPosition(
+        clampPosition(
+          {
+            x: pointer.current.originX + event.clientX - pointer.current.x,
+            y: pointer.current.originY + event.clientY - pointer.current.y,
+          },
+          viewport,
+        ),
+      );
+  };
+  const endPointer = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (
+      phone &&
+      event.type !== 'pointercancel' &&
+      pointer.current &&
+      event.clientY - pointer.current.y > 110
+    )
+      onMinimize();
+    pointer.current = null;
+    setSwipeY(0);
+    if (event.currentTarget.hasPointerCapture(event.pointerId))
+      event.currentTarget.releasePointerCapture(event.pointerId);
+  };
+  const bottom = 96;
+  const style: React.CSSProperties = phone
+    ? {
+        left: 8,
+        right: 8,
+        bottom: 'max(8px, env(safe-area-inset-bottom))',
+        maxHeight: win.maximized ? 'calc(100dvh - 72px)' : '88dvh',
+        height: win.maximized ? 'calc(100dvh - 72px)' : undefined,
+        zIndex: layer,
+      }
+    : win.maximized
+      ? {
+          left: 12,
+          right: 12,
+          top: 68,
+          height: Math.max(130, viewport.height - 68 - bottom),
+          zIndex: layer,
+        }
+      : {
+          left: position.x,
+          top: position.y,
+          width: windowWidth(viewport),
+          maxHeight: Math.max(130, viewport.height - position.y - bottom),
+          zIndex: layer,
+        };
   return (
-    <div
-      data-titlebar
-      onPointerDown={onDragStart}
-      onPointerMove={onDragMove}
-      onPointerUp={onDragEnd}
-      className="flex min-h-[52px] cursor-grab touch-none select-none items-center gap-2 border-b border-white/10 bg-white/[0.06] px-3 active:cursor-grabbing"
-    >
-      {/* Hybrid controls: macOS colors + explicit Windows-style symbols, always visible */}
-      <span className="flex items-center gap-2" onPointerDown={(e) => e.stopPropagation()}>
-        <button onClick={onClose} title="Close" aria-label={`Close ${win.title}`} className={`${btn} bg-[#FF5F57]`}>
-          <X size={15} strokeWidth={2.75} className="text-black/60" />
-        </button>
-        <button onClick={onMinimize} title="Minimize" aria-label={`Minimize ${win.title}`} className={`${btn} bg-[#FEBC2E]`}>
-          <Minus size={15} strokeWidth={2.75} className="text-black/60" />
-        </button>
+    <>
+      {phone && shown && (
         <button
-          onClick={onToggleMax}
-          title={win.maximized ? 'Restore' : 'Maximize'}
-          aria-label={`${win.maximized ? 'Restore' : 'Maximize'} ${win.title}`}
-          className={`${btn} bg-[#28C840]`}
+          type="button"
+          aria-label={`Minimize ${win.title} by dismissing the sheet`}
+          tabIndex={-1}
+          aria-hidden="true"
+          className="os-dialog-backdrop fixed inset-0"
+          style={{ zIndex: layer - 1 }}
+          onClick={onMinimize}
+        />
+      )}
+      <motion.section
+        ref={ref}
+        hidden={!shown}
+        inert={blocked || (phone && !focused)}
+        role="dialog"
+        aria-label={win.title}
+        aria-modal={phone && shown ? true : undefined}
+        tabIndex={-1}
+        onPointerDown={onFocus}
+        onFocusCapture={onFocus}
+        onKeyDown={(event) => {
+          if (event.key === 'Escape' && focused && !blocked) {
+            event.stopPropagation();
+            event.preventDefault();
+            onClose();
+          }
+        }}
+        initial={springs ? { opacity: 0, scale: 0.98 } : false}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={springs ? { duration: 0.15 } : { duration: 0 }}
+        className={`os-window fixed flex flex-col overflow-hidden rounded-2xl ${focused ? 'os-window-focused' : ''}`}
+        style={style}
+      >
+        <div
+          style={swipeY ? { transform: `translateY(${swipeY}px)` } : undefined}
+          className="flex min-h-0 flex-col"
         >
-          <Square size={12} strokeWidth={2.75} className="text-black/60" />
-        </button>
-      </span>
-      <span className="ml-1 truncate text-[14px] font-semibold text-white">{win.title}</span>
-      {win.stateText && <span className="ml-auto hidden shrink-0 text-[12px] text-white/50 sm:block">{win.stateText}</span>}
-    </div>
+          <div
+            onPointerDown={startPointer}
+            onPointerMove={movePointer}
+            onPointerUp={endPointer}
+            onPointerCancel={endPointer}
+            onLostPointerCapture={() => {
+              pointer.current = null;
+              setSwipeY(0);
+            }}
+            className={`os-window-title flex shrink-0 touch-none select-none flex-col ${phone ? '' : 'cursor-grab'}`}
+          >
+            {phone && (
+              <span className="mx-auto mt-2 h-1 w-10 rounded-full bg-white/40" aria-hidden="true" />
+            )}
+            <div className="flex min-h-[60px] items-center gap-1.5 px-2.5">
+              <div
+                className="flex shrink-0 gap-1"
+                onPointerDown={(event) => event.stopPropagation()}
+              >
+                <button
+                  className="flex h-11 w-11 items-center justify-center rounded-xl hover:bg-white/10"
+                  aria-label={`Close ${win.title}`}
+                  title="Close"
+                  onClick={onClose}
+                >
+                  <X size={17} className="text-[#fda4af]" aria-hidden="true" />
+                </button>
+                <button
+                  className="flex h-11 w-11 items-center justify-center rounded-xl hover:bg-white/10"
+                  aria-label={`Minimize ${win.title}`}
+                  title="Minimize"
+                  onClick={onMinimize}
+                >
+                  <Minus size={17} className="text-[#fcd34d]" aria-hidden="true" />
+                </button>
+                <button
+                  className="flex h-11 w-11 items-center justify-center rounded-xl hover:bg-white/10"
+                  aria-label={`${win.maximized ? 'Restore' : 'Maximize'} ${win.title}`}
+                  title={win.maximized ? 'Restore' : 'Maximize'}
+                  onClick={onToggleMax}
+                >
+                  <Square size={14} className="text-[#86efac]" aria-hidden="true" />
+                </button>
+              </div>
+              <h2 className="min-w-0 truncate text-sm font-semibold">{win.title}</h2>
+              {!phone && !win.maximized && (
+                <button
+                  className="ml-auto flex h-11 w-11 shrink-0 items-center justify-center rounded-xl hover:bg-white/10"
+                  aria-label={`Center ${win.title} window`}
+                  title="Center window"
+                  onPointerDown={(event) => event.stopPropagation()}
+                  onClick={() => setPosition(initialPosition(viewport, 0))}
+                >
+                  <Crosshair size={15} aria-hidden="true" />
+                </button>
+              )}
+            </div>
+          </div>
+          <div className="min-h-0 overflow-y-auto overscroll-contain p-5 text-[15px] leading-relaxed md:p-6">
+            {children}
+          </div>
+        </div>
+      </motion.section>
+    </>
   );
 }
