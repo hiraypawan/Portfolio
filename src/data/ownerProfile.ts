@@ -40,7 +40,7 @@ export interface Project {
   };
 }
 
-export const PROFILE_UPDATED = '2026-10-08';
+export const PROFILE_UPDATED = '2026-10-09';
 
 export const ownerProfile = {
   identity: {

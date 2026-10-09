@@ -82,14 +82,14 @@ export function clampPosition(position: { x: number; y: number }, viewport: View
       12,
       Math.min(position.x, Math.max(12, viewport.width - windowWidth(viewport) - 12)),
     ),
-    y: Math.max(68, Math.min(position.y, Math.max(68, viewport.height - 240))),
+    y: Math.max(52, Math.min(position.y, Math.max(52, viewport.height - 240))),
   };
 }
 export function initialPosition(viewport: Viewport, order: number) {
   return clampPosition(
     {
       x: (viewport.width - windowWidth(viewport)) / 2 + (order % 4) * 18,
-      y: 82 + (order % 4) * 18,
+      y: 64 + (order % 4) * 18,
     },
     viewport,
   );

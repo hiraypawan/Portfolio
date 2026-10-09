@@ -1,14 +1,15 @@
-# BUILD CONTRACT — PawanOS v1.1
+# BUILD CONTRACT — PawanOS v2.0
 
-Owner: Pawan Hiray. Canonical domain: pawanhiray.vercel.app. Reviewed 2026-10-08.
+Owner: Pawan Hiray. Canonical domain: pawanhiray.vercel.app. Reviewed 2026-10-09.
 
 ## Approved direction
 
-The user approved the portfolio audit and implementation, with particular emphasis on crawlable server-rendered content and **Work · About · Resume · Contact** navigation.
+The portfolio is an operating-system experience first, with crawlable content and direct **Work · About · Resume · Contact** routes.
 
-- `/` is the immediate, server-rendered reading view; `/os` retains the optional PawanOS desktop.
-- Work, About, resume, contact, and nine project cases are directly accessible without JavaScript.
-- The OS cannot cover or gate the default portfolio behind a boot animation.
+- `/` is PawanOS. `/os` remains a compatible shareable route to the same experience.
+- On desktop, the shell combines a macOS-style menu/window language with a Windows-style workspace and taskbar. On phones, it becomes a touch-native iOS/Android-inspired home screen and bottom-sheet app model.
+- Work, About, resume, contact, and nine project cases remain directly accessible without JavaScript.
+- A complete no-JavaScript fallback is rendered in the initial HTML, so the OS does not gate project access, crawling, or accessibility.
 - Primary conversion: inspect work → contact about a role or project. A call CTA means an email request, not a calendar booking.
 
 ## Content and proof
@@ -25,7 +26,7 @@ Keep Work/Projects, Results, Systems, Proof, About/Journey, Achievements, Social
 - Protected screenshot and legacy MP3 remain byte-identical.
 - Day/Night/Dark wallpapers; auto follows visitor local hour. Preferences are consolidated into one validated storage system.
 - Minimize keeps app state. Every open window is recoverable from the dock.
-- Desktop and phone sheets share the 768px breakpoint; usable on short screens, with ≥44px controls and visible keyboard focus.
+- Desktop windows and phone sheets share the 768px breakpoint; the home screen, app library, menu/status bar, dock, and every window remain usable on short screens, with ≥44px controls and visible keyboard focus.
 - Device reduced-motion preference wins. No ambient animations or repeating live-region announcements.
 - Sounds and haptics are optional and off by default.
 

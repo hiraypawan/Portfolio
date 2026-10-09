@@ -4,7 +4,7 @@ import { ownerProfile } from '../../src/data/ownerProfile';
 
 const origin = 'https://pawanhiray.vercel.app';
 
-test('raw server HTML contains the actual hero, projects, navigation, and preview metadata', async ({
+test('raw server HTML contains the OS portfolio, projects, navigation, and preview metadata', async ({
   request,
 }) => {
   const response = await request.get('/');
@@ -12,8 +12,8 @@ test('raw server HTML contains the actual hero, projects, navigation, and previe
   const html = await response.text();
   const main = html.match(/<main[\s\S]*?<\/main>/)?.[0] ?? '';
   for (const text of [
-    'AI Product',
-    'Developer.',
+    'AI Product Developer',
+    'PawanOS / Portfolio',
     'Pawan Hiray',
     'OneBrain',
     'MUStudentsUnited',
@@ -37,9 +37,9 @@ test('home, work, case study, resume, and contact work with JavaScript disabled'
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toContainText('AI Product');
-  await expect(page.getByRole('link', { name: 'Read my resume' })).toBeVisible();
-  await page.getByRole('link', { name: 'View my work', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('AI Product Developer');
+  await expect(page.getByRole('link', { name: 'Resume', exact: true })).toBeVisible();
+  await page.getByRole('link', { name: 'Work', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'OneBrain', exact: true })).toBeVisible();
   await page.getByRole('link', { name: 'OneBrain', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Architecture & workflow' })).toBeVisible();
@@ -57,6 +57,22 @@ test('home, work, case study, resume, and contact work with JavaScript disabled'
   ).toBeVisible();
   await expect(page.locator('.personal-os')).toBeHidden();
   await context.close();
+});
+
+test('the main page is PawanOS with desktop and mobile-native chrome', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('.personal-os')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'I’m Pawan.' })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Dock' })).toBeVisible();
+  await expect(page.locator('.os-system-brand')).toBeVisible();
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator('.os-dynamic-island')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Search apps and projects' })).toBeVisible();
+  await expect(page.locator('.os-home-indicator')).toBeVisible();
+  expect(
+    await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1),
+  ).toBe(true);
 });
 
 test('route metadata, sitemap, AI text, social image and PDF are served', async ({ request }) => {
