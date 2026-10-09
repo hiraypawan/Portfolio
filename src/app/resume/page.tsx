@@ -34,21 +34,27 @@ export default function ResumePage() {
           <style>{'.requires-js { display: none !important; }'}</style>
         </noscript>
         <article className="resume-page" aria-label="Pawan Hiray resume">
-          <header>
-            <h1>{ownerProfile.identity.fullName}</h1>
-            <p className="resume-headline">{ownerProfile.resume.headline}</p>
-            <address>
-              Mumbai, India ·{' '}
+          <header className="resume-header">
+            <div className="resume-name-row">
+              <div>
+                <h1>{ownerProfile.identity.fullName}</h1>
+                <p className="resume-headline">{ownerProfile.resume.headline}</p>
+              </div>
+              <span className="resume-monogram" aria-hidden="true">
+                PH
+              </span>
+            </div>
+            <address className="resume-contact-lines">
+              <span>Mumbai, India</span>
               <a href={`tel:${ownerProfile.conversion.phone.replace(/[^+\d]/g, '')}`}>
                 {ownerProfile.conversion.phone}
-              </a>{' '}
-              ·{' '}
+              </a>
               <a href={`mailto:${ownerProfile.conversion.email}`}>
                 {ownerProfile.conversion.email}
               </a>
-              <br />
-              <a href="https://github.com/hiraypawan">github.com/hiraypawan</a> ·{' '}
-              <a href={linkedin.url}>LinkedIn</a> · <a href={siteUrl}>pawanhiray.vercel.app</a>
+              <a href="https://github.com/hiraypawan">github.com/hiraypawan</a>
+              <a href={linkedin.url}>LinkedIn</a>
+              <a href={siteUrl}>pawanhiray.vercel.app</a>
             </address>
             <p className="resume-availability">{ownerProfile.identity.availability}</p>
           </header>
@@ -79,23 +85,29 @@ export default function ResumePage() {
             </ul>
           </section>
           <section>
-            <h2>Selected projects — AI-assisted implementation</h2>
+            <h2>Selected projects</h2>
             {resumeProjects.map((project) => (
               <div className="resume-project" key={project.id}>
-                <div className="resume-row">
-                  <h3>
-                    {project.name} — {project.category}
-                  </h3>
+                <div className="resume-row resume-project-heading">
+                  <div>
+                    <h3>{project.name}</h3>
+                    <p>
+                      {project.role} · {project.category}
+                    </p>
+                  </div>
                   <span>{project.dates}</span>
                 </div>
                 <p>{project.intervention}</p>
+                <p className="resume-outcome">
+                  <strong>Outcome:</strong> {project.outcome}
+                </p>
                 <p className="resume-stack">{project.stack.join(' · ')}</p>
                 <p className="resume-links">
                   <Link href={`/work/${project.id}`}>Case study</Link>
                   {hasPublicUrl(project.url) && (
                     <>
                       {' '}
-                      · <a href={project.url}>{project.url.replace('https://', '')}</a>
+                      · <a href={project.url}>Live project</a>
                     </>
                   )}
                   {hasPublicUrl(project.repository) && (
@@ -117,8 +129,8 @@ export default function ResumePage() {
             ))}
           </section>
           <footer>
-            Project implementations and community metrics are owner-reported. Followers are not
-            platform users. Public project evidence: {siteUrl}/work.
+            Portfolio, public project links, and implementation notes: {siteUrl}/work. Community
+            audience and product usage are reported separately.
           </footer>
         </article>
       </main>

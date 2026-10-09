@@ -96,22 +96,22 @@ export default function WindowFrame({
     if (event.currentTarget.hasPointerCapture(event.pointerId))
       event.currentTarget.releasePointerCapture(event.pointerId);
   };
-  const bottom = 96;
+  const bottom = 92;
   const style: React.CSSProperties = phone
     ? {
-        left: 8,
-        right: 8,
-        bottom: 'max(8px, env(safe-area-inset-bottom))',
-        maxHeight: win.maximized ? 'calc(100dvh - 72px)' : '88dvh',
-        height: win.maximized ? 'calc(100dvh - 72px)' : undefined,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        maxHeight: win.maximized ? 'calc(100dvh - 43px)' : '91dvh',
+        height: win.maximized ? 'calc(100dvh - 43px)' : undefined,
         zIndex: layer,
       }
     : win.maximized
       ? {
-          left: 12,
-          right: 12,
-          top: 68,
-          height: Math.max(130, viewport.height - 68 - bottom),
+          left: 10,
+          right: 10,
+          top: 52,
+          height: Math.max(130, viewport.height - 52 - bottom),
           zIndex: layer,
         }
       : {
@@ -159,7 +159,7 @@ export default function WindowFrame({
       >
         <div
           style={swipeY ? { transform: `translateY(${swipeY}px)` } : undefined}
-          className="flex min-h-0 flex-col"
+          className="flex min-h-0 flex-1 flex-col"
         >
           <div
             onPointerDown={startPointer}
@@ -172,40 +172,40 @@ export default function WindowFrame({
             }}
             className={`os-window-title flex shrink-0 touch-none select-none flex-col ${phone ? '' : 'cursor-grab'}`}
           >
-            {phone && (
-              <span className="mx-auto mt-2 h-1 w-10 rounded-full bg-white/40" aria-hidden="true" />
-            )}
-            <div className="flex min-h-[60px] items-center gap-1.5 px-2.5">
+            {phone && <span className="os-sheet-handle" aria-hidden="true" />}
+            <div className="os-window-title-row flex min-h-[56px] items-center gap-1.5 px-2.5">
               <div
-                className="flex shrink-0 gap-1"
+                className="os-window-controls flex shrink-0 gap-1"
                 onPointerDown={(event) => event.stopPropagation()}
               >
                 <button
-                  className="flex h-11 w-11 items-center justify-center rounded-xl hover:bg-white/10"
+                  className="os-window-control os-control-close flex h-11 w-11 items-center justify-center rounded-xl hover:bg-white/10"
                   aria-label={`Close ${win.title}`}
                   title="Close"
                   onClick={onClose}
                 >
-                  <X size={17} className="text-[#fda4af]" aria-hidden="true" />
+                  <X size={17} aria-hidden="true" />
                 </button>
                 <button
-                  className="flex h-11 w-11 items-center justify-center rounded-xl hover:bg-white/10"
+                  className="os-window-control os-control-minimize flex h-11 w-11 items-center justify-center rounded-xl hover:bg-white/10"
                   aria-label={`Minimize ${win.title}`}
                   title="Minimize"
                   onClick={onMinimize}
                 >
-                  <Minus size={17} className="text-[#fcd34d]" aria-hidden="true" />
+                  <Minus size={17} aria-hidden="true" />
                 </button>
                 <button
-                  className="flex h-11 w-11 items-center justify-center rounded-xl hover:bg-white/10"
+                  className="os-window-control os-control-maximize flex h-11 w-11 items-center justify-center rounded-xl hover:bg-white/10"
                   aria-label={`${win.maximized ? 'Restore' : 'Maximize'} ${win.title}`}
                   title={win.maximized ? 'Restore' : 'Maximize'}
                   onClick={onToggleMax}
                 >
-                  <Square size={14} className="text-[#86efac]" aria-hidden="true" />
+                  <Square size={14} aria-hidden="true" />
                 </button>
               </div>
-              <h2 className="min-w-0 truncate text-sm font-semibold">{win.title}</h2>
+              <h2 className="os-window-heading min-w-0 truncate text-sm font-semibold">
+                {win.title}
+              </h2>
               {!phone && !win.maximized && (
                 <button
                   className="ml-auto flex h-11 w-11 shrink-0 items-center justify-center rounded-xl hover:bg-white/10"
@@ -219,7 +219,7 @@ export default function WindowFrame({
               )}
             </div>
           </div>
-          <div className="min-h-0 overflow-y-auto overscroll-contain p-5 text-[15px] leading-relaxed md:p-6">
+          <div className="os-window-content min-h-0 flex-1 overflow-y-auto overscroll-contain p-5 text-[15px] leading-relaxed md:p-6">
             {children}
           </div>
         </div>

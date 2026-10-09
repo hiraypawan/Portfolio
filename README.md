@@ -2,12 +2,12 @@
 
 **AI Product Developer: Next.js, TypeScript, and AI integrations.**
 
-A server-rendered portfolio with an optional interactive desktop. The homepage, project cases, About, resume, and direct contact links work without JavaScript. The OS adds exploration; it never gates access to the work.
+An operating-system portfolio with a desktop workspace and a touch-native mobile home screen. PawanOS is the homepage; project cases, About, resume, and direct contact routes remain server-rendered and usable without JavaScript.
 
-- **Portfolio:** https://pawanhiray.vercel.app
+- **PawanOS:** https://pawanhiray.vercel.app
 - **Work:** https://pawanhiray.vercel.app/work
 - **Resume:** https://pawanhiray.vercel.app/resume
-- **Desktop:** https://pawanhiray.vercel.app/os
+- **Compatibility route:** https://pawanhiray.vercel.app/os
 - **AI-readable:** https://pawanhiray.vercel.app/llms.txt
 
 ## Selected work
@@ -55,16 +55,18 @@ GitHub Actions runs the production build, checks, PDF validation, production dep
 Identity, role, education, leadership, and the three selected projects live in `src/data/ownerProfile.ts`. Both `/resume` and the PDF generator consume that data.
 
 ```bash
-python3 -m pip install -r scripts/requirements-pdf.txt
-npm run resume:pdf
-npm run check:pdf
+python3 -m venv .venv
+.venv/bin/pip install -r scripts/requirements-pdf.txt
+PATH="$PWD/.venv/bin:$PATH" npm run resume:pdf
+PATH="$PWD/.venv/bin:$PATH" npm run check:pdf
 ```
 
 The generator refuses to replace the PDF if it spans more than one A4 page. Validation checks searchable text, project names, canonical links, and PDF author metadata. Degree completion remains **Expected 2026**, as in the supplied resume; it is not changed to a confirmed graduation without owner confirmation.
 
-## Desktop behavior and privacy
+## PawanOS behavior and privacy
 
-- All 15 required OS apps remain available; primary work is separate from utilities.
+- All 15 OS apps remain available; primary work is separate from the App Library utilities.
+- Desktop uses menu-bar, window, workspace, and dock conventions; mobile switches to status chrome, a four-column launcher, bottom dock, and full-width sheets.
 - Minimized windows stay mounted, preserving unsent Contact drafts and app state.
 - Phone sheets use the same 768px breakpoint as the desktop shell, with focus confinement and swipe-down minimization.
 - Search has unique result identities, arrow-key selection, focus restoration, and Escape isolation.
@@ -83,9 +85,9 @@ See [QUALITY_REPORT.md](QUALITY_REPORT.md) for validation and [CONTENT_LEDGER.md
 ## Structure
 
 ```text
-src/app/                  Server pages, metadata routes, optional /os
+src/app/                  PawanOS home, reading routes, metadata, and compatibility /os route
 src/components/portfolio/ Shared semantic content, project evidence, contact & print islands
-src/components/os/        Desktop shell, windows, focus hooks, lazy-loaded apps
+src/components/os/        Responsive OS shell, fallback, windows, focus hooks, and lazy-loaded apps
 src/data/ownerProfile.ts  Approved public content and shared resume data
 src/lib/                  Pure window state, contact encoding, storage validation, SEO
 scripts/                  Deterministic one-page PDF export and validation

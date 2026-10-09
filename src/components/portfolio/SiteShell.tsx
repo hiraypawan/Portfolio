@@ -12,6 +12,11 @@ const navigation = [
 export function SiteHeader({ active }: { active?: string }) {
   return (
     <header className="site-header">
+      <span className="site-chrome-dots" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+      </span>
       <Link href="/" className="brand">
         <span className="brand-symbol" aria-hidden="true">
           P

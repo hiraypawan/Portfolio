@@ -3,7 +3,16 @@
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 import { MotionConfig } from 'framer-motion';
-import { ArrowUpRight, FileText, HelpCircle, Search } from 'lucide-react';
+import {
+  ArrowUpRight,
+  BatteryFull,
+  FileText,
+  HelpCircle,
+  Search,
+  Signal,
+  Sparkles,
+  Wifi,
+} from 'lucide-react';
 import { ownerProfile } from '@/data/ownerProfile';
 import {
   ACCENTS,
@@ -27,6 +36,21 @@ import HelpDialog from './HelpDialog';
 import { useReducedPreference, useViewport } from './hooks';
 import WindowFrame from './Window';
 
+const HOME_APP_IDS = new Set([
+  ...APPS.filter((app) => app.primary).map((app) => app.id),
+  'systems',
+  'achievements',
+]);
+const HOME_APPS = APPS.filter((app) => HOME_APP_IDS.has(app.id));
+const LIBRARY_APPS = APPS.filter((app) => !HOME_APP_IDS.has(app.id));
+const FAVORITES = ['projects', 'journey', 'contact', 'settings'];
+
+function greeting(hour: number) {
+  if (hour < 12) return 'Good morning';
+  if (hour < 18) return 'Good afternoon';
+  return 'Good evening';
+}
+
 export default function PersonalOS() {
   const [desktop, dispatch] = useReducer(desktopReducer, INITIAL_DESKTOP);
   const [settings, setSettings] = useState<OSSettings>({ ...DEFAULT_SETTINGS });
@@ -42,6 +66,7 @@ export default function PersonalOS() {
   const blocked = palette || help;
   const accent = ACCENTS.find((item) => item.id === settings.accentId) ?? ACCENTS[0];
   const wallpaper = resolvedWallpaper(settings.wallpaper, hour);
+
   useEffect(() => {
     setSettings(loadSettings());
     setReady(true);
@@ -77,6 +102,7 @@ export default function PersonalOS() {
       window.removeEventListener('keydown', keyboard);
     };
   }, []);
+
   const feedback = (sound: SoundName) => {
     if (settings.sounds) playSound(sound);
     if (settings.haptics) buzz();
@@ -114,10 +140,10 @@ export default function PersonalOS() {
     if (item.type === 'link') window.location.href = item.id;
     else open(item.type === 'case' ? `case:${item.id}` : item.id);
   };
-  const favorites = ['projects', 'journey', 'contact', 'settings'];
-  const extraWindows = desktop.windows.filter((win) => !favorites.includes(win.id));
+  const extraWindows = desktop.windows.filter((win) => !FAVORITES.includes(win.id));
   const layers = [...desktop.windows].sort((a, b) => a.z - b.z).map((win) => win.id);
   const chromeBlocked = blocked || (phone && desktop.activeId !== null);
+
   return (
     <MotionConfig reducedMotion="user">
       <div
@@ -130,146 +156,176 @@ export default function PersonalOS() {
           className={`pointer-events-none absolute inset-0 wp-${wallpaper}`}
           aria-hidden="true"
         />
+        <div
+          className="os-wallpaper-glow pointer-events-none absolute inset-0"
+          aria-hidden="true"
+        />
+
         <div className="relative flex min-h-0 flex-1 flex-col" inert={chromeBlocked}>
-          <header className="relative z-10 flex min-h-16 shrink-0 flex-wrap items-center justify-between gap-3 border-b border-white/20 bg-[#10121ddd] px-4 py-2 pt-[max(8px,env(safe-area-inset-top))] md:px-6">
-            <Link href="/" className="inline-flex min-h-11 items-center gap-2 font-semibold">
-              <span className="brand-symbol !h-8 !w-8 !text-xl" aria-hidden="true">
-                P
-              </span>
-              PawanOS
-              <span className="hidden text-xs font-normal text-[var(--muted)] xl:inline">
-                {' '}
-                / interactive desktop
-              </span>
-            </Link>
-            <nav aria-label="Primary" className="hidden items-center gap-1 md:flex">
-              <button
-                className="min-h-11 rounded-lg px-3 text-sm hover:bg-white/10"
-                onClick={() => open('projects')}
-              >
-                Work
-              </button>
-              <button
-                className="min-h-11 rounded-lg px-3 text-sm hover:bg-white/10"
-                onClick={() => open('journey')}
-              >
-                About
-              </button>
-              <Link
-                className="flex min-h-11 items-center rounded-lg px-3 text-sm hover:bg-white/10"
-                href="/resume"
-              >
-                Resume
-              </Link>
-              <button
-                className="min-h-11 rounded-lg px-3 text-sm hover:bg-white/10"
-                onClick={() => open('contact')}
-              >
-                Contact
-              </button>
-            </nav>
-            <div className="flex items-center gap-1">
-              <span className="hidden px-2 sm:inline">
+          <header className="os-system-bar">
+            <div className="os-system-left">
+              <span className="os-mobile-time">
                 <DesktopClock />
               </span>
+              <Link href="/" className="os-system-brand" aria-label="PawanOS home">
+                <span className="os-start-mark" aria-hidden="true">
+                  P
+                </span>
+                <span>PawanOS</span>
+              </Link>
+              <nav aria-label="Desktop menu" className="os-menu-links">
+                <button onClick={() => open('projects')}>Work</button>
+                <button onClick={() => open('journey')}>About</button>
+                <Link href="/resume">Resume</Link>
+                <button onClick={() => open('contact')}>Contact</button>
+              </nav>
+            </div>
+
+            <div className="os-dynamic-island" aria-hidden="true">
+              <span />
+              <strong>PawanOS</strong>
+            </div>
+
+            <div className="os-system-right">
               <button
-                className="flex h-11 w-11 items-center justify-center rounded-lg hover:bg-white/10"
+                className="os-system-action"
                 aria-label="How to use PawanOS"
                 onClick={() => setHelp(true)}
               >
-                <HelpCircle size={18} aria-hidden="true" />
+                <HelpCircle size={16} aria-hidden="true" />
               </button>
               <button
-                className="flex h-11 w-11 items-center justify-center rounded-lg hover:bg-white/10"
+                className="os-system-action"
                 aria-label="Open search"
                 onClick={() => setPalette(true)}
               >
-                <Search size={18} aria-hidden="true" />
+                <Search size={16} aria-hidden="true" />
+                <span className="os-search-shortcut">⌘ K</span>
               </button>
+              <span className="os-status-icons" aria-hidden="true">
+                <Signal size={15} fill="currentColor" />
+                <Wifi size={16} />
+                <BatteryFull size={19} />
+              </span>
+              <span className="os-desktop-time">
+                <DesktopClock />
+              </span>
             </div>
           </header>
-          <main className="relative min-h-0 flex-1 overflow-y-auto px-4 pb-32 pt-6 md:px-8 md:pt-9">
-            <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[1fr_340px]">
-              <div className="order-2 lg:order-1">
-                <section className="os-surface p-4" aria-labelledby="os-apps-heading">
-                  <div className="mb-3 flex items-center justify-between gap-3">
-                    <h2 id="os-apps-heading" className="text-sm font-semibold">
-                      Start with the work
-                    </h2>
-                    <span className="font-mono text-[11px] text-[var(--muted)]">
-                      / or ⌘ K to search
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-4 gap-1 md:grid-cols-6">
-                    {APPS.filter((app) => app.primary).map((app) => (
-                      <AppTile key={app.id} app={app} open={() => open(app.id)} />
-                    ))}
-                    <Link href="/resume" className="os-tile">
-                      <span className="os-app-icon bg-gradient-to-br from-slate-500 to-slate-700">
-                        <FileText size={24} aria-hidden="true" />
-                      </span>
-                      <span>Resume</span>
-                    </Link>
-                  </div>
-                </section>
-                <details className="os-surface mt-5 p-4">
-                  <summary className="flex min-h-11 items-center text-sm font-semibold">
-                    More apps & utilities{' '}
-                    <span className="ml-auto text-xs text-[var(--muted)]">Explore</span>
-                  </summary>
-                  <div className="mt-3 grid grid-cols-4 gap-1 md:grid-cols-5">
-                    {APPS.filter((app) => !app.primary).map((app) => (
-                      <AppTile key={app.id} app={app} open={() => open(app.id)} />
-                    ))}
-                  </div>
-                </details>
-                <p className="os-surface mt-4 p-3 text-sm leading-relaxed text-white">
-                  Minimize to keep a draft. Every open window has a dock button. Prefer a page?{' '}
-                  <Link
-                    href="/work"
-                    className="rounded bg-[#10121ddd] px-1 text-[var(--acc1)] underline underline-offset-4"
+
+          <main id="main-content" className="os-workspace">
+            <div className="os-workspace-shell">
+              <section className="os-owner-widget" aria-labelledby="os-owner-heading">
+                <div className="os-owner-topline">
+                  <span className="os-avatar" aria-hidden="true">
+                    PH
+                  </span>
+                  <span className="os-online-pill">
+                    <i aria-hidden="true" /> Available for work
+                  </span>
+                  <button
+                    className="os-mobile-help"
+                    aria-label="How to use PawanOS"
+                    onClick={() => setHelp(true)}
                   >
-                    Read the work directly.
-                  </Link>
+                    <HelpCircle size={19} aria-hidden="true" />
+                  </button>
+                </div>
+                <p className="os-widget-kicker">
+                  <Sparkles size={13} aria-hidden="true" /> {greeting(hour)}
                 </p>
-              </div>
-              <section
-                className="os-surface order-1 self-start p-6 lg:order-2"
-                aria-labelledby="os-owner-heading"
-              >
-                <p className="eyebrow !text-[var(--acc1)]">AI Product Developer</p>
-                <h1 id="os-owner-heading" className="mt-3 text-3xl font-semibold tracking-tight">
-                  Pawan Hiray<span className="text-[var(--acc1)]">.</span>
+                <h1 id="os-owner-heading">
+                  I’m Pawan<span>.</span>
                 </h1>
-                <p className="mt-4 text-[15px] leading-relaxed text-[var(--secondary)]">
-                  {ownerProfile.identity.intro}
-                </p>
-                <div className="mt-5 flex flex-wrap gap-2">
+                <p className="os-owner-role">AI Product Developer · Mumbai, India</p>
+                <p className="os-owner-intro">{ownerProfile.identity.intro}</p>
+                <div className="os-owner-actions">
                   <button className="button-primary" onClick={() => open('projects')}>
                     View my work <ArrowUpRight size={16} aria-hidden="true" />
                   </button>
                   <button className="button-secondary" onClick={() => open('contact')}>
-                    Contact
+                    Let’s talk
                   </button>
                 </div>
-                <p className="mt-4 text-xs leading-relaxed text-[var(--muted)]">
-                  {ownerProfile.identity.availability}
-                </p>
-                <Link
-                  href="/"
-                  className="text-link mt-4 inline-flex min-h-11 items-center gap-2 text-sm"
-                >
-                  Quick reading view <ArrowUpRight size={15} aria-hidden="true" />
-                </Link>
+                <div className="os-widget-stats" aria-label="Portfolio summary">
+                  <span>
+                    <strong>03</strong>
+                    <small>featured builds</small>
+                  </span>
+                  <span>
+                    <strong>09</strong>
+                    <small>case files</small>
+                  </span>
+                  <span>
+                    <strong>Open</strong>
+                    <small>junior & freelance</small>
+                  </span>
+                </div>
               </section>
+
+              <section className="os-launch-area" aria-labelledby="os-apps-heading">
+                <div className="os-mobile-search-row">
+                  <button className="os-search-pill" onClick={() => setPalette(true)}>
+                    <Search size={17} aria-hidden="true" />
+                    <span>Search apps and projects</span>
+                  </button>
+                </div>
+                <div className="os-section-heading">
+                  <div>
+                    <p className="os-section-kicker">Workspace</p>
+                    <h2 id="os-apps-heading">Apps</h2>
+                  </div>
+                  <span>Open an app to explore</span>
+                </div>
+                <div className="os-app-grid">
+                  {HOME_APPS.map((app) => (
+                    <AppTile key={app.id} app={app} open={() => open(app.id)} />
+                  ))}
+                  <Link
+                    href="/resume"
+                    className="os-tile"
+                    aria-label="Open Resume: One-page HTML and PDF resume"
+                  >
+                    <span className="os-app-icon bg-gradient-to-br from-slate-500 to-slate-700">
+                      <FileText size={25} strokeWidth={1.8} aria-hidden="true" />
+                    </span>
+                    <span className="os-app-label">Resume</span>
+                  </Link>
+                </div>
+
+                <details className="os-app-library">
+                  <summary>
+                    <span className="os-library-icon" aria-hidden="true">
+                      <i />
+                      <i />
+                      <i />
+                      <i />
+                    </span>
+                    <span>
+                      <strong>App Library</strong>
+                      <small>{LIBRARY_APPS.length} tools & utilities</small>
+                    </span>
+                    <span className="os-library-open">Open</span>
+                  </summary>
+                  <div className="os-library-grid">
+                    {LIBRARY_APPS.map((app) => (
+                      <AppTile key={app.id} app={app} open={() => open(app.id)} />
+                    ))}
+                  </div>
+                </details>
+              </section>
+
+              <p className="os-workspace-note">
+                <span aria-hidden="true">●</span> Windows remember drafts when minimized. Press{' '}
+                <kbd>⌘ K</kbd> to search, or use the dock below.{' '}
+                <Link href="/work">Open the reading view</Link>.
+              </p>
             </div>
           </main>
-          <nav
-            aria-label="Dock"
-            className="absolute inset-x-0 bottom-[max(10px,env(safe-area-inset-bottom))] z-20 flex justify-center px-3"
-          >
-            <div className="os-dock flex max-w-full items-center gap-1 overflow-x-auto p-1.5">
-              {favorites.map((id) => {
+
+          <nav aria-label="Dock" className="os-taskbar">
+            <div className="os-dock">
+              {FAVORITES.map((id) => {
                 const app = APP_MAP[id];
                 const win = desktop.windows.find((item) => item.id === id);
                 return (
@@ -280,20 +336,20 @@ export default function PersonalOS() {
                     onClick={() => dock(id)}
                     title={`${app.name}${win?.minimized ? ' — minimized' : ''}`}
                   >
-                    <app.icon size={21} aria-hidden="true" />
-                    <span>{app.name}</span>
+                    <span className={`os-dock-icon bg-gradient-to-br ${app.tint}`}>
+                      <app.icon size={21} strokeWidth={1.8} aria-hidden="true" />
+                    </span>
+                    <span className="os-dock-label">{app.name}</span>
                     {win && (
                       <span
-                        className={`h-1 w-1 rounded-full ${win.minimized ? 'bg-[#a4a9bc]' : 'bg-white'}`}
+                        className={`os-running-dot ${win.minimized ? 'is-minimized' : ''}`}
                         aria-hidden="true"
                       />
                     )}
                   </button>
                 );
               })}
-              {extraWindows.length > 0 && (
-                <span className="mx-1 h-9 w-px shrink-0 bg-white/20" aria-hidden="true" />
-              )}
+              {extraWindows.length > 0 && <span className="os-dock-divider" aria-hidden="true" />}
               {extraWindows.map((win) => (
                 <button
                   key={win.id}
@@ -302,20 +358,24 @@ export default function PersonalOS() {
                   onClick={() => dock(win.id)}
                   title={`${win.title}${win.minimized ? ' — minimized' : ''}`}
                 >
-                  <FileText size={21} aria-hidden="true" />
-                  <span className="max-w-24 truncate">
-                    {win.title.replace(' — case study', '')}
+                  <span className="os-dock-icon os-document-icon">
+                    <FileText size={21} aria-hidden="true" />
                   </span>
+                  <span className="os-dock-label">{win.title.replace(' — case study', '')}</span>
                 </button>
               ))}
-              <span className="mx-1 h-9 w-px shrink-0 bg-white/20" aria-hidden="true" />
+              <span className="os-dock-divider os-search-divider" aria-hidden="true" />
               <button aria-label="Dock: Search" onClick={() => setPalette(true)}>
-                <Search size={21} aria-hidden="true" />
-                <span>Search</span>
+                <span className="os-dock-icon os-search-icon">
+                  <Search size={21} aria-hidden="true" />
+                </span>
+                <span className="os-dock-label">Search</span>
               </button>
             </div>
+            <span className="os-home-indicator" aria-hidden="true" />
           </nav>
         </div>
+
         {desktop.windows.map((win) => (
           <WindowFrame
             key={win.id}
@@ -352,9 +412,9 @@ function AppTile({ app, open }: { app: AppDef; open: () => void }) {
   return (
     <button className="os-tile" aria-label={`Open ${app.name}: ${app.desc}`} onClick={open}>
       <span className={`os-app-icon bg-gradient-to-br ${app.tint}`}>
-        <app.icon size={24} strokeWidth={1.8} aria-hidden="true" />
+        <app.icon size={25} strokeWidth={1.8} aria-hidden="true" />
       </span>
-      <span>{app.name}</span>
+      <span className="os-app-label">{app.name}</span>
     </button>
   );
 }
